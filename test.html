@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>CyberShield Info Hub</title>
+    <style>
+        /* Alapbeállítások */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0d1117; /* Sötét kiber-háttér */
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 1. Navigációs menü (Középre igazítva) */
+        nav {
+            background-color: #161b22;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            gap: 40px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        nav a {
+            color: #00f2ff; /* Ciánkék neon */
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #00ffaa;
+            text-shadow: 0 0 10px #00ffaa;
+        }
+
+        /* 2. Hero szekció (A kép alapján) */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: radial-gradient(circle, rgba(0,242,255,0.05) 0%, rgba(13,17,23,1) 70%);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .subtitle {
+            color: #8b949e;
+            margin-bottom: 50px;
+            font-style: italic;
+        }
+
+        /* 3. Interaktív rész: Input és Kör egymás mellett */
+        .interactive-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        /* Jelszó mező stílusa */
+        .input-wrapper {
+            position: relative;
+        }
+
+        #pw-input {
+            background: #0d1117;
+            border: 2px solid #30363d;
+            border-radius: 8px;
+            padding: 15px 45px 15px 20px;
+            color: white;
+            font-size: 18px;
+            width: 300px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        #pw-input:focus {
+            border-color: #00f2ff;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+
+        #toggle-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            opacity: 0.6;
+        }
+
+        /* Kör alakú mérő */
+        .strength-meter {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        svg {
+            transform: rotate(-90deg);
+        }
+
+        circle {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+        }
+
+        .bg-circle { stroke: #161b22; }
+
+        .meter-circle {
+            stroke: #ff4d4d;
+            stroke-dasharray: 440; /* 2 * PI * 70 */
+            stroke-dashoffset: 440;
+            transition: 0.5s ease-out;
+        }
+
+        .status-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#">Főoldal</a>
+        <a href="#">A Támadások Világa</a>
+        <a href="#">Védekezési Kézikönyv</a>
+    </nav>
+
+    <div class="hero">
+        <h1>The Digital Frontier</h1>
+        <p class="subtitle">// PROTECTING YOUR DIGITAL CASTLE</p>
+
+        <div class="interactive-container">
+            <div class="input-wrapper">
+                <input type="password" id="pw-input" placeholder="Teszteld a jelszavad...">
+                <button id="toggle-btn">👁️</button>
+            </div>
+
+            <div class="strength-meter">
+                <svg width="150" height="150">
+                    <circle class="bg-circle" cx="75" cy="75" r="70"></circle>
+                    <circle id="meter" class="meter-circle" cx="75" cy="75" r="70"></circle>
+                </svg>
+                <div class="status-text">
+                    <span id="label">GYENGE</span><br>
+                    <small id="percent">0%</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('pw-input');
+        const meter = document.getElementById('meter');
+        const label = document.getElementById('label');
+        const percentText = document.getElementById('percent');
+        const toggleBtn = document.getElementById('toggle-btn');
+
+        const circumference = 2 * Math.PI * 70;
+
+        // Jelszó láthatóság váltó
+        toggleBtn.addEventListener('click', () => {
+            const isPw = input.type === 'password';
+            input.type = isPw ? 'text' : 'password';
+            toggleBtn.textContent = isPw ? '🙈' : '👁️';
+        });
+
+        // Erősség számítás
+        input.addEventListener('input', () => {
+            let val = input.value;
+            let score = 0;
+
+            if (val.length >= 8) score += 25;
+            if (/[A-Z]/.test(val)) score += 25;
+            if (/[0-9]/.test(val)) score += 25;
+            if (/[^A-Za-z0-9]/.test(val)) score += 25;
+
+            // Kör frissítése
+            const offset = circumference - (score / 100) * circumference;
+            meter.style.strokeDashoffset = offset;
+            percentText.textContent = score + "%";
+
+            // Szín és szöveg váltása
+            if (score <= 25) {
+                meter.style.stroke = "#ff4d4d";
+                label.textContent = "GYENGE";
+                label.style.color = "#ff4d4d";
+            } else if (score <= 75) {
+                meter.style.stroke = "#ffa500";
+                label.textContent = "KÖZEPES";
+                label.style.color = "#ffa500";
+            } else {
+                meter.style.stroke = "#00ffcc";
+                label.textContent = "ERŐS";
+                label.style.color = "#00ffcc";
+            }
+        });
+    </script>
+</body>
+</html>

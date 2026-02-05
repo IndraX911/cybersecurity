@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="lock.png">
+    <title>Védekezési Kézikönyv</title>
+</head>
+<body>
+    <nav class="menu">
+        <a href="fo.html">FŐOLDAL</a>
+        <a href="al.html">A TÁMADÁSOK VILÁGA</a>
+        <a href="al2.html">VÉDEKEZÉSI KÉZIKÖNYV</a>
+    </nav>
+    <section class="attack-hero">
+    <h1>VÉDEKEZÉSI PROTOKOLL</h1>
+    <p>Aktiváld a védelmi vonalakat. A biztonság nem állapot, hanem folyamat.</p>
+</section>
+
+<section class="manual-container">
+    <div class="protocol-box">
+        <div class="protocol-header">
+            <span class="status-online"></span>
+            <h2>01. SZEMÉLYES ADATVÉDELEM</h2>
+        </div>
+        <div class="protocol-content">
+            <div class="check-item">
+                <input type="checkbox" id="c1">
+                <label for="c1"><b>Kétlépcsős azonosítás (2FA):</b> Használd mindenhol, ahol csak lehet (Google, Facebook, Bank).</label>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="c2">
+                <label for="c2"><b>Jelszókezelő:</b> Ne jegyezz meg jelszavakat. Használj Bitwardent vagy KeePass-t.</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="protocol-box">
+        <div class="protocol-header">
+            <span class="status-online"></span>
+            <h2>02. RENDSZERINTEGRITÁS</h2>
+        </div>
+        <div class="protocol-content">
+            <div class="check-item">
+                <input type="checkbox" id="c3">
+                <label for="c3"><b>Automatikus frissítések:</b> A Windows/macOS és a szoftverek legyenek mindig naprakészek.</label>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="c4">
+                <label for="c4"><b>Mentési stratégia:</b> 3-2-1 szabály (3 másolat, 2 különböző hordozó, 1 offline mentés).</label>
+            </div>
+        </div>
+    </div>
+    <div class="protocol-box">
+        <div class="protocol-header">
+            <span class="status-online"></span>
+            <h2>03. HÁLÓZATI PAJZS</h2>
+        </div>
+        <div class="protocol-content">
+            <div class="check-item">
+                <input type="checkbox" id="c5">
+                <label for="c5"><b>VPN Használat:</b> Nyilvános Wi-Fi hálózaton (kávézó, reptér) kötelező a titkosított csatorna.</label>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="c6">
+                <label for="c6"><b>Böngésző Bővítmények:</b> Reklámblokkoló (uBlock Origin) és követésgátlók telepítése.</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="tools-section">
+        <h3>JAVASOLT VÉDELMI FELSZERELÉS</h3>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">🛡️</div>
+                <h4>Bitwarden</h4>
+                <p>Jelszókezelő</p>
+                <a href="https://bitwarden.com/download/" target="_blank" class="tool-btn">LETÖLTÉS</a>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">👻</div>
+                <h4>ESET Antivírus</h4>
+                <p>Vírusírtó</p>
+                <a href="https://www.eset.com/hu/otthonra/vasarlas/?gad_campaignid=20778568758" target="_blank" class="tool-btn">LETÖLTÉS</a>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">🧅</div>
+                <h4>Tor Browser</h4>
+                <p>Anonim Böngészés</p>
+                <a href="https://www.torproject.org/download/" target="_blank" class="tool-btn">LETÖLTÉS</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="protocol-box panic-mode">
+        <div class="protocol-header panic-header">
+            <span class="status-offline"></span> <h2>⚠️ VÖRÖS KÓD: MIT TEGYÉL HA MEGHACKELTEK?</h2>
+        </div>
+        <div class="protocol-content">
+            <ol class="panic-list">
+                <li><b>AZONNALI LEVÁLASZTÁS:</b> Húzd ki a netkábelt / Kapcsold ki a Wi-Fi-t.</li>
+                <li><b>JELSZÓCSERE MÁS ESZKÖZRŐL:</b> Telefonról változtasd meg az email és banki jelszavaidat.</li>
+                <li><b>2FA ELLENŐRZÉS:</b> Nézd meg, nem adtak-e hozzá idegen telefonszámot a fiókodhoz.</li>
+                <li><b>BANK ÉRTESÍTÉSE:</b> Tiltsd le a kártyáidat, ha gyanús mozgást látsz.</li>
+            </ol>
+        </div>
+    </div>
+</section>
+</body>
+</html>

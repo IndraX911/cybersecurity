@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animacio.css">
+    <script src="animacio.js"></script>
+    <link rel="icon" type="image/png" href="lock.png">
+    <title>Cyber Security</title>
+</head>
+
+<body>
+    <div id="hacker-loader">
+    <div id="terminal-content"></div>
+</div>
+    <nav class="menu">
+        <a href="fo.html">FŐOLDAL</a>
+        <a href="al.html">A TÁMADÁSOK VILÁGA</a>
+        <a href="al2.html">VÉDEKEZÉSI KÉZIKÖNYV</a>
+    </nav>
+    <header class="fohead">
+        <section class="attack-hero">
+            <h1>A DIGITÁLIS VÁRAD VÉDELMEZŐJE</h1>
+            <p>Ismerd meg a Kiberbiztonságot, tanulj meg védekezni ellene.</p>
+        </section>
+
+        <div class="hero-content">
+            <div class="password-wrapper">
+                <input type="password" id="pw-input" placeholder="Teszteld a jelszavadat...">
+                <button type="button" id="toggle-btn">👁️</button>
+            </div>
+
+            <div class="strength-meter">
+                <svg width="120" height="120">
+                    <circle class="bg" cx="60" cy="60" r="50"></circle>
+                    <circle class="meter" id="meter-circle" cx="60" cy="60" r="50"></circle>
+                </svg>
+                <span id="strength-text">GYENGE</span>
+            </div>
+        </div><br>
+        <section class="map-section">
+            <h2>Globális Fenyegetettségi Térkép</h2>
+
+            <div class="map-wrapper">
+                <div class="map-container">
+                    <iframe src="https://cybermap.kaspersky.com/en/widget/dynamic/dark" frameborder="0">
+                    </iframe>
+                </div>
+
+                <div class="map-legend-side">
+                    <div style="text-align: center; color: white; box-shadow:0 0 10px lightgray;">
+                        <h2 >Jelmagyarázat</h2>
+                    </div>
+                    <div class="legend-item">
+                        <div class="dot yellow" style="background: rgb(2, 129, 0); box-shadow: 0 0 10px rgb(2, 129, 0);"></div>
+                        <div>
+                            <h4>OAS</h4>
+                            <p>Fájlrendszer szintű védelem.</p>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="dot blue" style="background: rgb(250, 71, 101); box-shadow: 0 0 10px rgb(250, 71, 101);"></div>
+                        <div>
+                            <h4>IDS</h4>
+                            <p>Hálózati behatolás észlelés.</p>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="dot orange" style="background: rgb(0, 136, 255); box-shadow: 0 0 10px rgb(0, 136, 255);"></div>
+                        <div>
+                            <h4>WAV</h4>
+                            <p>Webes víruskeresés.</p>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="dot yellow" style="background: orange; box-shadow: 0 0 10px orange;"></div>
+                        <div>
+                            <h4>MAV</h4>
+                            <p>Levelezési védelem.</p>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="dot purple" style="background: rgb(102, 31, 102); box-shadow: 0 0 10px rgb(102, 31, 102)"></div>
+                        <div>
+                            <h4>KAS</h4>
+                            <p>Blokkol egy kéretlen levelet.</p>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="dot" style="background: #ffff00; box-shadow: 0 0 10px #ffff00;"></div>
+                        <div>
+                            <h4>VUL</h4>
+                            <p>Sérülékenység Vizsgálat</p>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="dot" style="background: #ff0000; box-shadow: 0 0 10px #ff0000;"></div>
+                        <div>
+                            <h4>ODS</h4>
+                            <p>Manuális Vizsgálat (On-Demand)</p>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="dot" style="background: darkblue; box-shadow: 0 0 10px darkblue;"></div>
+                        <div>
+                            <h4>RMW</h4>
+                            <p>Zsarolóvírus (Ransomware) blokkolva</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="news-section">
+            <div class="section-header">
+                <h2>Hírek a Frontvonalról</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="news-grid">
+                <article class="news-card">
+                    <div class="news-tag">Kritikus</div>
+                    <h3>Új Zero-Day sebezhetőség a Chrome-ban</h3>
+                    <p>A kutatók egy olyan hibát találtak, amit már aktívan kihasználnak a hackerek. Frissítsd a
+                        böngésződ azonnal!</p>
+                    <a href="https://nki.gov.hu/it-biztonsag/hirek/kritikus-zero-day-sebezhetoseget-javitottak-a-chrome-142-es-frissiteseben/"
+                        target="_blank" class="news-link">Tovább a cikkre →</a>
+                </article>
+
+                <article class="news-card">
+                    <div class="news-tag warning">Figyelmeztetés</div>
+                    <h3>Veszélyes adathalász hullám terjed az e-mailekben</h3>
+                    <p>A csalók "Díjbekérő" tárggyal küldenek leveleket, amik valójában egy trójai vírust telepítenek a
+                        gépedre.</p>
+                    <a href="https://www.penzcentrum.hu/tech/20260121/rem-veszelyes-csalas-terjed-az-ugyfelkapu-feluleten-igy-nullazzak-pillanatok-alatt-a-gyanutlan-magyarok-bankszamlait-1192247"
+                        target="_blank" class="news-link">Tovább a cikkre →</a>
+                </article>
+
+                <article class="news-card">
+                    <div class="news-tag info">Érdekesség</div>
+                    <h3>A kvantumszámítógépepnek vége a titkosításuknak?</h3>
+                    <p>Hogyan készülnek a kiberbiztonsági szakértők a jövőre, amikor a mai jelszavak pillanatok alatt
+                        feltörhetőek lesznek?</p>
+                    <a href="https://biztonsagportal.hu/maradnak-e-titkok-a-kvantumszamitogepek-koraban.html"
+                        target="_blank" class="news-link">Tovább a cikkre →</a>
+                </article>
+            </div>
+        </section>
+        <section class="stats-container">
+            <div class="stat-item">
+                <h2 class="counter" data-target="2244">0</h2>
+                <p>Támadás / másodperc</p>
+            </div>
+            <div class="stat-item">
+                <h2 class="counter" data-target="300000">0</h2>
+                <p>Új kártékony fájl naponta</p>
+            </div>
+            <div class="stat-item">
+                <h2 class="counter" data-target="10.5">0</h2>
+                <p>Billió dollár kár évente</p>
+            </div>
+        </section>
+        <section class="log-section">
+            <div class="log-header">
+                <span class="pulse-icon"></span>
+                <h3>Rendszerbiztonsági Napló (Live)</h3>
+            </div>
+            <div id="threat-log" class="log-body">
+            </div>
+        </section>
+
+    </header>
+
+    <script>
+        const input = document.getElementById('pw-input');
+        const meter = document.getElementById('meter-circle');
+        const text = document.getElementById('strength-text');
+        const fullOffset = 314;
+
+        input.addEventListener('input', () => {
+            let val = input.value;
+            let score = 0;
+
+
+            if (val.length > 8) score += 25;
+            if (/[A-Z]/.test(val)) score += 20;
+            if (/[0-9]/.test(val)) score += 25;
+            if (/[^A-Za-z0-9]/.test(val)) score += 30;
+
+
+            let offset = fullOffset - (score / 100) * fullOffset;
+            meter.style.strokeDashoffset = offset;
+
+
+            if (score <= 25) {
+                meter.style.stroke = "#ff4d4d";
+                text.innerText = "GYENGE";
+            } else if (score <= 75) {
+                meter.style.stroke = "#ffa500";
+                text.innerText = "KÖZEPES";
+            } else {
+                meter.style.stroke = "#00ffcc";
+                text.innerText = "ERŐS";
+            }
+        });
+        const toggleBtn = document.getElementById('toggle-btn');
+        const pwInput = document.getElementById('pw-input');
+
+        toggleBtn.addEventListener('click', () => {
+            
+            const type = pwInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            pwInput.setAttribute('type', type);
+
+            
+            toggleBtn.textContent = type === 'password' ? '👁️' : '🙈';
+        });
+
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200; 
+
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+
+                
+                const inc = target / speed;
+
+                if (count < target) {
+                    
+                    counter.innerText = Math.ceil(count + inc);
+                    
+                    setTimeout(updateCount, 15);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+
+            updateCount();
+        });
+        const logContainer = document.getElementById('threat-log');
+        const locations = ["Budapest", "London", "New York", "Tokyo", "Berlin", "Paris"];
+        const threats = ["Brute Force", "SQL Injection", "DDoS kísérlet", "Malware blokkolva", "Port Scan"];
+
+        function addLogEntry() {
+            const time = new Date().toLocaleTimeString();
+            const loc = locations[Math.floor(Math.random() * locations.length)];
+            const threat = threats[Math.floor(Math.random() * threats.length)];
+            const ip = `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `[${time}] <b>${threat}</b> észlelve innen: ${loc} (${ip}) - <span style="color: #00f2ff;">Blokkolva</span>`;
+
+            logContainer.prepend(entry); 
+
+           
+            if (logContainer.children.length > 5) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+
+            setTimeout(addLogEntry, Math.random() * 4000 + 2000); 
+        }
+
+        addLogEntry();
+
+    </script>
+</body>
+
+</html>

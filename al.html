@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="lock.png">
+    <title>A Támadások Világa</title>
+</head>
+<body>
+    <nav class="menu">
+        <a href="fo.html">FŐOLDAL</a>
+        <a href="al.html">A TÁMADÁSOK VILÁGA</a>
+        <a href="al2.html">VÉDEKEZÉSI KÉZIKÖNYV</a>
+    </nav>
+    <section class="attack-hero">
+    <h1>A TÁMADÁSOK VILÁGA</h1>
+    <p>Ismerd meg a digitális fegyvereket, amik ellen a pajzsot építjük.</p>
+</section>
+
+<section class="attack-grid">
+    <div class="attack-card">
+        <div class="attack-icon">🐎</div>
+        <h2>Trójai (Trojan)</h2>
+        <p>Hasznos programnak álcázza magát, de a háttérben kaput nyit a támadóknak.</p>
+        <ul class="attack-details">
+            <li><b>Veszély:</b> Adatlopás, távoli hozzáférés</li>
+            <li><b>Módszer:</b> Csatolmányok, tört szoftverek</li>
+        </ul>
+    </div>
+
+    <div class="attack-card">
+        <div class="attack-icon">🔐</div>
+        <h2>Ransomware</h2>
+        <p>Titkosítja az összes fájlodat, és pénzt követel a feloldásért cserébe.</p>
+        <ul class="attack-details">
+            <li><b>Veszély:</b> Teljes adatvesztés</li>
+            <li><b>Módszer:</b> Adathalász e-mailek</li>
+        </ul>
+    </div>
+
+    <div class="attack-card">
+        <div class="attack-icon">🎣</div>
+        <h2>Phishing</h2>
+        <p>Hamis weboldalakkal csalják ki a jelszavadat vagy bankkártya adataidat.</p>
+        <ul class="attack-details">
+            <li><b>Veszély:</b> Identitáslopás, anyagi kár</li>
+            <li><b>Módszer:</b> Sürgető hangvételű e-mailek</li>
+        </ul>
+    </div>
+</section>
+<section class="attack-interface">
+    <div class="attack-selector">
+        <div class="selection-card" onclick="showThreat('trojan')">
+            <span>01</span> TRÓJAI PROGRAM
+        </div>
+        <div class="selection-card" onclick="showThreat('ransomware')">
+            <span>02</span> RANSOMWARE
+        </div>
+        <div class="selection-card" onclick="showThreat('phishing')">
+            <span>03</span> ADATHALÁSZAT
+        </div>
+    </div>
+
+    <div id="threat-monitor" class="threat-monitor">
+        <div class="monitor-placeholder">
+            VÁLASSZON KI EGY FENYEGETÉST AZ ELEMZÉSHEZ...
+        </div>
+    </div>
+</section>
+
+<script>
+    const threatData = {
+    trojan: {
+        title: "TRÓJAI FALÓ (TROJAN)",
+        desc: "Látszólag ártalmatlan szoftver, amely hátsó kaput (backdoor) nyit a rendszeren.",
+        level: "medium",
+        levelText: "MAGAS",
+        percent: "75%"
+    },
+    ransomware: {
+        title: "ZSAROLÓVÍRUS (RANSOMWARE)",
+        desc: "Katonai szintű titkosítással zárolja a fájlokat. A feloldásért váltságdíjat követel.",
+        level: "high",
+        levelText: "KRITIKUS",
+        percent: "98%"
+    },
+    phishing: {
+        title: "ADATHALÁSZAT (PHISHING)",
+        desc: "Pszichológiai manipulációval kicsalt hitelesítő adatok és banki információk.",
+        level: "low",
+        levelText: "KÖZEPES",
+        percent: "45%"
+    }
+};
+
+function showThreat(type) {
+    const data = threatData[type];
+    const monitor = document.getElementById('threat-monitor');
+    
+    monitor.innerHTML = `
+        <div class="monitor-content" style="animation: fadeIn 0.5s ease;">
+            <h2 style="color: #00ff00; margin-bottom: 20px;">${data.title}</h2>
+            <p style="color: #c9d1d9; margin-bottom: 30px;">${data.desc}</p>
+            
+            <div class="threat-container">
+                <div class="threat-label">
+                    <span>VESZÉLYESSÉGI SZINT:</span>
+                    <span class="threat-value ${data.level}">${data.levelText}</span>
+                </div>
+                <div class="threat-bar">
+                    <div class="threat-fill ${data.level}" style="width: ${data.percent}"></div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.querySelectorAll('.selection-card').forEach(card => card.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
