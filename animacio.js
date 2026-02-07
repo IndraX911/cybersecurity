@@ -26,7 +26,7 @@ window.addEventListener('load', () => {
     "MEM_SCAN: 0x0045FF12 elemzése... Rejtett folyamat azonosítva.",
     "NET_MAP: Helyi hálózati csomópontok feltérképezése [192.168.0.1/24]",
     "NODE_01: Aktív [Tűzfal észlelve]",
-    "NODE_01: auth_module_v2 megkerülése... [8%... 45%... 89%]",
+    "NODE_01: auth_module_v2 megkerülése... [8%... 45%... 89%... 100%]",
     "NODE_01: HOZZÁFÉRÉS MEGADVA. Token: 4f82-a912-bc03",
     " ",
     "TŰZFAL_ÁLLAPOT: Megszállva.",
@@ -90,3 +90,4 @@ window.addEventListener('load', () => {
     setTimeout(typeChar, 200);
 
 });
+
