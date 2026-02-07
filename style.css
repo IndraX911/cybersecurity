@@ -4,6 +4,22 @@ body {
         background-color: #0d1117;
 }
 
+/* Ha a kijelző szűkebb, mint 768px (szinte minden telefon) */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px; /* Kicsit nagyobb betűk, hogy olvashatóbb legyen mobilon */
+    }
+    
+    #terminal, #hacker-loader {
+        width: 95%; /* Majdnem kitölti a kijelzőt kétoldalt */
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    iframe {
+        height: 300px; /* Mobilon ne legyen olyan magas a térkép, hogy elvigye az egész képernyőt */
+    }
+}
 
 .attack-hero {
     text-align: center;
@@ -860,4 +876,5 @@ circle {
     cursor: pointer;
     font-size: 18px;
     outline: none;
+
 }
