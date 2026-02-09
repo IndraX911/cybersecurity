@@ -14,14 +14,14 @@ window.addEventListener('load', () => {
     }
 
    const messages = [
-    "CYBERSHIELD Kernel v4.1.0-release [LTS]",
+    "CYBERSECURITY Kernel v4.1.0-release [LTS]",
     "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
     " ",
-    "CPU ellenőrzése: AMD Ryzen 5 2026-X @ 5.4GHz... OK",
-    "Memória ellenőrzése: 8192MB ECC DDR4... OK",
+    "CPU ellenőrzése: AMD Ryzen 9 2026-X @ 5.4GHz... OK",
+    "Memória ellenőrzése: 32768 ECC DDR5... OK",
     "Lokalizált alrendszerek inicializálása (HU_hu)... Kész.",
     " ",
-    "C:\\Users\\Admin-PC> start security_audit.sh",
+    "C:\\Users\\ADMIN-PC> start security_audit.sh",
     "--------------------------------------------------",
     "MEM_SCAN: 0x0045FF12 elemzése... Rejtett folyamat azonosítva.",
     "NET_MAP: Helyi hálózati csomópontok feltérképezése [192.168.0.1/24]",
@@ -34,10 +34,10 @@ window.addEventListener('load', () => {
     "CSOMAG_SZIFFROZÓ: Bejövő forgalom rögzítése...",
     "SEBZHETŐSÉG_VIZSGÁLAT: 80-as, 443-as port nyitva. Injektálás...",
     " ",
-    "ROOT_HOZZÁFÉRÉS: 'Admin_Root' felhasználó azonosítva.",
+    "ROOT_HOZZÁFÉRÉS: 'ADMIN_ROOT' felhasználó azonosítva.",
     "ÁLLAPOT: Rendszer sikeresen feltörve.",
     "--------------------------------------------------",
-    "Betöltés befejezése: CyberShield Interfész v2026",
+    "Betöltés befejezése: CyberSecurity Interfész v2026",
     "INDÍTÁS..."
 ];
 
@@ -74,20 +74,21 @@ window.addEventListener('load', () => {
                 charIndex = 0;
                 lineIndex++;
                 // Sor végén szünet
-                setTimeout(typeChar, 50); 
+                setTimeout(typeChar, 120); 
             }
         } else {
             // VÉGE
             sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
-                setTimeout(() => loader.style.display = 'none', 800);
-            }, 1200);
+                setTimeout(() => loader.style.display = 'none', 900);
+            }, 1500);
         }
     }
 
     // Indítás
-    setTimeout(typeChar, 200);
+    setTimeout(typeChar, 700);
 
 });
+
 
