@@ -16,29 +16,42 @@ window.addEventListener('load', () => {
    const messages = [
     "CYBERSECURITY Kernel v4.1.0-release [LTS]",
     "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
+    "Hálózati azonosító: 192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255),
     " ",
-    "CPU ellenőrzése: AMD Ryzen 9 2026-X @ 5.4GHz... OK",
-    "Memória ellenőrzése: 32768MB ECC DDR5... OK",
+    "BIOS ELLENŐRZÉSE: American Megatrends v.2026... OK",
+    "CPU: AMD Ryzen 9 2026-X @ 5.4GHz [16 Cores]... OK",
+    "GPU: NVIDIA RTX 5090 Ti - CUDA Magok inicializálása... OK",
+    "MEMÓRIA: 32768MB ECC DDR5 @ 6400MHz... OK",
     "Lokalizált alrendszerek inicializálása (HU_hu)... Kész.",
+    "Belső fájlrendszer csatolása: /dev/sda1... SIKERES.",
     " ",
-    "C:\\Users\\ADMIN-PC> start security_audit.sh",
+    "C:\\Users\\ADMIN-PC> start security_audit.sh --force --verbose",
     "--------------------------------------------------",
     "MEM_SCAN: 0x0045FF12 elemzése... Rejtett folyamat azonosítva.",
-    "NET_MAP: Helyi hálózati csomópontok feltérképezése [192.168.0.1/24]",
-    "NODE_01: Aktív [Tűzfal észlelve]",
-    "NODE_01: auth_module_v2 megkerülése... [8%... 45%... 89%... 100%]",
+    "ANTI-VIRUS: Alvó módba kényszerítve (ID: 4412).",
+    "NET_MAP: Helyi hálózati csomópontok feltérképezése...",
+    "IP_RANGE: [192.168.0.1/24] vizsgált IP-k száma: 254",
+    "NODE_01: Aktív [Tűzfal észlelve: Cisco ASA]",
+    " ",
+    "NODE_01: brute_force_v4 indítása a 22-es porton...",
+    "BRUTE_FORCE: Szótár alapú támadás... [12%... 38%... 67%... 91%]",
+    "NODE_01: auth_module_v2 megkerülése... SIKERES.",
     "NODE_01: HOZZÁFÉRÉS MEGADVA. Token: 4f82-a912-bc03",
     " ",
-    "TŰZFAL_ÁLLAPOT: ÁTSZAKÍTVA.",
-    "TITKOSÍTÁS: AES-256 kézfogás létrejött.",
-    "CSOMAG_SZIFFROZÓ: Bejövő forgalom rögzítése...",
-    "SEBZHETŐSÉG_VIZSGÁLAT: 80-as, 443-as port nyitva. Injektálás...",
+    "TŰZFAL_ÁLLAPOT: ÁTSZAKÍTVA / KOMPROMITÁLVA.",
+    "TITKOSÍTÁS: AES-256 kézfogás létrejött. Kulcs: SHA-512",
+    "CSOMAG_SZIFFROZÓ: 'Man-in-the-Middle' pozíció felvéve...",
+    "TRAFFIC: HTTP/HTTPS adatfolyam rögzítése folyamatban...",
+    "SEBZHETŐSÉG: 80-as, 443-as, 8080-as port nyitva.",
+    "INJEKTÁLÁS: SQL_Injection kód küldése az adatbázisnak...",
+    "DB_STATUS: Adatbázis válaszolt. Táblák listázása...",
     " ",
-    "ROOT_HOZZÁFÉRÉS: 'ADMIN_ROOT' felhasználó azonosítva.",
-    "ÁLLAPOT: Rendszer sikeresen feltörve.",
+    "ROOT_HOZZÁFÉRÉS: 'ADMIN_ROOT' jogosultság megszerezve.",
+    "NYOMOK ELTÜNTETÉSE: Logfájlok törlése a szerverről... OK.",
+    "ÁLLAPOT: Rendszer teljes ellenőrzés alatt.",
     "--------------------------------------------------",
     "Betöltés befejezése: CyberSecurity Interfész v2026",
-    "INDÍTÁS..."
+    "TERMINÁL INDÍTÁSA..."
 ];
 
     let lineIndex = 0;
@@ -87,6 +100,7 @@ window.addEventListener('load', () => {
     setTimeout(typeChar, 1150);
 
 });
+
 
 
 
