@@ -4,10 +4,10 @@ window.addEventListener('load', () => {
 
     // HANG BETÖLTÉSE
     const typeSound = new Audio('typing3.mp3'); 
-    typeSound.volume = 0.3; // Hangerő (0.0 - 1.0) - ne legyen túl hangos!
-    typeSound.playbackRate = 2.0; // Kicsit gyorsítunk a hangon, hogy techisebb legyen
+    typeSound.volume = 0.3; 
+    typeSound.playbackRate = 2.0; 
 
-    // SESSION ELLENŐRZÉS (Hogy csak egyszer fusson)
+    // SESSION ELLENŐRZÉS 
     if (sessionStorage.getItem('introPlayed')) {
         loader.style.display = 'none';
         return; 
@@ -53,14 +53,11 @@ window.addEventListener('load', () => {
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
             loader.scrollTop = loader.scrollHeight;
             
-            // --- HANG LEJÁTSZÁSA ---
-            // Csak minden 2. vagy 3. karakternél szólaljon meg, hogy ne legyen "zajkása"
-            // és csak akkor, ha a böngésző engedi (try-catch blokk a hibák ellen)
+            //HANG LEJÁTSZÁSA
             if (charIndex % 3 === 0) { 
-                const soundClone = typeSound.cloneNode(); // Többszörözés, hogy átfedésben is szólhasson
+                const soundClone = typeSound.cloneNode(); 
                 soundClone.volume = 0.2;
                 soundClone.play().catch(error => {
-                    // Ha a böngésző letiltja az autoplay-t, itt némán elkapjuk a hibát
                     console.log("A böngésző letiltotta a hangot (Autoplay Policy).");
                 });
             }
@@ -87,9 +84,10 @@ window.addEventListener('load', () => {
     }
 
     // Indítás
-    setTimeout(typeChar, 1100);
+    setTimeout(typeChar, 1150);
 
 });
+
 
 
 
