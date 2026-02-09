@@ -34,7 +34,7 @@ window.addEventListener('load', () => {
     "NODE_01: Aktív [Tűzfal észlelve: Cisco ASA]",
     " ",
     "NODE_01: brute_force_v4 indítása a 22-es porton...",
-    "BRUTE_FORCE: Szótár alapú támadás... [12%... 38%... 67%... 10%]",
+    "BRUTE_FORCE: Szótár alapú támadás... [12%... 38%... 67%... 100%]",
     "NODE_01: auth_module_v2 megkerülése... SIKERES.",
     "NODE_01: HOZZÁFÉRÉS MEGADVA. Token: 4f82-a912-bc03",
     " ",
@@ -100,6 +100,7 @@ window.addEventListener('load', () => {
     setTimeout(typeChar, 1150);
 
 });
+
 
 
 
