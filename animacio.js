@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
     "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
     " ",
     "CPU ellenőrzése: AMD Ryzen 9 2026-X @ 5.4GHz... OK",
-    "Memória ellenőrzése: 32768 ECC DDR5... OK",
+    "Memória ellenőrzése: 32768MB ECC DDR5... OK",
     "Lokalizált alrendszerek inicializálása (HU_hu)... Kész.",
     " ",
     "C:\\Users\\ADMIN-PC> start security_audit.sh",
@@ -29,7 +29,7 @@ window.addEventListener('load', () => {
     "NODE_01: auth_module_v2 megkerülése... [8%... 45%... 89%... 100%]",
     "NODE_01: HOZZÁFÉRÉS MEGADVA. Token: 4f82-a912-bc03",
     " ",
-    "TŰZFAL_ÁLLAPOT: Megszállva.",
+    "TŰZFAL_ÁLLAPOT: ÁTSZAKÍTVA.",
     "TITKOSÍTÁS: AES-256 kézfogás létrejött.",
     "CSOMAG_SZIFFROZÓ: Bejövő forgalom rögzítése...",
     "SEBZHETŐSÉG_VIZSGÁLAT: 80-as, 443-as port nyitva. Injektálás...",
@@ -69,12 +69,12 @@ window.addEventListener('load', () => {
 
             if (charIndex < messages[lineIndex].length) {
                 // Gyors gépelés
-                setTimeout(typeChar, Math.random() * 2 + 1); 
+                setTimeout(typeChar, Math.random() * 3 + 2); 
             } else {
                 charIndex = 0;
                 lineIndex++;
                 // Sor végén szünet
-                setTimeout(typeChar, 120); 
+                setTimeout(typeChar, 140); 
             }
         } else {
             // VÉGE
@@ -87,8 +87,9 @@ window.addEventListener('load', () => {
     }
 
     // Indítás
-    setTimeout(typeChar, 700);
+    setTimeout(typeChar, 1100);
 
 });
+
 
 
