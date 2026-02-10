@@ -20,6 +20,7 @@ window.addEventListener('load', () => {
     " ",
     "BIOS ELLENŐRZÉSE: American Megatrends v.2026... OK",
     "CPU: AMD Ryzen 9 2026-X @ 5.4GHz [16 Cores]... OK",
+    "GPU: NVIDIA RTX 4090 - 24GB VRAM - CUDA magok inicializálása... OK",
     "MEMÓRIA: 32768MB ECC DDR5 @ 6400MHz... OK",
     "Lokalizált alrendszerek inicializálása (HU_hu)... Kész.",
     "Belső fájlrendszer csatolása: /dev/sda1... SIKERES.",
@@ -99,6 +100,7 @@ window.addEventListener('load', () => {
     setTimeout(typeChar, 1150);
 
 });
+
 
 
 
