@@ -20,11 +20,8 @@
             left: 0 !important;
             width: 100vw !important;
             height: 100vh !important;
-            background: transparent !important;
-            /* Ez adja a színt */
-            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2) !important;
-            pointer-events: none !important; /* Átengedi a kattintást */
-            z-index: 999998 !important; /* Minden felett, de az egér alatt */
+            pointer-events: none !important;
+            z-index: 999999 !important;
         }
         
         body {
@@ -43,16 +40,12 @@
             width: 25px !important;
             height: 25px !important;
             position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            z-index: 2147483647 !important; /* Legfelső réteg */
+            z-index: 2147483647 !important;
             pointer-events: none !important;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>') !important;
             background-size: contain !important;
             background-repeat: no-repeat !important;
-            /* Vibrálás */
-            animation: jitter-final 0.08s steps(2) infinite !important;
-            display: block !important; /* Mindig legyen kint a DOM-ban */
+            display: block !important;
         }
         
         @keyframes jitter-final {
@@ -187,33 +180,31 @@
     <script>
         // Ezt a scriptet a </body> elé tedd, a DIV UTÁN
         // MINDENT törölj ki a korábbi egér JS-ből és csak ezt tedd be
-    <script>
+        alert("A kód fut!");
     // Azonnal futó függvény, hogy ne legyen ütközés
-    (function() {
+    window.onload = function() {
         const cursor = document.querySelector('.custom-cursor');
-        
-        if (!cursor) {
-            console.error("NEM TALÁLOM AZ EGERET!");
-            return;
+        const filter = document.querySelector('.screen-filter');
+
+        // KÉNYSZERÍTJÜK a vörös színt JavaScriptből
+        if (filter) {
+            filter.style.filter = "sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2)";
+            filter.style.backgroundColor = "transparent";
+            console.log("Szűrő aktiválva");
         }
 
-        // Kényszerítjük, hogy látszódjon
-        cursor.style.opacity = "1";
-
+        // KÉNYSZERÍTJÜK a kurzor mozgását
         document.addEventListener('mousemove', function(e) {
-            // A leghatékonyabb pozicionálás
-            const x = e.clientX;
-            const y = e.clientY;
-            
-            cursor.style.left = x + 'px';
-            cursor.style.top = y + 'px';
+            if (cursor) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            }
         });
 
-        // Biztonsági kör: Ha görgetsz, maradjon ott
-        window.addEventListener('scroll', () => {}, {passive: true});
-    })();
-</script>
-
+        // KÉNYSZERÍTJÜK a háttérszínt
+        document.body.style.backgroundColor = "#050000";
+        document.body.style.cursor = "none";
+    };
         const threatData = {
 
             trojan: {
@@ -315,6 +306,7 @@
     </script>
 </body>
 </html>
+
 
 
 
