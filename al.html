@@ -160,25 +160,27 @@ function showThreat(type) {
     document.querySelectorAll('.selection-card').forEach(card => card.classList.remove('active'));
     event.currentTarget.classList.add('active');
 }
-    document.addEventListener('mousemove', (e) => {
+   document.addEventListener('mousemove', (e) => {
     const cursor = document.querySelector('.custom-cursor');
     if (cursor) {
-        cursor.style.display = 'block'; // Megjelenítjük, ha mozog
+        // A kerekített értékek néha simábbak, de a vibráláshoz a nyers koordináta kell
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
     }
 });
 
-// Opcionális: Ha elhagyja az ablakot, tűnjön el
-document.addEventListener('mouseleave', () => {
-    const cursor = document.querySelector('.custom-cursor');
-    if (cursor) cursor.style.display = 'none';
+// Ha esetleg egy gomb fölé mész, akkor is maradjon rejtve az egér
+document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        document.body.style.cursor = 'none';
+    });
 });
 </script>
     <div class="custom-cursor"></div>
 </body>
 
 </html>
+
 
 
 
