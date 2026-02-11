@@ -36,21 +36,16 @@
         .custom-cursor {
             width: 28px;
             height: 28px;
-            /* Absolute pozíció, hogy a dokumentum tetejétől számoljon */
             position: absolute !important; 
+            /* Kezdjen a képernyőn kívül, így nem látszik lent */
+            top: -100px; 
+            left: -100px;
             pointer-events: none;
             z-index: 2147483647;
-            
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
-            background-color: transparent !important;
-            
             filter: drop-shadow(0 0 8px red);
-            display: block !important; /* Hogy biztosan látszódjon */
-            opacity: 1 !important;
-            
-            /* Rezgés */
             animation: jitter 0.3s infinite;
         }
         
@@ -197,9 +192,7 @@
         </div>
 
     </section>
-
-
-
+     <div class="custom-cursor"></div>
     <script>
 
         const threatData = {
@@ -299,32 +292,29 @@
         }
 
         // Megkeressük az egeret
-const cursor = document.querySelector('.custom-cursor');
-
-// Egérmozgás figyelése
-document.addEventListener('mousemove', (e) => {
-    if (cursor) {
-        // A pageX/Y a dokumentum tetejéhez mér, így a görgetést is automatikusan kezeli!
-        cursor.style.left = e.pageX + 'px';
-        cursor.style.top = e.pageY + 'px';
-    }
-});
-
-// Ez megakadályozza, hogy a linkek felett visszajöjjön a régi egér
-document.addEventListener('mouseover', (e) => {
-    if (e.target && e.target.style) {
-        e.target.style.cursor = 'none';
-    }
-});
+        const cursor = document.querySelector('.custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            if (cursor) {
+                // A pageX/Y abszolút koordináták az oldal tetejétől számítva
+                // Ez megoldja a görgetési problémát!
+                cursor.style.left = e.pageX + 'px';
+                cursor.style.top = e.pageY + 'px';
+                
+                // Biztosítjuk, hogy látható legyen, ha már mozog
+                cursor.style.display = 'block';
+            }
+        });
     </script>
 
-    <div class="custom-cursor"></div>
+   
 
 </body>
 
 
 
 </html>
+
 
 
 
