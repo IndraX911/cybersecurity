@@ -106,8 +106,8 @@ document.addEventListener('keydown', function(event) {
     
     // Ha az Entert nyomják meg, és az overlay még létezik/látható
     if (event.key === 'Enter' && overlay) {
-        // Mivel a CSS-ben !important van, JavaScripttel így tudjuk biztosan eltüntetni:
-        overlay.setAttribute('style', 'display: none !important');
+        // Ez a sor kényszeríti az eltűnést, felülbírálva a CSS-t:
+        overlay.style.setProperty('display', 'none', 'important');
         
         // Elindítjuk a gépelést
         if (typeof typeChar === "function") {
@@ -117,6 +117,7 @@ document.addEventListener('keydown', function(event) {
 });
 
 });
+
 
 
 
