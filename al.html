@@ -36,41 +36,29 @@
         .custom-cursor {
             width: 28px;
             height: 28px;
-            /* FIXED pozíció, hogy a képernyőhöz tapadjon */
             position: fixed !important; 
-            top: 0;
-            left: 0;
-            /* Ez a legfontosabb: eltoljuk a regisztrációs pontot */
-            margin-left: -14px; 
-            margin-top: -14px;
-            
             pointer-events: none;
             z-index: 2147483647;
-            
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
+            filter: drop-shadow(0 0 8px red);
             
-            /* Rezgés animáció */
-            animation: jitter 0.1s linear infinite !important;
-            will-change: transform;
+            /* EZ A GYORSASÁG (0.1s mostmár nem fogja elrontani) */
+            animation: jitter 0.1s infinite; 
             
-            /* Ha a body filtere zavar, ez segít: */
-            backdrop-filter: none !important;
-        }
-        
-        /* Kényszerítjük, hogy ne örökölje a body szűrőjét */
-        body > .custom-cursor {
-            filter: drop-shadow(0 0 8px red) !important;
+            /* Elmozdítjuk a középpontot, hogy a nyíl hegye jó helyen legyen */
+            margin-left: -2px;
+            margin-top: -2px;
         }
         
         @keyframes jitter {
             0% { margin: 0px 0px; }
-            50% { margin: 1px -1px; }
+            25% { margin: 2px -1px; }
+            50% { margin: -1px 2px; }
+            75% { margin: 1px -2px; }
             100% { margin: 0px 0px; }
         }
-
-
         body {
 
             background-color: #050000;
@@ -79,6 +67,9 @@
 
             filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
 
+        }
+        body > .custom-cursor {
+            filter: drop-shadow(0 0 8px red) !important;
         }
     </style>
 
@@ -193,9 +184,6 @@
             </div>
 
         </div>
-
-
-
         <div id="threat-monitor" class="threat-monitor">
 
             <div class="monitor-placeholder">
@@ -308,43 +296,19 @@
 
         // Megkeressük az egeret
         // Megvárjuk, amíg az oldal kész
-    window.addEventListener('load', () => {
-        const cursor = document.querySelector('.custom-cursor');
-        
-        if (cursor) {
-            // Kényszerítjük a kezdőpozíciót
-            cursor.style.position = 'fixed'; // Visszaváltunk fixed-re a teszt kedvéért
-            cursor.style.display = 'block';
+   window.addEventListener('load', () => {
+    const cursor = document.querySelector('.custom-cursor');
     
-            document.addEventListener('mousemove', (e) => {
-                // A clientX/Y a látható ablakhoz képest mér
-                // A transform: translate3d pedig kikerüli a koordináta-hibákat
-                const x = e.clientX;
-                const y = e.clientY;
-                
-                cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    if (cursor) {
+        document.addEventListener('mousemove', (e) => {
+            window.requestAnimationFrame(() => {
+                // Sima koordinátákat használunk, hogy ne vesszen össze az animációval
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
             });
-        }
-    });
+        });
+    }
+});
     </script>
-
-   
-
 </body>
-
-
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
