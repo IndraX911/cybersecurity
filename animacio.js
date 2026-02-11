@@ -3,12 +3,13 @@ window.addEventListener('load', () => {
     const terminal = document.getElementById('terminal-content');
     const overlay = document.getElementById('start-overlay');
     const startMessage = document.getElementById('start-message');
-    const progressBar = document.getElementById('progress-bar-fill'); // Kell egy ilyen elem!
+    const progressBar = document.getElementById('progress-bar-fill');
 
     const typeSound = new Audio('typing3.mp3'); 
     typeSound.volume = 0.2; 
     typeSound.playbackRate = 2.0; 
 
+    // Session ellenőrzés
     if (sessionStorage.getItem('introPlayed')) {
         if (loader) loader.style.display = 'none';
         if (overlay) overlay.remove(); 
@@ -17,27 +18,30 @@ window.addEventListener('load', () => {
 
     // --- TÖLTŐCSIK LOGIKA ---
     let progress = 0;
-    startMessage.style.display = 'none'; // Alapból rejtve
+    let isFinished = false; // Flag, hogy tudjuk, mikor végeztünk
 
     const interval = setInterval(() => {
-        progress += Math.random() * 5; // Véletlenszerű haladás
-        if (progress > 100) progress = 100;
+        // Véletlenszerű sebesség, hogy élethűbb legyen
+        progress += Math.random() * 3.5; 
+        
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            isFinished = true;
+            
+            // Ha kész, megjelenik a felirat
+            if (startMessage) {
+                startMessage.style.opacity = "1";
+                startMessage.style.display = "block";
+            }
+        }
         
         if (progressBar) {
             progressBar.style.width = progress + "%";
         }
+    }, 80);
 
-        if (progress === 100) {
-            clearInterval(interval);
-            // Csak ha végzett a csík, akkor jelenik meg az üzenet
-            setTimeout(() => {
-                startMessage.style.display = 'block';
-                startMessage.classList.add('fade-in'); 
-            }, 500);
-        }
-    }, 100);
-
-    // --- GÉPELÉSI ÜZENETEK ---
+    // --- GÉPELÉSI ÜZENETEK (A te specifikációiddal) ---
     const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
         "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
@@ -98,11 +102,11 @@ window.addEventListener('load', () => {
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, 10); 
+                setTimeout(typeChar, 15); 
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 120); 
+                setTimeout(typeChar, 150); 
             }
         } else {
             sessionStorage.setItem('introPlayed', 'true');
@@ -113,8 +117,9 @@ window.addEventListener('load', () => {
         }
     }
 
+    // --- ENTER FIGYELŐ (Csak ha a csík kész!) ---
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' && overlay && startMessage.style.display === 'block') {
+        if (event.key === 'Enter' && isFinished && overlay) {
             overlay.remove(); 
             typeChar();
         }
