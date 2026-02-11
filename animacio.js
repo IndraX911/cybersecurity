@@ -109,11 +109,11 @@ window.addEventListener('load', () => {
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, Math.random() * 4 + 1);
+                setTimeout(typeChar, Math.random() * 3 + 1);
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 50); 
+                setTimeout(typeChar, 40); 
             }
         } else {
             // BEFEJEZÉS ÉS MENTÉS
@@ -143,4 +143,5 @@ window.addEventListener('load', () => {
     
     if (overlay) overlay.addEventListener('click', startFinal);
 });
+
 
