@@ -6,53 +6,55 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="lock.png">
     <style>
+        
     /* Csak a támadási szekcióban tüntetjük el az eredeti egeret */
     /* Ezt a body-ra vagy a támadási szekció fő konténerére tedd! */
-    .attack-page-body {
-        cursor: none !important;
-    }
+    
+        .attack-page-body {
+            cursor: none !important;
+        }
 
     /* Minden elemre rákényszerítjük, hogy ne mutasson egeret */
-    .attack-page-body * {
-        cursor: none !important;
-    }
+        .attack-page-body * {
+            cursor: none !important;
+        }
 
     /* A vörös kör stílusa */
-    .custom-cursor {
-        width: 20px;
-        height: 20px;
-        background-color: rgba(255, 0, 0, 0.8);
-        border-radius: 50%;
-        position: fixed;
-        pointer-events: none;
-        z-index: 999999;
-        box-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 0, 0, 0.8);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 999999;
+            box-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
         /* Vibrálás */
-        animation: mouse-jitter 0.05s infinite;
-        transform: translate(-50%, -50%);
+            animation: mouse-jitter 0.05s infinite;
+            transform: translate(-50%, -50%);
         /* Kezdetben rejtve, amíg el nem mozdul az egér */
-        display: none;
-    }
-
-    @keyframes mouse-jitter {
-        0% {
-            transform: translate(-50%, -50%) translate(-2px, 1px);
+            display: none;
         }
 
-        50% {
-            transform: translate(-50%, -50%) translate(2px, -1px);
+        @keyframes mouse-jitter {
+            0% {
+                transform: translate(-50%, -50%) translate(-2px, 1px);
+            }
+    
+            50% {
+                transform: translate(-50%, -50%) translate(2px, -1px);
+            }
+    
+            100% {
+                transform: translate(-50%, -50%) translate(1px, 2px);
+            }
         }
 
-        100% {
-            transform: translate(-50%, -50%) translate(1px, 2px);
+        body {
+            background-color: #050000;
+            /* Vöröses fekete */
+            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
         }
-    }
-
-    body {
-        background-color: #050000;
-        /* Vöröses fekete */
-        filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
-    }
 </style>
     <title>A Támadások Világa</title>
 </head>
@@ -186,6 +188,7 @@ document.addEventListener('mouseleave', () => {
 </body>
 
 </html>
+
 
 
 
