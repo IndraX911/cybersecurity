@@ -98,11 +98,11 @@ window.addEventListener('load', () => {
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, Math.random() * 13 + 5); // 2 és 12 ms között váltakozik
+                setTimeout(typeChar, Math.random() * 4 + 2); // 2 és 12 ms között váltakozik
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 90);
+                setTimeout(typeChar, 45);
             }
         } else {
             sessionStorage.setItem('introPlayed', 'true');
@@ -121,6 +121,7 @@ window.addEventListener('load', () => {
         }
     });
 });
+
 
 
 
