@@ -5,7 +5,7 @@ body {
     overflow: hidden;
 }
 
-/* A teljes képernyős indító felület */
+/* --- 2. START OVERLAY (A BETÖLTŐ KÉPERNYŐ) --- */
 #start-overlay {
     position: fixed !important;
     top: 0 !important;
@@ -18,27 +18,15 @@ body {
     align-items: center !important;
     justify-content: center !important;
     z-index: 100000 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
 }
 
-.loader-container {
-    text-align: center;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* --- 2. PROGRESS BAR (ZÖLD CSÍK) --- */
 #progress-bar-container {
-    width: 100% !important;
+    width: 80% !important;
     max-width: 600px !important;
     height: 12px !important;
     border: 1px solid #00ff00 !important;
     background: rgba(0, 255, 0, 0.1) !important;
     margin-bottom: 20px !important;
-    overflow: hidden !important;
 }
 
 #progress-bar-fill {
@@ -48,20 +36,15 @@ body {
     box-shadow: 0 0 15px #00ff00 !important;
 }
 
-/* --- 3. A SZÖVEG (EGYSÉGES VILLOGÁSSAL) --- */
 #start-message {
     color: #00ff00 !important;
     font-family: 'Courier New', monospace !important;
     font-size: 1.5rem !important;
     text-shadow: 0 0 10px #00ff00 !important;
-    text-align: center !important;
-    margin: 0 !important;
-    display: block !important;
-    /* Ez az egy animáció vezérel minden villogást */
     animation: simple-blink 1.2s linear infinite !important;
 }
 
-/* --- 4. HACKER TERMINÁL / LOADER RÉSZ --- */
+/* --- 3. HACKER TERMINÁL (A "CMD-S" IZE) --- */
 #hacker-loader {
     position: fixed !important;
     top: 0 !important;
@@ -69,12 +52,19 @@ body {
     width: 100% !important;
     height: 100vh !important;
     background-color: #030a03 !important;
+    /* Ez adja vissza a rácsos hacker hátteret */
+    background-image: 
+        linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px) !important;
+    background-size: 30px 30px !important;
     color: #00ff41 !important;
     font-family: 'Courier New', monospace !important;
     padding: 30px !important;
     z-index: 9999 !important;
     display: block !important;
     overflow-y: auto !important;
+    font-size: 1.1rem !important;
+    box-sizing: border-box !important;
 }
 
 #hacker-loader::-webkit-scrollbar {
@@ -87,28 +77,22 @@ body {
     text-shadow: 0 0 5px rgba(0, 255, 0, 0.7) !important;
 }
 
-/* Villogó kurzor a terminál végén */
+/* A villogó kurzor a CMD végén */
 #terminal-content::after {
     content: "_" !important;
-    animation: simple-blink 0.5s infinite !important;
+    animation: terminal-blink 0.5s infinite !important;
 }
 
-/* --- 5. ANIMÁCIÓK DEFINÍCIÓI --- */
-
-/* Egységes villogás (ezt használja a szöveg és a kurzor is) */
+/* --- 4. ANIMÁCIÓK --- */
 @keyframes simple-blink {
     0%   { opacity: 1; }
     50%  { opacity: 0.2; }
     100% { opacity: 1; }
 }
 
-.fade-in {
-    animation: fadeIn 0.8s ease-in forwards !important;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes terminal-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 .loader-fade-out {
