@@ -6,8 +6,7 @@ window.addEventListener('load', () => {
     const progressBar = document.getElementById('progress-bar-fill');
 
     const typeSound = new Audio('typing3.mp3'); 
-    typeSound.volume = 0.2; 
-    typeSound.playbackRate = 2.0; 
+    typeSound.volume = 0.2;
 
     if (sessionStorage.getItem('introPlayed')) {
         if (loader) loader.style.display = 'none';
@@ -18,29 +17,29 @@ window.addEventListener('load', () => {
     let progress = 0;
     let isFinished = false;
 
+    // Töltés indítása
     const interval = setInterval(() => {
-        // Véletlenszerű haladás a realisztikus hatásért
-        progress += Math.random() * 2.5; 
+        progress += Math.random() * 3; // Véletlenszerű sebesség
         
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
             isFinished = true;
             
-            // --- ITT TÖRTÉNIK A SZÖVEG CSERÉJE ---
+            // SZÖVEG CSERÉJE ÉS VILLOGTATÁSA
             if (startMessage) {
                 startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T!";
-                startMessage.classList.add('ready-blink'); // Villogó effekt hozzáadása
+                startMessage.classList.add('ready-blink');
             }
         }
         
         if (progressBar) {
             progressBar.style.width = progress + "%";
         }
-    }, 60);
+    }, 70);
 
-    // Terminál üzenetek (A te 2026-os konfigoddal)
-    const messages = [
+    // Üzenetek a gépeléshez (A 2026-os Ryzen 9 konfigoddal)
+   const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
         "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
         "Hálózati azonosító: 192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255),
@@ -80,30 +79,30 @@ window.addEventListener('load', () => {
         "Betöltés befejezése: CyberSecurity Interfész v2026",
         "TERMINÁL INDÍTÁSA..."
     ];
+
     let lineIndex = 0;
     let charIndex = 0;
 
     function typeChar() {
         if (lineIndex < messages.length) {
-            if (charIndex === 0) {
-                terminal.innerHTML += "<br>> ";
-            }
+            if (charIndex === 0) terminal.innerHTML += "<br>> ";
+            
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
             loader.scrollTop = loader.scrollHeight;
-            
-            if (charIndex % 3 === 0) { 
-                const soundClone = typeSound.cloneNode(); 
-                soundClone.volume = 0.15;
-                soundClone.play().catch(e => {});
+
+            if (charIndex % 3 === 0) {
+                const s = typeSound.cloneNode();
+                s.volume = 0.1;
+                s.play().catch(() => {});
             }
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, 10); 
+                setTimeout(typeChar, 15);
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 140); 
+                setTimeout(typeChar, 130);
             }
         } else {
             sessionStorage.setItem('introPlayed', 'true');
@@ -114,10 +113,10 @@ window.addEventListener('load', () => {
         }
     }
 
-    document.addEventListener('keydown', function(event) {
-        // Csak akkor indul el, ha már 100%-on van a csík
-        if (event.key === 'Enter' && isFinished && overlay) {
-            overlay.remove(); 
+    // Billentyű figyelés
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && isFinished && overlay) {
+            overlay.remove();
             typeChar();
         }
     });
