@@ -14,31 +14,32 @@
         
         /* 2. A VÖRÖS NYÍL STÍLUSA */
         .custom-cursor {
-            width: 25px;
-            height: 25px;
-            position: fixed; /* Ez rögzíti a képernyőhöz, görgetésnél is ott marad! */
+            width: 28px;
+            height: 28px;
+            position: fixed !important; 
+            /* A top és left legyen 0, mert a JS fogja mozgatni az egészet */
             top: 0;
             left: 0;
             pointer-events: none;
-            z-index: 2147483647; /* Minden felett */
+            z-index: 999999999; /* Brutál magas érték */
             
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
-            background-color: transparent !important;
-            border: none !important;
             
-            filter: drop-shadow(0 0 5px red) drop-shadow(0 0 10px red);
+            filter: drop-shadow(0 0 8px red);
             
-            /* Fontos: ne legyen transition, mert az okozza a késést! */
-            transition: none !important;
-            display: block !important;
+            /* Ez a sor segít a böngészőnek, hogy ne laggoljon görgetéskor */
+            will-change: transform;
+            
+            /* Rezgés animáció - kicsit finomítva */
+            animation: jitter 0.2s infinite;
         }
         
-        @keyframes glitch-mouse-slow {
-            0% { opacity: 1; transform: translate3d(var(--x), var(--y), 0) translate(0, 0); }
-            50% { opacity: 0.9; transform: translate3d(var(--x), var(--y), 0) translate(1px, -1px); }
-            100% { opacity: 1; transform: translate3d(var(--x), var(--y), 0) translate(0, 0); }
+        @keyframes jitter {
+            0% { margin: 0px 0px; }
+            50% { margin: 1px -1px; }
+            100% { margin: 0px 0px; }
         }
         
         body {
@@ -174,13 +175,20 @@ const cursor = document.querySelector('.custom-cursor');
 
 document.addEventListener('mousemove', (e) => {
     if (cursor) {
-        // clientX és clientY a látható ablakhoz viszonyít
-        // Mivel a kurzor position: fixed, ez mindig pontos lesz görgetéskor is!
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+        // A clientX/Y a látható ablakhoz képest adja meg a helyet.
+        // A translate rögzíti az elemet a kurzorhoz.
+        const x = e.clientX;
+        const y = e.clientY;
+        cursor.style.transform = `translate(${x}px, ${y}px)`;
     }
 });
 
+// Extra biztonság: ha görgetsz, a fix pozíció miatt 
+// a translate-nek alapból követnie kellene, de így kényszerítjük:
+window.addEventListener('scroll', () => {
+    // A fixed + translate párosításnál itt nincs teendő, 
+    // ha az elem a body legvégén van.
+}, { passive: true });
 // Biztonsági mentés: Ha véletlenül visszajönne az egér gombok felett
 document.addEventListener('mouseover', (e) => {
     if (e.target.style) {
@@ -207,6 +215,7 @@ document.addEventListener('scroll', (e) => {
 </body>
 
 </html>
+
 
 
 
