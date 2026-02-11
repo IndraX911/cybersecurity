@@ -1,104 +1,109 @@
-/* --- 1. ALAPOK --- */
+/* --- 1. GLOBÁLIS BEÁLLÍTÁSOK --- */
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #000; /* Legyen alapból fekete minden */
+    background-color: #000;
 }
 
-/* --- 2. START OVERLAY (A TELJES BETÖLTŐ) --- */
-#start-overlay {
-    position: fixed !important;
-    top: 0; left: 0;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-color: #000000 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 1000000 !important;
+/* Betöltés alatt tiltjuk a görgetést az eredeti oldalon */
+body.loading-mode {
+    background-color: #000 !important;
     overflow: hidden !important;
+}
+
+/* --- 2. START OVERLAY (Betöltő tartója) --- */
+#start-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000000;
 }
 
 /* --- 3. PROGRESS BAR (A SZÉLES CSÍK) --- */
 #progress-bar-container {
-    width: 85% !important; /* Szélesebbre vettem az egész tartót */
-    max-width: 900px !important; /* Hogy nagy monitoron is jól nézzen ki */
-    height: 16px !important; /* Vastagabb, markánsabb csík */
-    border: 2px solid #00ff00 !important;
-    background: rgba(0, 255, 0, 0.1) !important;
-    margin-bottom: 30px !important;
-    position: relative !important;
-    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3) !important;
+    width: 90%; 
+    max-width: 1000px; 
+    height: 18px; 
+    border: 1px solid #00ff00;
+    background: rgba(0, 255, 0, 0.1);
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
 }
 
 #progress-bar-fill {
-    width: 0%; /* Ezt írja felül a JS */
-    height: 100% !important;
-    background-color: #00ff00 !important;
-    box-shadow: 0 0 20px #00ff00 !important;
-    transition: width 0.1s linear !important; /* Hogy sima legyen a töltés */
+    width: 0%; /* A JS fogja mozgatni */
+    height: 100%;
+    background-color: #00ff00;
+    box-shadow: 0 0 20px #00ff00;
 }
 
 /* --- 4. A SZÖVEG ÉS A NEON ENTER --- */
 #start-message {
-    color: #00ff00 !important;
-    font-family: 'Courier New', monospace !important;
-    font-size: 1.5rem !important;
-    text-shadow: 0 0 10px #00ff00 !important;
-    padding: 12px 24px !important;
-    text-transform: uppercase !important;
-    display: inline-block !important;
-    background-color: transparent; /* Alapból nincs háttér */
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 1.5rem;
+    text-shadow: 0 0 10px #00ff00;
+    padding: 15px 30px;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
     animation: simple-blink 1.5s infinite;
 }
 
-/* CSAK AZ ENTER-NÉL AKTIVÁLÓDIK */
+/* Amikor kész a betöltés, ezt kapja meg az ENTER felirat */
 #start-message.ready-blink {
-    background-color: #00ff00 !important; /* Neon zöld háttér visszahozva */
-    color: #000000 !important;         /* Fekete betűk */
+    background-color: #00ff00 !important;
+    color: #000000 !important;
     text-shadow: none !important;
-    box-shadow: 0 0 35px #00ff00 !important;
-    font-weight: bold !important;
+    box-shadow: 0 0 40px #00ff00 !important; /* Még erősebb neon fény */
+    font-weight: bold;
     animation: simple-blink 0.6s infinite !important;
-    cursor: pointer !important;
+    cursor: pointer;
 }
 
-/* --- 5. HACKER LOADER (CMD) --- */
+/* --- 5. HACKER LOADER (CMD KONZOL) --- */
 #hacker-loader {
-    position: fixed !important;
+    position: fixed;
     top: 0; left: 0;
-    width: 100% !important;
-    height: 100vh !important;
-    background-color: #030a03 !important;
+    width: 100%;
+    height: 100vh;
+    background-color: #030a03;
     background-image: 
         linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px) !important;
-    background-size: 30px 30px !important;
-    color: #00ff41 !important;
-    font-family: 'Courier New', monospace !important;
-    font-size: 1.2rem !important;
-    padding: 30px !important;
-    z-index: 999999 !important;
-    overflow-y: auto !important;
-    box-sizing: border-box !important;
+        linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+    background-size: 35px 35px;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    padding: 30px;
+    z-index: 999999;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: block;
 }
 
 #terminal-content::after {
-    content: "_" !important;
-    animation: simple-blink 0.5s infinite !important;
+    content: "_";
+    animation: simple-blink 0.5s infinite;
 }
 
 /* --- 6. ANIMÁCIÓK --- */
 @keyframes simple-blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.2; }
+    50% { opacity: 0.3; }
 }
 
-/* Eltűnés effekt */
 .loader-fade-out {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transition: opacity 0.8s ease-out, visibility 0.8s !important;
-    pointer-events: none !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-out;
+    pointer-events: none;
 }
