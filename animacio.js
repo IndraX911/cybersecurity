@@ -1,6 +1,3 @@
-// Betöltési mód bekapcsolása azonnal
-document.body.classList.add('loading-mode');
-
 window.addEventListener('load', () => {
     const loader = document.getElementById('hacker-loader');
     const terminal = document.getElementById('terminal-content');
@@ -8,40 +5,22 @@ window.addEventListener('load', () => {
     const startMessage = document.getElementById('start-message');
     const progressBar = document.getElementById('progress-bar-fill');
 
-    // Hang effekt definiálása (ha nincs fájlod, a catch lekezeli)
-    const typeSound = new Audio('typing3.mp3'); 
-    typeSound.volume = 0.1;
-
-    // Ha már látta az intrót ebben a munkamenetben, ugorjuk át
-    if (sessionStorage.getItem('introPlayed')) {
-        if (loader) loader.style.display = 'none';
-        if (overlay) overlay.remove(); 
-        document.body.classList.remove('loading-mode');
-        return; 
-    }
-
     let progress = 0;
     let isFinished = false;
 
-    // EGYETLEN TÖLTÉSI CIKLUS
+    // TÖLTÉS MOTOR
     const interval = setInterval(() => {
-        progress += Math.random() * 2; 
-        
+        progress += Math.random() * 2.5;
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
             isFinished = true;
-            
             if (startMessage) {
-                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
-                startMessage.classList.add('ready-blink'); // Neon zöld háttér bekapcsolása
+                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T!";
+                startMessage.classList.add('ready-blink');
             }
         }
-        
-        if (progressBar) {
-            // Itt kényszerítjük a szélességet
-            progressBar.style.width = progress + "%";
-        }
+        if (progressBar) progressBar.style.width = progress + "%";
     }, 50);
 
     const messages = [
@@ -88,47 +67,59 @@ window.addEventListener('load', () => {
     let charIndex = 0;
 
     function typeChar() {
+        if (!terminal) return;
+
         if (lineIndex < messages.length) {
             if (charIndex === 0) terminal.innerHTML += "<br>> ";
+            
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
+            
+            // Automatikus görgetés az aljára
             loader.scrollTop = loader.scrollHeight;
-
-            if (charIndex % 3 === 0) {
-                const s = typeSound.cloneNode();
-                s.play().catch(() => {}); // Ha nincs meg a mp3, nem akad el a kód
-            }
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, 5); 
+                setTimeout(typeChar, 10); // Gyors gépelés
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 30);
+                setTimeout(typeChar, 100); // Szünet a sorok között
             }
         } else {
-            sessionStorage.setItem('introPlayed', 'true');
+            // A végén eltüntetjük a fekete CMD-t
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
                 document.body.classList.remove('loading-mode');
                 setTimeout(() => loader.style.display = 'none', 900);
-            }, 1000);
+            }, 1500);
         }
     }
 
-    function startTerminal() {
-        if (isFinished && overlay) {
-            overlay.remove();
-            typeChar();
+    function startFinalPhase() {
+        if (isFinished) {
+            console.log("Fázis váltás indítása...");
+            
+            // Kényszerített megjelenítés
+            if (loader) {
+                loader.style.display = 'block';
+                loader.style.zIndex = '9999999';
+            }
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+            
+            // Rövid várakozás, hogy a böngésző "felfogja" a megjelenítést
+            setTimeout(typeChar, 200);
         }
     }
 
-    // Figyeljük az ENTER billentyűt ÉS a kattintást is
+    // Billentyűzet
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') startTerminal();
+        if (e.key === 'Enter') startFinalPhase();
     });
 
+    // Kattintás (mobilon is működjön)
     if (overlay) {
-        overlay.addEventListener('click', startTerminal);
+        overlay.addEventListener('click', startFinalPhase);
     }
 });
