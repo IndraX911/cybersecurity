@@ -7,49 +7,44 @@
     <link rel="icon" type="image/png" href="lock.png">
     <style>
     /* Csak a támadási szekcióban tüntetjük el az eredeti egeret */
+    /* Ezt a body-ra vagy a támadási szekció fő konténerére tedd! */
     .attack-page-body {
         cursor: none !important;
     }
 
-    /* Az új, vibráló kurzor stílusa */
+    /* Minden elemre rákényszerítjük, hogy ne mutasson egeret */
+    .attack-page-body * {
+        cursor: none !important;
+    }
+
+    /* A vörös kör stílusa */
     .custom-cursor {
-        width: 15px;
-        height: 15px;
-        background-color: #ff0000;
+        width: 20px;
+        height: 20px;
+        background-color: rgba(255, 0, 0, 0.8);
         border-radius: 50%;
         position: fixed;
         pointer-events: none;
-        /* Fontos: ne kattints rá véletlenül a kurzorra */
-        z-index: 99999;
-        box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
-        /* Vibrálás indítása */
-        animation: mouse-jitter 0.1s infinite;
+        z-index: 999999;
+        box-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
+        /* Vibrálás */
+        animation: mouse-jitter 0.05s infinite;
         transform: translate(-50%, -50%);
-        /* Hogy a pont közepe legyen az egér hegyénél */
+        /* Kezdetben rejtve, amíg el nem mozdul az egér */
+        display: none;
     }
 
-    /* A vibráló mozgás definíciója */
     @keyframes mouse-jitter {
         0% {
-            transform: translate(-50%, -50%) translate(0, 0);
-        }
-
-        25% {
-            transform: translate(-50%, -50%) translate(2px, -2px);
-            opacity: 0.8;
+            transform: translate(-50%, -50%) translate(-2px, 1px);
         }
 
         50% {
-            transform: translate(-50%, -50%) translate(-1px, 2px);
-        }
-
-        75% {
-            transform: translate(-50%, -50%) translate(-2px, -1px);
-            opacity: 0.9;
+            transform: translate(-50%, -50%) translate(2px, -1px);
         }
 
         100% {
-            transform: translate(-50%, -50%) translate(1px, 1px);
+            transform: translate(-50%, -50%) translate(1px, 2px);
         }
     }
 
@@ -185,6 +180,7 @@ function showThreat(type) {
 </body>
 
 </html>
+
 
 
 
