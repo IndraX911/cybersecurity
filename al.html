@@ -13,18 +13,19 @@
     <link rel="icon" type="image/png" href="lock.png">
 
     <style>
-
         /* Eredeti egér elrejtése mindenhol */
 
         /* 1. AZ EREDETI EGÉR ELTÜNTETÉSE - Brutál módszer */
 
-        html, body, * {
+        html,
+        body,
+        * {
 
             cursor: none !important;
 
         }
 
-        
+
 
         /* 2. A VÖRÖS NYÍL STÍLUSA */
 
@@ -34,7 +35,7 @@
 
             height: 28px;
 
-            position: fixed !important; 
+            position: fixed !important;
 
             /* A top és left legyen 0, mert a JS fogja mozgatni az egészet */
 
@@ -44,9 +45,10 @@
 
             pointer-events: none;
 
-            z-index: 999999999; /* Brutál magas érték */
+            z-index: 999999999;
+            /* Brutál magas érték */
 
-            
+
 
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
 
@@ -54,17 +56,17 @@
 
             background-repeat: no-repeat;
 
-            
+
 
             filter: drop-shadow(0 0 8px red);
 
-            
+
 
             /* Ez a sor segít a böngészőnek, hogy ne laggoljon görgetéskor */
 
             will-change: transform;
 
-            
+
 
             /* Rezgés animáció - kicsit finomítva */
 
@@ -72,19 +74,25 @@
 
         }
 
-        
+
 
         @keyframes jitter {
 
-            0% { margin: 0px 0px; }
+            0% {
+                margin: 0px 0px;
+            }
 
-            50% { margin: 1px -1px; }
+            50% {
+                margin: 1px -1px;
+            }
 
-            100% { margin: 0px 0px; }
+            100% {
+                margin: 0px 0px;
+            }
 
         }
 
-        
+
 
         body {
 
@@ -95,8 +103,7 @@
             filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
 
         }
-
-</style>
+    </style>
 
     <title>A Támadások Világa</title>
 
@@ -116,175 +123,175 @@
 
     <section class="attack-hero">
 
-    <h1>A TÁMADÁSOK VILÁGA</h1>
+        <h1>A TÁMADÁSOK VILÁGA</h1>
 
-    <p>Ismerd meg a digitális támadásokat, amik ellen a pajzsot építjük.</p>
+        <p>Ismerd meg a digitális támadásokat, amik ellen a pajzsot építjük.</p>
 
-</section>
-
-
-
-<section class="attack-grid">
-
-    <div class="attack-card">
-
-        <div class="attack-icon">🐎</div>
-
-        <h2>Trójai (Trojan)</h2>
-
-        <p>Hasznos programnak álcázza magát, de a háttérben kaput nyit a támadóknak.</p>
-
-        <ul class="attack-details">
-
-            <li><b>Veszély:</b> Adatlopás, távoli hozzáférés</li>
-
-            <li><b>Módszer:</b> Csatolmányok, tört szoftverek</li>
-
-        </ul>
-
-    </div>
+    </section>
 
 
 
-    <div class="attack-card">
+    <section class="attack-grid">
 
-        <div class="attack-icon">🔐</div>
+        <div class="attack-card">
 
-        <h2>Ransomware</h2>
+            <div class="attack-icon">🐎</div>
 
-        <p>Titkosítja az összes fájlodat, és pénzt követel a feloldásért cserébe.</p>
+            <h2>Trójai (Trojan)</h2>
 
-        <ul class="attack-details">
+            <p>Hasznos programnak álcázza magát, de a háttérben kaput nyit a támadóknak.</p>
 
-            <li><b>Veszély:</b> Teljes adatvesztés</li>
+            <ul class="attack-details">
 
-            <li><b>Módszer:</b> Adathalász e-mailek</li>
+                <li><b>Veszély:</b> Adatlopás, távoli hozzáférés</li>
 
-        </ul>
+                <li><b>Módszer:</b> Csatolmányok, tört szoftverek</li>
 
-    </div>
-
-
-
-    <div class="attack-card">
-
-        <div class="attack-icon">🎣</div>
-
-        <h2>Phishing</h2>
-
-        <p>Hamis weboldalakkal csalják ki a jelszavadat vagy bankkártya adataidat.</p>
-
-        <ul class="attack-details">
-
-            <li><b>Veszély:</b> Identitáslopás, anyagi kár</li>
-
-            <li><b>Módszer:</b> Sürgető hangvételű e-mailek</li>
-
-        </ul>
-
-    </div>
-
-</section>
-
-<section class="attack-interface">
-
-    <div class="attack-selector">
-
-        <div class="selection-card" onclick="showThreat('trojan')">
-
-            <span>01</span> TRÓJAI PROGRAM
+            </ul>
 
         </div>
 
-        <div class="selection-card" onclick="showThreat('ransomware')">
-
-            <span>02</span> RANSOMWARE
-
-        </div>
-
-        <div class="selection-card" onclick="showThreat('phishing')">
-
-            <span>03</span> ADATHALÁSZAT
-
-        </div>
-
-    </div>
 
 
+        <div class="attack-card">
 
-    <div id="threat-monitor" class="threat-monitor">
+            <div class="attack-icon">🔐</div>
 
-        <div class="monitor-placeholder">
+            <h2>Ransomware</h2>
 
-            VÁLASSZON KI EGY FENYEGETÉST AZ ELEMZÉSHEZ...
+            <p>Titkosítja az összes fájlodat, és pénzt követel a feloldásért cserébe.</p>
+
+            <ul class="attack-details">
+
+                <li><b>Veszély:</b> Teljes adatvesztés</li>
+
+                <li><b>Módszer:</b> Adathalász e-mailek</li>
+
+            </ul>
 
         </div>
 
-    </div>
-
-</section>
 
 
+        <div class="attack-card">
 
-<script>
+            <div class="attack-icon">🎣</div>
 
-    const threatData = {
+            <h2>Phishing</h2>
 
-    trojan: {
+            <p>Hamis weboldalakkal csalják ki a jelszavadat vagy bankkártya adataidat.</p>
 
-        title: "TRÓJAI FALÓ (TROJAN)",
+            <ul class="attack-details">
 
-        desc: "Látszólag ártalmatlan szoftver, amely hátsó kaput (backdoor) nyit a rendszeren.",
+                <li><b>Veszély:</b> Identitáslopás, anyagi kár</li>
 
-        level: "medium",
+                <li><b>Módszer:</b> Sürgető hangvételű e-mailek</li>
 
-        levelText: "MAGAS",
+            </ul>
 
-        percent: "75%"
+        </div>
 
-    },
+    </section>
 
-    ransomware: {
+    <section class="attack-interface">
 
-        title: "ZSAROLÓVÍRUS (RANSOMWARE)",
+        <div class="attack-selector">
 
-        desc: "Katonai szintű titkosítással zárolja a fájlokat. A feloldásért váltságdíjat követel.",
+            <div class="selection-card" onclick="showThreat('trojan')">
 
-        level: "high",
+                <span>01</span> TRÓJAI PROGRAM
 
-        levelText: "KRITIKUS",
+            </div>
 
-        percent: "98%"
+            <div class="selection-card" onclick="showThreat('ransomware')">
 
-    },
+                <span>02</span> RANSOMWARE
 
-    phishing: {
+            </div>
 
-        title: "ADATHALÁSZAT (PHISHING)",
+            <div class="selection-card" onclick="showThreat('phishing')">
 
-        desc: "Pszichológiai manipulációval kicsalt hitelesítő adatok és banki információk.",
+                <span>03</span> ADATHALÁSZAT
 
-        level: "low",
+            </div>
 
-        levelText: "KÖZEPES",
-
-        percent: "45%"
-
-    }
-
-};
+        </div>
 
 
 
-function showThreat(type) {
+        <div id="threat-monitor" class="threat-monitor">
 
-    const data = threatData[type];
+            <div class="monitor-placeholder">
 
-    const monitor = document.getElementById('threat-monitor');
+                VÁLASSZON KI EGY FENYEGETÉST AZ ELEMZÉSHEZ...
 
-    
+            </div>
 
-    monitor.innerHTML = `
+        </div>
+
+    </section>
+
+
+
+    <script>
+
+        const threatData = {
+
+            trojan: {
+
+                title: "TRÓJAI FALÓ (TROJAN)",
+
+                desc: "Látszólag ártalmatlan szoftver, amely hátsó kaput (backdoor) nyit a rendszeren.",
+
+                level: "medium",
+
+                levelText: "MAGAS",
+
+                percent: "75%"
+
+            },
+
+            ransomware: {
+
+                title: "ZSAROLÓVÍRUS (RANSOMWARE)",
+
+                desc: "Katonai szintű titkosítással zárolja a fájlokat. A feloldásért váltságdíjat követel.",
+
+                level: "high",
+
+                levelText: "KRITIKUS",
+
+                percent: "98%"
+
+            },
+
+            phishing: {
+
+                title: "ADATHALÁSZAT (PHISHING)",
+
+                desc: "Pszichológiai manipulációval kicsalt hitelesítő adatok és banki információk.",
+
+                level: "low",
+
+                levelText: "KÖZEPES",
+
+                percent: "45%"
+
+            }
+
+        };
+
+
+
+        function showThreat(type) {
+
+            const data = threatData[type];
+
+            const monitor = document.getElementById('threat-monitor');
+
+
+
+            monitor.innerHTML = `
 
         <div class="monitor-content" style="animation: fadeIn 0.5s ease;">
 
@@ -318,111 +325,111 @@ function showThreat(type) {
 
 
 
-    document.querySelectorAll('.selection-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.selection-card').forEach(card => card.classList.remove('active'));
 
-    event.currentTarget.classList.add('active');
+            event.currentTarget.classList.add('active');
 
-}
+        }
 
-   document.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', (e) => {
 
-    const cursor = document.querySelector('.custom-cursor');
+            const cursor = document.querySelector('.custom-cursor');
 
-    if (cursor) {
+            if (cursor) {
 
-        // A kerekített értékek néha simábbak, de a vibráláshoz a nyers koordináta kell
+                // A kerekített értékek néha simábbak, de a vibráláshoz a nyers koordináta kell
 
-        cursor.style.left = e.clientX + 'px';
+                cursor.style.left = e.clientX + 'px';
 
-        cursor.style.top = e.clientY + 'px';
+                cursor.style.top = e.clientY + 'px';
 
-    }
+            }
 
-});
-
-
-
-// Ha esetleg egy gomb fölé mész, akkor is maradjon rejtve az egér
-
-const cursor = document.querySelector('.custom-cursor');
+        });
 
 
 
-document.addEventListener('mousemove', (e) => {
+        // Ha esetleg egy gomb fölé mész, akkor is maradjon rejtve az egér
 
-    if (cursor) {
-
-        // A clientX/Y a látható ablakhoz képest adja meg a helyet.
-
-        // A translate rögzíti az elemet a kurzorhoz.
-
-        const x = e.clientX;
-
-        const y = e.clientY;
-
-        cursor.style.transform = `translate(${x}px, ${y}px)`;
-
-    }
-
-});
+        const cursor = document.querySelector('.custom-cursor');
 
 
 
-// Extra biztonság: ha görgetsz, a fix pozíció miatt 
+        document.addEventListener('mousemove', (e) => {
 
-// a translate-nek alapból követnie kellene, de így kényszerítjük:
+            if (cursor) {
 
-window.addEventListener('scroll', () => {
+                // A clientX/Y a látható ablakhoz képest adja meg a helyet.
 
-    // A fixed + translate párosításnál itt nincs teendő, 
+                // A translate rögzíti az elemet a kurzorhoz.
 
-    // ha az elem a body legvégén van.
+                const x = e.clientX;
 
-}, { passive: true });
+                const y = e.clientY;
 
-// Biztonsági mentés: Ha véletlenül visszajönne az egér gombok felett
+                cursor.style.transform = `translate(${x}px, ${y}px)`;
 
-document.addEventListener('mouseover', (e) => {
+            }
 
-    if (e.target.style) {
-
-        e.target.style.cursor = 'none';
-
-    }
-
-});
+        });
 
 
 
-// Kényszerített frissítés görgetéskor
+        // Extra biztonság: ha görgetsz, a fix pozíció miatt 
 
-window.addEventListener('scroll', () => {
+        // a translate-nek alapból követnie kellene, de így kényszerítjük:
 
-    // Ezt üresen is hagyhatjuk, mert a CSS position: absolute megoldja a többit,
+        window.addEventListener('scroll', () => {
 
-    // ha a JavaScript frissíti a koordinátákat.
+            // A fixed + translate párosításnál itt nincs teendő, 
 
-});
+            // ha az elem a body legvégén van.
+
+        }, { passive: true });
+
+        // Biztonsági mentés: Ha véletlenül visszajönne az egér gombok felett
+
+        document.addEventListener('mouseover', (e) => {
+
+            if (e.target.style) {
+
+                e.target.style.cursor = 'none';
+
+            }
+
+        });
 
 
 
-// Egérmozgás követése
+        // Kényszerített frissítés görgetéskor
 
-document.addEventListener('mousemove', updateCursorPos);
+        window.addEventListener('scroll', () => {
+
+            // Ezt üresen is hagyhatjuk, mert a CSS position: absolute megoldja a többit,
+
+            // ha a JavaScript frissíti a koordinátákat.
+
+        });
 
 
 
-// Görgetésnél is kényszerítjük a frissítést
+        // Egérmozgás követése
 
-document.addEventListener('scroll', (e) => {
+        document.addEventListener('mousemove', updateCursorPos);
 
-    // Mivel a scroll eseményben nincs clientX, az utolsó ismert pozíciót tartjuk
 
-    // De a position: fixed ezt alapból megoldja, ha nem akad be a böngésző
 
-}, { passive: true });
+        // Görgetésnél is kényszerítjük a frissítést
 
-</script>
+        document.addEventListener('scroll', (e) => {
+
+            // Mivel a scroll eseményben nincs clientX, az utolsó ismert pozíciót tartjuk
+
+            // De a position: fixed ezt alapból megoldja, ha nem akad be a böngésző
+
+        }, { passive: true });
+
+    </script>
 
     <div class="custom-cursor"></div>
 
