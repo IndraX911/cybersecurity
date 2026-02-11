@@ -24,6 +24,11 @@ window.addEventListener('load', () => {
             if (startMessage) {
                 startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
                 startMessage.classList.add('ready-blink');
+                startMessage.style.opacity = "0";
+                setTimeout(() => {
+                    startMessage.style.transition = "opacity 0.8s ease-in";
+                    startMessage.style.opacity = "1";
+                }, 100);
             }
         }
         
@@ -127,3 +132,4 @@ window.addEventListener('load', () => {
     
     if (overlay) overlay.addEventListener('click', startFinal);
 });
+
