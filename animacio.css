@@ -72,6 +72,20 @@
 }
 
 /* A teljes képernyős indító felület */
+#start-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #000000 !important;
+    display: flex !important; /* Ez rakja középre a szöveget */
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 99999 !important; /* Mindennek a tetején */
+    visibility: visible !important;
+    opacity: 1 !important;
+}
 .blink-text {
     color: #00ff00 !important;
     font-family: 'Courier New', monospace !important;
@@ -89,5 +103,6 @@
     50%  { opacity: 0.1; } /* Majdnem eltűnik */
     100% { opacity: 1; }   /* Újra látható */
 }
+
 
 
