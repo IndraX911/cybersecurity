@@ -1,3 +1,29 @@
+#boot-loader-container {
+    width: 300px;
+    text-align: center;
+}
+
+#boot-bar {
+    width: 0%; /* Innen indul */
+    height: 4px;
+    background: #00ff00;
+    box-shadow: 0 0 15px #00ff00;
+    margin-bottom: 10px;
+    /* Ez az animáció viszi végig a csíkot 2 másodperc alatt */
+    animation: loadBar 2s linear forwards;
+}
+
+#boot-text {
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+@keyframes loadBar {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
 #hacker-loader {
     position: fixed;
     top: 0;
@@ -103,3 +129,4 @@
     50%  { opacity: 0.2; }
     100% { opacity: 1; }
 }
+
