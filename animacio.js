@@ -98,7 +98,7 @@ window.addEventListener('load', () => {
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, 5);
+                setTimeout(typeChar, Math.random() * 10 + 2); // 2 és 12 ms között váltakozik
             } else {
                 charIndex = 0;
                 lineIndex++;
@@ -121,5 +121,6 @@ window.addEventListener('load', () => {
         }
     });
 });
+
 
 
