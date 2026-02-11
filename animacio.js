@@ -97,7 +97,6 @@ window.addEventListener('load', () => {
     }
 
     // Indítás
-    setTimeout(typeChar, 1150);
 
     // Eredetileg itt hívtad meg a függvényt. 
 // Ehelyett most figyeljük az ENTER gombot:
@@ -109,6 +108,7 @@ document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter' && overlay.style.display !== 'none') {
         // 1. Eltüntetjük a Start képernyőt
         overlay.style.display = 'none';
+        typeChar();
         
         // 2. Lejátszunk egy kis "behatolási hangot" (opcionális, de menő)
         // (Ide később tehetsz hangot, ha akarsz)
@@ -121,6 +121,7 @@ document.addEventListener('keydown', function(event) {
 });
 
 });
+
 
 
 
