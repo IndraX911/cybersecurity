@@ -8,25 +8,12 @@
     <style>
         /* --- ANGYALI OLDAL KONTÉNER --- */
     .page-container-holy {
-        animation: holyEntry 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         transform-origin: center center;
         width: 100%;
         /* Kékes-fehér ragyogást ad az egész oldalnak */
         filter: drop-shadow(0 0 20px rgba(0, 150, 255, 0.3));
     }
 
-    @keyframes holyEntry {
-        0% {
-            transform: rotate(-180deg) scale(1.2); /* Másik irányba forog, mint a démoni */
-            opacity: 0;
-            filter: brightness(3) blur(15px); /* Erős fehér fénnyel érkezik */
-        }
-        100% {
-            transform: rotate(0deg) scale(1);
-            opacity: 1;
-            filter: brightness(1) blur(0);
-        }
-    }
 
 /* --- TISZTÍTÓ LÉZER CSÍK (KÉK) --- */
     .scan-line-holy {
@@ -157,6 +144,7 @@
 </body>
 
 </html>
+
 
 
 
