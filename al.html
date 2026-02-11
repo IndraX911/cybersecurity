@@ -170,16 +170,23 @@ function showThreat(type) {
     document.addEventListener('mousemove', (e) => {
     const cursor = document.querySelector('.custom-cursor');
     if (cursor) {
-        // Frissítjük a pozíciót az egér koordinátái alapján
+        cursor.style.display = 'block'; // Megjelenítjük, ha mozog
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
     }
+});
+
+// Opcionális: Ha elhagyja az ablakot, tűnjön el
+document.addEventListener('mouseleave', () => {
+    const cursor = document.querySelector('.custom-cursor');
+    if (cursor) cursor.style.display = 'none';
 });
 </script>
     <div class="custom-cursor"></div>
 </body>
 
 </html>
+
 
 
 
