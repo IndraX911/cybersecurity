@@ -6,12 +6,59 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="lock.png">
     <style>
-       
-    body {
-    background-color: #050000; /* Vöröses fekete */
-    filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
+    /* Csak a támadási szekcióban tüntetjük el az eredeti egeret */
+    .attack-page-body {
+        cursor: none !important;
     }
-    </style>
+
+    /* Az új, vibráló kurzor stílusa */
+    .custom-cursor {
+        width: 15px;
+        height: 15px;
+        background-color: #ff0000;
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        /* Fontos: ne kattints rá véletlenül a kurzorra */
+        z-index: 99999;
+        box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        /* Vibrálás indítása */
+        animation: mouse-jitter 0.1s infinite;
+        transform: translate(-50%, -50%);
+        /* Hogy a pont közepe legyen az egér hegyénél */
+    }
+
+    /* A vibráló mozgás definíciója */
+    @keyframes mouse-jitter {
+        0% {
+            transform: translate(-50%, -50%) translate(0, 0);
+        }
+
+        25% {
+            transform: translate(-50%, -50%) translate(2px, -2px);
+            opacity: 0.8;
+        }
+
+        50% {
+            transform: translate(-50%, -50%) translate(-1px, 2px);
+        }
+
+        75% {
+            transform: translate(-50%, -50%) translate(-2px, -1px);
+            opacity: 0.9;
+        }
+
+        100% {
+            transform: translate(-50%, -50%) translate(1px, 1px);
+        }
+    }
+
+    body {
+        background-color: #050000;
+        /* Vöröses fekete */
+        filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
+    }
+</style>
     <title>A Támadások Világa</title>
 </head>
 <body>
@@ -130,6 +177,7 @@ function showThreat(type) {
 </body>
 
 </html>
+
 
 
 
