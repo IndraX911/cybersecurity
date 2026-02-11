@@ -1,11 +1,8 @@
-/* --- 1. ALAPOK ÉS GÖRGETÉS JAVÍTÁSA --- */
-html, body {
-    background-color: #000000 !important;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    /* Alapból tiltjuk, de a JS-ed a végén feloldja */
-    overflow-x: hidden;
+/* --- 1. CSAK A BETÖLTÉS ALATT LEGYEN FEKETE --- */
+/* Kivettük az !important-ot a body-ról, hogy a weboldalad színei visszajöjjenek a végén */
+body.loading-mode {
+    background-color: #000000;
+    overflow: hidden;
 }
 
 /* --- 2. START OVERLAY (BETÖLTŐ) --- */
@@ -21,15 +18,10 @@ html, body {
     z-index: 100000 !important;
 }
 
-.loader-container {
-    text-align: center;
-    width: 90%;
-    max-width: 800px;
-}
-
 /* --- 3. PROGRESS BAR --- */
 #progress-bar-container {
-    width: 100%;
+    width: 80%;
+    max-width: 600px;
     height: 12px;
     border: 1px solid #00ff00;
     background: rgba(0, 255, 0, 0.1);
@@ -42,29 +34,32 @@ html, body {
     box-shadow: 0 0 15px #00ff00;
 }
 
-/* --- 4. A SZÖVEG ÉS A NEON ENTER --- */
+/* --- 4. A SZÖVEG (ALAPÁLLAPOT - ZÖLD BETŰ, NINCS HÁTTÉR) --- */
 #start-message {
     color: #00ff00 !important;
     font-family: 'Courier New', monospace !important;
     font-size: 1.4rem !important;
     text-shadow: 0 0 8px #00ff00;
-    padding: 15px 25px;
+    padding: 10px 20px;
     text-transform: uppercase;
     display: inline-block !important;
-    transition: all 0.4s ease;
+    background-color: transparent !important; /* Alapból nincs háttér */
+    animation: simple-blink 1.5s infinite;
 }
 
-/* Amikor kész a rendszer, ez adja meg a neon zöld hátteret */
-.ready-blink {
-    background-color: #00ff00 !important; /* Neon zöld háttér */
+/* --- 5. CSAK AZ ENTER SZÖVEG NEON ZÖLD HÁTTERE --- */
+/* Ezt csak akkor kapja meg, ha a szöveg már az ENTER-t írja ki */
+#start-message.ready-blink {
+    background-color: #00ff00 !important; /* Itt jön be a neon zöld háttér */
     color: #000000 !important;         /* Fekete betűk */
-    text-shadow: none !important;      /* Itt nem kell árnyék a betűnek */
-    box-shadow: 0 0 30px #00ff00, 0 0 60px rgba(0, 255, 0, 0.5) !important;
-    animation: simple-blink 0.6s infinite !important; /* Gyors villogás */
+    text-shadow: none !important;
+    box-shadow: 0 0 30px #00ff00 !important;
+    font-weight: bold !important;
+    animation: simple-blink 0.6s infinite !important;
     cursor: pointer !important;
 }
 
-/* --- 5. HACKER TERMINÁL (CMD SZAKASZ) --- */
+/* --- 6. HACKER TERMINÁL (CMD SZAKASZ) --- */
 #hacker-loader {
     position: fixed !important;
     top: 0; left: 0;
@@ -79,15 +74,8 @@ html, body {
     font-size: 1.3rem !important;
     padding: 40px !important;
     z-index: 99999 !important;
-    overflow-y: auto !important; /* A terminálon belül lehessen görgetni a szöveget */
+    overflow-y: auto !important;
     box-sizing: border-box !important;
-}
-
-#hacker-loader::-webkit-scrollbar { display: none; }
-
-#terminal-content {
-    white-space: pre-wrap !important;
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
 }
 
 #terminal-content::after {
@@ -95,21 +83,15 @@ html, body {
     animation: simple-blink 0.5s infinite;
 }
 
-/* --- 6. ANIMÁCIÓK ÉS KILÉPÉS --- */
+/* --- 7. ANIMÁCIÓK ÉS KILÉPÉS --- */
 @keyframes simple-blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.2; }
+    50% { opacity: 0.3; }
 }
 
-/* Ez fut le, amikor az ENTER-re kattintasz */
 .loader-fade-out {
     opacity: 0 !important;
     visibility: hidden !important;
-    transition: opacity 0.8s ease-out, visibility 0.8s !important;
+    transition: opacity 0.8s ease-out !important;
     pointer-events: none !important;
-}
-
-/* Ezt a JS-nek kell rátennie a body-ra a végén, hogy tudj görgetni a HTML-ben */
-body.loaded {
-    overflow-y: auto !important;
 }
