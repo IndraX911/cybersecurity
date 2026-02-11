@@ -308,24 +308,24 @@
 
         // Megkeressük az egeret
         // Megvárjuk, amíg az oldal kész
-window.addEventListener('load', () => {
-    const cursor = document.querySelector('.custom-cursor');
+    window.addEventListener('load', () => {
+        const cursor = document.querySelector('.custom-cursor');
+        
+        if (cursor) {
+            // Kényszerítjük a kezdőpozíciót
+            cursor.style.position = 'fixed'; // Visszaváltunk fixed-re a teszt kedvéért
+            cursor.style.display = 'block';
     
-    if (cursor) {
-        // Kényszerítjük a kezdőpozíciót
-        cursor.style.position = 'fixed'; // Visszaváltunk fixed-re a teszt kedvéért
-        cursor.style.display = 'block';
-
-        document.addEventListener('mousemove', (e) => {
-            // A clientX/Y a látható ablakhoz képest mér
-            // A transform: translate3d pedig kikerüli a koordináta-hibákat
-            const x = e.clientX;
-            const y = e.clientY;
-            
-            cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-        });
-    }
-});
+            document.addEventListener('mousemove', (e) => {
+                // A clientX/Y a látható ablakhoz képest mér
+                // A transform: translate3d pedig kikerüli a koordináta-hibákat
+                const x = e.clientX;
+                const y = e.clientY;
+                
+                cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            });
+        }
+    });
     </script>
 
    
@@ -335,6 +335,7 @@ window.addEventListener('load', () => {
 
 
 </html>
+
 
 
 
