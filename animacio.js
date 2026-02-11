@@ -9,39 +9,37 @@ window.addEventListener('load', () => {
     typeSound.volume = 0.2; 
     typeSound.playbackRate = 2.0; 
 
-    // Session ellenőrzés
     if (sessionStorage.getItem('introPlayed')) {
         if (loader) loader.style.display = 'none';
         if (overlay) overlay.remove(); 
         return; 
     }
 
-    // --- TÖLTŐCSIK LOGIKA ---
     let progress = 0;
-    let isFinished = false; // Flag, hogy tudjuk, mikor végeztünk
+    let isFinished = false;
 
     const interval = setInterval(() => {
-        // Véletlenszerű sebesség, hogy élethűbb legyen
-        progress += Math.random() * 3.5; 
+        // Véletlenszerű haladás a realisztikus hatásért
+        progress += Math.random() * 2.5; 
         
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
             isFinished = true;
             
-            // Ha kész, megjelenik a felirat
+            // --- ITT TÖRTÉNIK A SZÖVEG CSERÉJE ---
             if (startMessage) {
-                startMessage.style.opacity = "1";
-                startMessage.style.display = "block";
+                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T!";
+                startMessage.classList.add('ready-blink'); // Villogó effekt hozzáadása
             }
         }
         
         if (progressBar) {
             progressBar.style.width = progress + "%";
         }
-    }, 80);
+    }, 60);
 
-    // --- GÉPELÉSI ÜZENETEK (A te specifikációiddal) ---
+    // Terminál üzenetek (A te 2026-os konfigoddal)
     const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
         "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
@@ -82,7 +80,6 @@ window.addEventListener('load', () => {
         "Betöltés befejezése: CyberSecurity Interfész v2026",
         "TERMINÁL INDÍTÁSA..."
     ];
-
     let lineIndex = 0;
     let charIndex = 0;
 
@@ -102,11 +99,11 @@ window.addEventListener('load', () => {
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, 15); 
+                setTimeout(typeChar, 10); 
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 150); 
+                setTimeout(typeChar, 140); 
             }
         } else {
             sessionStorage.setItem('introPlayed', 'true');
@@ -117,8 +114,8 @@ window.addEventListener('load', () => {
         }
     }
 
-    // --- ENTER FIGYELŐ (Csak ha a csík kész!) ---
     document.addEventListener('keydown', function(event) {
+        // Csak akkor indul el, ha már 100%-on van a csík
         if (event.key === 'Enter' && isFinished && overlay) {
             overlay.remove(); 
             typeChar();
