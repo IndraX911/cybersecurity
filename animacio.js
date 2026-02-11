@@ -109,7 +109,7 @@ window.addEventListener('load', () => {
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, 10); 
+                setTimeout(typeChar, Math.random() * 4 + 1);
             } else {
                 charIndex = 0;
                 lineIndex++;
@@ -143,3 +143,4 @@ window.addEventListener('load', () => {
     
     if (overlay) overlay.addEventListener('click', startFinal);
 });
+
