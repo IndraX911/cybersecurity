@@ -13,59 +13,52 @@
     <link rel="icon" type="image/png" href="lock.png">
 
     <style>
+        /* A démoni vörös szűrő fixálása */
         .screen-filter {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Ide került a szűrő! */
-            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
-            background-color: transparent;
-            pointer-events: none; /* Átengedi a kattintást! */
-            z-index: 999998; /* Közvetlenül a kurzor alatt */
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background: transparent !important;
+            /* Ez adja a színt */
+            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2) !important;
+            pointer-events: none !important; /* Átengedi a kattintást */
+            z-index: 999998 !important; /* Minden felett, de az egér alatt */
         }
         
         body {
-            background-color: #050000;
+            background-color: #050000 !important;
             margin: 0;
-            min-height: 100vh;
             cursor: none !important;
         }
         
+        /* Minden elemet kényszerítünk, hogy ne mutasson egeret */
         html, body, * {
             cursor: none !important;
         }
         
-        /* 2. A KURZOR - Most már tökéletes lesz */
-        /* --- 2. A VÖRÖS NYÍL STÍLUSA (JAVÍTVA) --- */
-        /* --- 2. A VÖRÖS NYÍL STÍLUSA (JAVÍTVA) --- */
+        /* A KURZOR - Most már stabilan */
         .custom-cursor {
             width: 25px !important;
             height: 25px !important;
             position: fixed !important;
-            top: 0;
-            left: 0;
-            z-index: 2147483647 !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 2147483647 !important; /* Legfelső réteg */
             pointer-events: none !important;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>') !important;
             background-size: contain !important;
             background-repeat: no-repeat !important;
-            filter: drop-shadow(0 0 8px red) !important;
-            
-            /* Alapból elrejtjük */
-            display: none;
-        
-            /* Vibrálás: CSAK a belső eltolást rángatjuk */
-            animation: jitter-fast 0.08s steps(2) infinite !important;
-            /* Hardveres gyorsítás bekapcsolása */
-            will-change: transform;
+            /* Vibrálás */
+            animation: jitter-final 0.08s steps(2) infinite !important;
+            display: block !important; /* Mindig legyen kint a DOM-ban */
         }
         
-        @keyframes jitter-fast {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(2px, -1px); }
-            100% { transform: translate(0, 0); }
+        @keyframes jitter-final {
+            0% { margin: 0px 0px; }
+            50% { margin: 2px -1px; }
+            100% { margin: 0px 0px; }
         }
     </style>
 
@@ -194,22 +187,32 @@
     <script>
         // Ezt a scriptet a </body> elé tedd, a DIV UTÁN
         // MINDENT törölj ki a korábbi egér JS-ből és csak ezt tedd be
+    <script>
+    // Azonnal futó függvény, hogy ne legyen ütközés
     (function() {
-    const cursor = document.querySelector('.custom-cursor');
-    
-    if (!cursor) return;
-
-    document.addEventListener('mousemove', function(e) {
-        // Megjelenítjük az első mozdulatnál
-        cursor.style.display = 'block';
+        const cursor = document.querySelector('.custom-cursor');
         
-        // A leghatékonyabb, görgetés-álló módszer
-        // A translate3d kényszeríti a böngészőt, hogy fixen tartsa az ablakhoz képest
-        cursor.style.left = '0px';
-        cursor.style.top = '0px';
-        cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-    });
-})();
+        if (!cursor) {
+            console.error("NEM TALÁLOM AZ EGERET!");
+            return;
+        }
+
+        // Kényszerítjük, hogy látszódjon
+        cursor.style.opacity = "1";
+
+        document.addEventListener('mousemove', function(e) {
+            // A leghatékonyabb pozicionálás
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            cursor.style.left = x + 'px';
+            cursor.style.top = y + 'px';
+        });
+
+        // Biztonsági kör: Ha görgetsz, maradjon ott
+        window.addEventListener('scroll', () => {}, {passive: true});
+    })();
+</script>
 
         const threatData = {
 
@@ -312,6 +315,7 @@
     </script>
 </body>
 </html>
+
 
 
 
