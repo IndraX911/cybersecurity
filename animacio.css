@@ -27,6 +27,7 @@
     background: rgba(0, 255, 0, 0.1);
     margin-bottom: 20px;
     overflow: hidden;
+    
 }
 
 #progress-bar-fill {
@@ -34,6 +35,11 @@
     height: 100%;
     background-color: #00ff00;
     box-shadow: 0 0 15px #00ff00;
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+@keyframes glow {
+    from { box-shadow: 0 0 10px #00ff00; }
+    to { box-shadow: 0 0 25px #00ff00, 0 0 35px #00ff00; }
 }
 
 #start-message {
@@ -194,6 +200,7 @@
     50%  { opacity: 0.2; }
     100% { opacity: 1; }
 }
+
 
 
 
