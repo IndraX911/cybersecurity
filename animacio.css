@@ -27,6 +27,7 @@ body {
     border: 1px solid #00ff00 !important;
     background: rgba(0, 255, 0, 0.1) !important;
     margin-bottom: 20px !important;
+    overflow: hidden !important;
 }
 
 #progress-bar-fill {
@@ -36,15 +37,37 @@ body {
     box-shadow: 0 0 15px #00ff00 !important;
 }
 
+/* --- 3. AZ EREDETI SZKENNER ANIMÁCIÓ --- */
 #start-message {
     color: #00ff00 !important;
     font-family: 'Courier New', monospace !important;
     font-size: 1.5rem !important;
     text-shadow: 0 0 10px #00ff00 !important;
-    animation: simple-blink 1.2s linear infinite !important;
+    position: relative !important;
+    display: inline-block !important;
+    overflow: hidden !important; /* Levágja a lézert a szöveg szélén */
+    padding: 5px 10px !important;
 }
 
-/* --- 3. HACKER TERMINÁL (A "CMD-S" IZE) --- */
+/* A vörös lézer csík */
+#start-message::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 3px !important;
+    background: #ff0000 !important;
+    box-shadow: 0 0 15px #ff0000, 0 0 5px #ffffff !important;
+    z-index: 10 !important;
+    animation: scanner-move 2s linear infinite !important;
+}
+
+@keyframes scanner-move {
+    0% { top: -5%; }
+    100% { top: 105%; }
+}
+
+/* --- 4. HACKER TERMINÁL (A "CMD-S" RÉSZ) --- */
 #hacker-loader {
     position: fixed !important;
     top: 0 !important;
@@ -52,7 +75,6 @@ body {
     width: 100% !important;
     height: 100vh !important;
     background-color: #030a03 !important;
-    /* Ez adja vissza a rácsos hacker hátteret */
     background-image: 
         linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px) !important;
@@ -62,13 +84,17 @@ body {
     padding: 30px !important;
     z-index: 9999 !important;
     display: block !important;
-    overflow-y: auto !important;
-    font-size: 1.1rem !important;
+    overflow-y: auto !important; /* Görgetés engedélyezése */
     box-sizing: border-box !important;
 }
 
+/* Görgetősáv elrejtése */
 #hacker-loader::-webkit-scrollbar {
     display: none;
+}
+#hacker-loader {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 #terminal-content {
@@ -77,26 +103,22 @@ body {
     text-shadow: 0 0 5px rgba(0, 255, 0, 0.7) !important;
 }
 
-/* A villogó kurzor a CMD végén */
+/* Villogó kurzor a terminál végén */
 #terminal-content::after {
     content: "_" !important;
-    animation: terminal-blink 0.5s infinite !important;
+    animation: blink 0.5s infinite !important;
 }
 
-/* --- 4. ANIMÁCIÓK --- */
-@keyframes simple-blink {
-    0%   { opacity: 1; }
-    50%  { opacity: 0.2; }
-    100% { opacity: 1; }
-}
-
-@keyframes terminal-blink {
-    0%, 100% { opacity: 1; }
+/* --- 5. ANIMÁCIÓK --- */
+@keyframes blink {
+    0% { opacity: 1; }
     50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 .loader-fade-out {
     opacity: 0 !important;
-    transition: opacity 0.8s ease-out !important;
+    transform: scale(1.1) !important;
+    transition: all 0.8s ease-out !important;
     pointer-events: none !important;
 }
