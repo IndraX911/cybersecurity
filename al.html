@@ -25,31 +25,31 @@
         .custom-cursor {
             width: 28px;
             height: 28px;
-            /* Átváltunk absolute-ra, hogy az oldalhoz rögzüljön, ne az ablakhoz */
-            position: absolute !important; 
+            /* MOST MÁR TÉNYLEG FIX LESZ, MERT NINCS FELETTE FILTER */
+            position: fixed !important; 
             top: 0;
             left: 0;
             pointer-events: none;
-            z-index: 2147483647;
+            z-index: 2147483647; /* Legmagasabb prioritás */
             
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
-            background-color: transparent !important;
             
             filter: drop-shadow(0 0 8px red);
             
-            /* Rezgés animáció */
-            animation: jitter 0.15s infinite;
+            /* Hardveres gyorsítás */
+            will-change: transform;
+            /* Kezdő pozíció a képernyőn kívül */
+            transform: translate3d(-100px, -100px, 0);
             
-            /* Fontos: ne legyen transition, mert laggolni fog */
-            transition: none !important;
+            animation: jitter 0.2s infinite;
         }
         
         @keyframes jitter {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(1px, -1px); }
-            100% { transform: translate(0, 0); }
+            0% { margin: 0px 0px; }
+            50% { margin: 1px -1px; }
+            100% { margin: 0px 0px; }
         }
 
 
@@ -315,5 +315,6 @@
 
 
 </html>
+
 
 
