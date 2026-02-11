@@ -1,85 +1,75 @@
 window.addEventListener('load', () => {
-    window.addEventListener('load', () => {
-    const startMessage = document.getElementById('start-message');
-    const overlay = document.getElementById('start-overlay');
-
-    // Csak akkor várunk és mutatjuk meg, ha még nem játszottuk le az intrót
-    if (!sessionStorage.getItem('introPlayed')) {
-        
-        // 2 másodperc (2000 miliszekundum) várakozás
-        setTimeout(() => {
-            if (startMessage) {
-                startMessage.style.display = 'block'; // Megjelenik a szöveg
-            }
-        }, 2000); 
-
-    } else {
-        // Ha már jártunk itt, az overlay-t azonnal töröljük, ne várjon semmire
-        if (overlay) overlay.remove();
-    }
-});
+    // 1. ELEMEK ÖSSZEGYŰJTÉSE
     const loader = document.getElementById('hacker-loader');
     const terminal = document.getElementById('terminal-content');
+    const overlay = document.getElementById('start-overlay');
+    const startMessage = document.getElementById('start-message');
 
-    // HANG BETÖLTÉSE
+    // 2. HANG BEÁLLÍTÁSA
     const typeSound = new Audio('typing3.mp3'); 
     typeSound.volume = 0.3; 
     typeSound.playbackRate = 2.0; 
 
-    // SESSION ELLENŐRZÉS 
+    // 3. SESSION ELLENŐRZÉS (Ha már jártunk itt)
     if (sessionStorage.getItem('introPlayed')) {
-        loader.style.display = 'none';
-        const overlay = document.getElementById('start-overlay');
-        if (overlay) {
-            overlay.remove(); 
-    }
-        return; 
+        if (loader) loader.style.display = 'none';
+        if (overlay) overlay.remove(); 
+        return; // Itt megáll, nem fut le a többi rész
     }
 
-   const messages = [
-    "CYBERSECURITY Kernel v4.1.0-release [LTS]",
-    "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
-    "Hálózati azonosító: 192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255),
-    " ",
-    "BIOS ELLENŐRZÉSE: American Megatrends v.2026... OK",
-    "CPU: AMD Ryzen 9 2025-X @ 5.4GHz [16 Cores]... OK",
-    "GPU: NVIDIA RTX 4090 - 24GB VRAM - CUDA magok inicializálása... OK",
-    "MEMÓRIA: 32768MB ECC DDR5 @ 6400MHz... OK",
-    "Lokalizált alrendszerek inicializálása (HU_hu)... Kész.",
-    "Belső fájlrendszer csatolása: /dev/sda1... SIKERES.",
-    " ",
-    "C:\\Users\\ADMIN-PC> start security_audit.sh --force --verbose",
-    "--------------------------------------------------",
-    "MEM_SCAN: 0x0045FF12 elemzése... Rejtett folyamat azonosítva.",
-    "ANTI-VIRUS: Alvó módba kényszerítve (ID: 4412).",
-    "NET_MAP: Helyi hálózati csomópontok feltérképezése...",
-    "IP_RANGE: [192.168.0.1/24] vizsgált IP-k száma: 254",
-    "NODE_01: Aktív [Tűzfal észlelve: Cisco ASA]",
-    " ",
-    "NODE_01: brute_force_v4 indítása a 22-es porton...",
-    "BRUTE_FORCE: Szótár alapú támadás... [12%... 38%... 67%... 100%]",
-    "NODE_01: auth_module_v2 megkerülése... SIKERES.",
-    "NODE_01: HOZZÁFÉRÉS MEGADVA. Token: 4f82-a912-bc03",
-    " ",
-    "TŰZFAL_ÁLLAPOT: ÁTSZAKÍTVA / KOMPROMITÁLVA.",
-    "TITKOSÍTÁS: AES-256 kézfogás létrejött. Kulcs: SHA-512",
-    "CSOMAG_SZIFFROZÓ: 'Man-in-the-Middle' pozíció felvéve...",
-    "TRAFFIC: HTTP/HTTPS adatfolyam rögzítése folyamatban...",
-    "SEBZHETŐSÉG: 80-as, 443-as, 8080-as port nyitva.",
-    "INJEKTÁLÁS: SQL_Injection kód küldése az adatbázisnak...",
-    "DB_STATUS: Adatbázis válaszolt. Táblák listázása...",
-    " ",
-    "ROOT_HOZZÁFÉRÉS: 'ADMIN_ROOT' jogosultság megszerezve.",
-    "NYOMOK ELTÜNTETÉSE: Logfájlok törlése a szerverről... OK.",
-    "ÁLLAPOT: Rendszer teljes ellenőrzés alatt.",
-    "--------------------------------------------------",
-    "Betöltés befejezése: CyberSecurity Interfész v2026",
-    "TERMINÁL INDÍTÁSA..."
-];
+    // 4. IDŐZÍTŐ: 2 másodperc múlva jelenjen meg a kezdő szöveg
+    setTimeout(() => {
+        if (startMessage) {
+            startMessage.style.display = 'block';
+        }
+    }, 2000);
+
+    // 5. GÉPELÉSI ÜZENETEK
+    const messages = [
+        "CYBERSECURITY Kernel v4.1.0-release [LTS]",
+        "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
+        "Hálózati azonosító: 192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255),
+        " ",
+        "BIOS ELLENŐRZÉSE: American Megatrends v.2026... OK",
+        "CPU: AMD Ryzen 9 2025-X @ 5.4GHz [16 Cores]... OK",
+        "GPU: NVIDIA RTX 4090 - 24GB VRAM - CUDA magok inicializálása... OK",
+        "MEMÓRIA: 32768MB ECC DDR5 @ 6400MHz... OK",
+        "Lokalizált alrendszerek inicializálása (HU_hu)... Kész.",
+        "Belső fájlrendszer csatolása: /dev/sda1... SIKERES.",
+        " ",
+        "C:\\Users\\ADMIN-PC> start security_audit.sh --force --verbose",
+        "--------------------------------------------------",
+        "MEM_SCAN: 0x0045FF12 elemzése... Rejtett folyamat azonosítva.",
+        "ANTI-VIRUS: Alvó módba kényszerítve (ID: 4412).",
+        "NET_MAP: Helyi hálózati csomópontok feltérképezése...",
+        "IP_RANGE: [192.168.0.1/24] vizsgált IP-k száma: 254",
+        "NODE_01: Aktív [Tűzfal észlelve: Cisco ASA]",
+        " ",
+        "NODE_01: brute_force_v4 indítása a 22-es porton...",
+        "BRUTE_FORCE: Szótár alapú támadás... [12%... 38%... 67%... 100%]",
+        "NODE_01: auth_module_v2 megkerülése... SIKERES.",
+        "NODE_01: HOZZÁFÉRÉS MEGADVA. Token: 4f82-a912-bc03",
+        " ",
+        "TŰZFAL_ÁLLAPOT: ÁTSZAKÍTVA / KOMPROMITÁLVA.",
+        "TITKOSÍTÁS: AES-256 kézfogás létrejött. Kulcs: SHA-512",
+        "CSOMAG_SZIFFROZÓ: 'Man-in-the-Middle' pozíció felvéve...",
+        "TRAFFIC: HTTP/HTTPS adatfolyam rögzítése folyamatban...",
+        "SEBZHETŐSÉG: 80-as, 443-as, 8080-as port nyitva.",
+        "INJEKTÁLÁS: SQL_Injection kód küldése az adatbázisnak...",
+        "DB_STATUS: Adatbázis válaszolt. Táblák listázása...",
+        " ",
+        "ROOT_HOZZÁFÉRÉS: 'ADMIN_ROOT' jogosultság megszerezve.",
+        "NYOMOK ELTÜNTETÉSE: Logfájlok törlése a szerverről... OK.",
+        "ÁLLAPOT: Rendszer teljes ellenőrzés alatt.",
+        "--------------------------------------------------",
+        "Betöltés befejezése: CyberSecurity Interfész v2026",
+        "TERMINÁL INDÍTÁSA..."
+    ];
 
     let lineIndex = 0;
     let charIndex = 0;
 
+    // 6. GÉPELÉS FUNKCIÓ
     function typeChar() {
         if (lineIndex < messages.length) {
             if (charIndex === 0) {
@@ -89,28 +79,22 @@ window.addEventListener('load', () => {
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
             loader.scrollTop = loader.scrollHeight;
             
-            //HANG LEJÁTSZÁSA
             if (charIndex % 3 === 0) { 
                 const soundClone = typeSound.cloneNode(); 
                 soundClone.volume = 0.2;
-                soundClone.play().catch(error => {
-                    console.log("A böngésző letiltotta a hangot (Autoplay Policy).");
-                });
+                soundClone.play().catch(e => console.log("Hang tiltva"));
             }
 
             charIndex++;
 
             if (charIndex < messages[lineIndex].length) {
-                // Gyors gépelés
                 setTimeout(typeChar, Math.random() * 3 + 2); 
             } else {
                 charIndex = 0;
                 lineIndex++;
-                // Sor végén szünet
                 setTimeout(typeChar, 140); 
             }
         } else {
-            // VÉGE
             sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
@@ -119,45 +103,12 @@ window.addEventListener('load', () => {
         }
     }
 
-    // Indítás
-
-    // Eredetileg itt hívtad meg a függvényt. 
-// Ehelyett most figyeljük az ENTER gombot:
-
-document.addEventListener('keydown', function(event) {
-    const overlay = document.getElementById('start-overlay');
-    
-    // Ha Entert nyomnak és az overlay létezik
-    if (event.key === 'Enter' && overlay) {
-        
-        // Ez a sor GYÖKERESTÜL KITÖRÖLI az elemet az oldalból
-        overlay.remove(); 
-        
-        // Ezután elindítjuk a gépelést
-        if (typeof typeChar === "function") {
+    // 7. ENTER FIGYELŐ
+    document.addEventListener('keydown', function(event) {
+        // Csak akkor indul, ha Entert nyomnak, létezik az overlay, és a szöveg már megjelent (2 mp után)
+        if (event.key === 'Enter' && overlay && startMessage.style.display === 'block') {
+            overlay.remove(); 
             typeChar();
         }
-    }
+    });
 });
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
