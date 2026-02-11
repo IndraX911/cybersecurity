@@ -1,99 +1,104 @@
-/* --- 1. CSAK A BETÖLTÉS ALATT LEGYEN FEKETE --- */
-/* Kivettük az !important-ot a body-ról, hogy a weboldalad színei visszajöjjenek a végén */
-body.loading-mode {
-    background-color: #000000;
-    overflow: hidden;
+/* --- 1. ALAPOK --- */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Legyen alapból fekete minden */
 }
 
-/* --- 2. START OVERLAY (BETÖLTŐ) --- */
+/* --- 2. START OVERLAY (A TELJES BETÖLTŐ) --- */
 #start-overlay {
     position: fixed !important;
     top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    width: 100vw !important;
+    height: 100vh !important;
     background-color: #000000 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    z-index: 100000 !important;
+    z-index: 1000000 !important;
+    overflow: hidden !important;
 }
 
-/* --- 3. PROGRESS BAR --- */
+/* --- 3. PROGRESS BAR (A SZÉLES CSÍK) --- */
 #progress-bar-container {
-    width: 80%;
-    max-width: 600px;
-    height: 12px;
-    border: 1px solid #00ff00;
-    background: rgba(0, 255, 0, 0.1);
-    margin-bottom: 25px;
+    width: 85% !important; /* Szélesebbre vettem az egész tartót */
+    max-width: 900px !important; /* Hogy nagy monitoron is jól nézzen ki */
+    height: 16px !important; /* Vastagabb, markánsabb csík */
+    border: 2px solid #00ff00 !important;
+    background: rgba(0, 255, 0, 0.1) !important;
+    margin-bottom: 30px !important;
+    position: relative !important;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3) !important;
 }
 
 #progress-bar-fill {
-    width: 0%; height: 100%;
-    background-color: #00ff00;
-    box-shadow: 0 0 15px #00ff00;
+    width: 0%; /* Ezt írja felül a JS */
+    height: 100% !important;
+    background-color: #00ff00 !important;
+    box-shadow: 0 0 20px #00ff00 !important;
+    transition: width 0.1s linear !important; /* Hogy sima legyen a töltés */
 }
 
-/* --- 4. A SZÖVEG (ALAPÁLLAPOT - ZÖLD BETŰ, NINCS HÁTTÉR) --- */
+/* --- 4. A SZÖVEG ÉS A NEON ENTER --- */
 #start-message {
     color: #00ff00 !important;
     font-family: 'Courier New', monospace !important;
-    font-size: 1.4rem !important;
-    text-shadow: 0 0 8px #00ff00;
-    padding: 10px 20px;
-    text-transform: uppercase;
+    font-size: 1.5rem !important;
+    text-shadow: 0 0 10px #00ff00 !important;
+    padding: 12px 24px !important;
+    text-transform: uppercase !important;
     display: inline-block !important;
-    background-color: transparent !important; /* Alapból nincs háttér */
+    background-color: transparent; /* Alapból nincs háttér */
     animation: simple-blink 1.5s infinite;
 }
 
-/* --- 5. CSAK AZ ENTER SZÖVEG NEON ZÖLD HÁTTERE --- */
-/* Ezt csak akkor kapja meg, ha a szöveg már az ENTER-t írja ki */
+/* CSAK AZ ENTER-NÉL AKTIVÁLÓDIK */
 #start-message.ready-blink {
-    background-color: #00ff00 !important; /* Itt jön be a neon zöld háttér */
+    background-color: #00ff00 !important; /* Neon zöld háttér visszahozva */
     color: #000000 !important;         /* Fekete betűk */
     text-shadow: none !important;
-    box-shadow: 0 0 30px #00ff00 !important;
+    box-shadow: 0 0 35px #00ff00 !important;
     font-weight: bold !important;
     animation: simple-blink 0.6s infinite !important;
     cursor: pointer !important;
 }
 
-/* --- 6. HACKER TERMINÁL (CMD SZAKASZ) --- */
+/* --- 5. HACKER LOADER (CMD) --- */
 #hacker-loader {
     position: fixed !important;
     top: 0; left: 0;
-    width: 100%; height: 100vh;
+    width: 100% !important;
+    height: 100vh !important;
     background-color: #030a03 !important;
     background-image: 
         linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px) !important;
-    background-size: 35px 35px !important;
+    background-size: 30px 30px !important;
     color: #00ff41 !important;
     font-family: 'Courier New', monospace !important;
-    font-size: 1.3rem !important;
-    padding: 40px !important;
-    z-index: 99999 !important;
+    font-size: 1.2rem !important;
+    padding: 30px !important;
+    z-index: 999999 !important;
     overflow-y: auto !important;
     box-sizing: border-box !important;
 }
 
 #terminal-content::after {
-    content: "_";
-    animation: simple-blink 0.5s infinite;
+    content: "_" !important;
+    animation: simple-blink 0.5s infinite !important;
 }
 
-/* --- 7. ANIMÁCIÓK ÉS KILÉPÉS --- */
+/* --- 6. ANIMÁCIÓK --- */
 @keyframes simple-blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    50% { opacity: 0.2; }
 }
 
+/* Eltűnés effekt */
 .loader-fade-out {
     opacity: 0 !important;
     visibility: hidden !important;
-    transition: opacity 0.8s ease-out !important;
+    transition: opacity 0.8s ease-out, visibility 0.8s !important;
     pointer-events: none !important;
 }
-
-
