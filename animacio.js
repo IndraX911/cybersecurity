@@ -102,25 +102,22 @@ window.addEventListener('load', () => {
 // Ehelyett most figyeljük az ENTER gombot:
 
 document.addEventListener('keydown', function(event) {
-    // Ellenőrizzük, hogy az ENTER-t nyomták-e le, ÉS hogy látszik-e még a start képernyő
     const overlay = document.getElementById('start-overlay');
     
-    if (event.key === 'Enter' && overlay.style.display !== 'none') {
-        // 1. Eltüntetjük a Start képernyőt
-        overlay.style.display = 'none';
-        typeChar();
+    // Ha az Entert nyomják meg, és az overlay még létezik/látható
+    if (event.key === 'Enter' && overlay) {
+        // Mivel a CSS-ben !important van, JavaScripttel így tudjuk biztosan eltüntetni:
+        overlay.setAttribute('style', 'display: none !important');
         
-        // 2. Lejátszunk egy kis "behatolási hangot" (opcionális, de menő)
-        // (Ide később tehetsz hangot, ha akarsz)
-
-        // 3. ELINDÍTJUK A HACKER ANIMÁCIÓT
-        // Fontos: Győződj meg róla, hogy a fő függvényed neve tényleg 'displayMessages'
-        // vagy ahogy elnevezted a kiíró logikát!
-        
+        // Elindítjuk a gépelést
+        if (typeof typeChar === "function") {
+            typeChar();
+        }
     }
 });
 
 });
+
 
 
 
