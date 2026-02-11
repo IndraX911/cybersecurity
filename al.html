@@ -7,36 +7,38 @@
     <link rel="icon" type="image/png" href="lock.png">
     <style>
     /* 1. KIKAPCSOLJUK AZ EREDETI EGERET MINDENHOL */
+        /* Az egér eltüntetése marad */
         html, body, * {
             cursor: none !important;
         }
         
-        /* 2. A VÖRÖS KÖR STÍLUSA */
         .custom-cursor {
-            width: 20px;
-            height: 20px;
-            background-color: #ff0000;
-            border-radius: 50%;
-            position: fixed; /* Fix pozíció, hogy kövesse a nézetet */
-            pointer-events: none; /* Átlátszó a kattintásoknak */
+            width: 25px;
+            height: 25px;
+            position: fixed;
+            pointer-events: none;
             z-index: 999999;
-            box-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
             
-            /* VIBRÁLÁS: Nagyon gyors és agresszív */
+            /* AZ EGÉRNYÍL FORMÁJA (Vörös SVG) */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="black" stroke-width="1"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+        
+            /* Vörös ragyogás (Glow) */
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+        
+            /* VIBRÁLÁS (Agresszív glitch) */
             animation: glitch-mouse 0.04s infinite;
             
-            /* Középre igazítás az egér hegyéhez */
-            margin-left: -10px;
-            margin-top: -10px;
             display: block !important;
         }
         
-        /* 3. AZ AGRESSZÍV VIBRÁLÁS (Glitch) */
+        /* Ugyanaz a vibrálás, amit szerettél */
         @keyframes glitch-mouse {
             0% { transform: translate(0, 0); }
-            20% { transform: translate(-3px, 2px) skewX(10deg); }
-            40% { transform: translate(3px, -2px); opacity: 0.8; }
-            60% { transform: translate(-5px, -1px) scale(1.2); }
+            20% { transform: translate(-3px, 2px) rotate(2deg); }
+            40% { transform: translate(3px, -2px) scale(1.1); opacity: 0.8; }
+            60% { transform: translate(-5px, -1px) skewX(5deg); }
             80% { transform: translate(4px, 3px); opacity: 1; }
             100% { transform: translate(0, 0); }
         }
@@ -180,6 +182,7 @@ document.querySelectorAll('a, button').forEach(el => {
 </body>
 
 </html>
+
 
 
 
