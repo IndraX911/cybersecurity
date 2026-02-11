@@ -1,4 +1,23 @@
 window.addEventListener('load', () => {
+    window.addEventListener('load', () => {
+    const startMessage = document.getElementById('start-message');
+    const overlay = document.getElementById('start-overlay');
+
+    // Csak akkor várunk és mutatjuk meg, ha még nem játszottuk le az intrót
+    if (!sessionStorage.getItem('introPlayed')) {
+        
+        // 2 másodperc (2000 miliszekundum) várakozás
+        setTimeout(() => {
+            if (startMessage) {
+                startMessage.style.display = 'block'; // Megjelenik a szöveg
+            }
+        }, 2000); 
+
+    } else {
+        // Ha már jártunk itt, az overlay-t azonnal töröljük, ne várjon semmire
+        if (overlay) overlay.remove();
+    }
+});
     const loader = document.getElementById('hacker-loader');
     const terminal = document.getElementById('terminal-content');
 
@@ -122,6 +141,7 @@ document.addEventListener('keydown', function(event) {
 });
 
 });
+
 
 
 
