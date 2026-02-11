@@ -17,81 +17,40 @@
 
         /* 1. AZ EREDETI EGÉR ELTÜNTETÉSE - Brutál módszer */
 
-        html,
-        body,
-        * {
-
+        /* Eredeti egér tiltása */
+        html, body, * {
             cursor: none !important;
-
         }
-
-
-
-        /* 2. A VÖRÖS NYÍL STÍLUSA */
-
+        
         .custom-cursor {
-
             width: 28px;
-
             height: 28px;
-
-            position: fixed !important;
-
-            /* A top és left legyen 0, mert a JS fogja mozgatni az egészet */
-
+            /* Átváltunk absolute-ra, hogy az oldalhoz rögzüljön, ne az ablakhoz */
+            position: absolute !important; 
             top: 0;
-
             left: 0;
-
             pointer-events: none;
-
-            z-index: 999999999;
-            /* Brutál magas érték */
-
-
-
+            z-index: 2147483647;
+            
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
-
             background-size: contain;
-
             background-repeat: no-repeat;
-
-
-
+            background-color: transparent !important;
+            
             filter: drop-shadow(0 0 8px red);
-
-
-
-            /* Ez a sor segít a böngészőnek, hogy ne laggoljon görgetéskor */
-
-            will-change: transform;
-
-
-
-            /* Rezgés animáció - kicsit finomítva */
-
-            animation: jitter 0.2s infinite;
-
+            
+            /* Rezgés animáció */
+            animation: jitter 0.15s infinite;
+            
+            /* Fontos: ne legyen transition, mert laggolni fog */
+            transition: none !important;
         }
-
-
-
+        
         @keyframes jitter {
-
-            0% {
-                margin: 0px 0px;
-            }
-
-            50% {
-                margin: 1px -1px;
-            }
-
-            100% {
-                margin: 0px 0px;
-            }
-
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(1px, -1px); }
+            100% { transform: translate(0, 0); }
         }
-
 
 
         body {
@@ -331,103 +290,23 @@
 
         }
 
-        document.addEventListener('mousemove', (e) => {
-
-            const cursor = document.querySelector('.custom-cursor');
-
-            if (cursor) {
-
-                // A kerekített értékek néha simábbak, de a vibráláshoz a nyers koordináta kell
-
-                cursor.style.left = e.clientX + 'px';
-
-                cursor.style.top = e.clientY + 'px';
-
-            }
-
-        });
-
-
-
-        // Ha esetleg egy gomb fölé mész, akkor is maradjon rejtve az egér
-
         const cursor = document.querySelector('.custom-cursor');
 
+document.addEventListener('mousemove', (e) => {
+    if (cursor) {
+        // pageX/Y = kurzor helye az oldalon + a görgetés mértéke
+        // Ez a legbiztosabb módszer, ha a 'fixed' pozíció elromlik a filterek miatt
+        cursor.style.left = e.pageX + 'px';
+        cursor.style.top = e.pageY + 'px';
+    }
+});
 
-
-        document.addEventListener('mousemove', (e) => {
-
-            if (cursor) {
-
-                // A clientX/Y a látható ablakhoz képest adja meg a helyet.
-
-                // A translate rögzíti az elemet a kurzorhoz.
-
-                const x = e.clientX;
-
-                const y = e.clientY;
-
-                cursor.style.transform = `translate(${x}px, ${y}px)`;
-
-            }
-
-        });
-
-
-
-        // Extra biztonság: ha görgetsz, a fix pozíció miatt 
-
-        // a translate-nek alapból követnie kellene, de így kényszerítjük:
-
-        window.addEventListener('scroll', () => {
-
-            // A fixed + translate párosításnál itt nincs teendő, 
-
-            // ha az elem a body legvégén van.
-
-        }, { passive: true });
-
-        // Biztonsági mentés: Ha véletlenül visszajönne az egér gombok felett
-
-        document.addEventListener('mouseover', (e) => {
-
-            if (e.target.style) {
-
-                e.target.style.cursor = 'none';
-
-            }
-
-        });
-
-
-
-        // Kényszerített frissítés görgetéskor
-
-        window.addEventListener('scroll', () => {
-
-            // Ezt üresen is hagyhatjuk, mert a CSS position: absolute megoldja a többit,
-
-            // ha a JavaScript frissíti a koordinátákat.
-
-        });
-
-
-
-        // Egérmozgás követése
-
-        document.addEventListener('mousemove', updateCursorPos);
-
-
-
-        // Görgetésnél is kényszerítjük a frissítést
-
-        document.addEventListener('scroll', (e) => {
-
-            // Mivel a scroll eseményben nincs clientX, az utolsó ismert pozíciót tartjuk
-
-            // De a position: fixed ezt alapból megoldja, ha nem akad be a böngésző
-
-        }, { passive: true });
+// Biztonsági mentés: ha görgetsz, de nem mozog az egér, 
+// egyes böngészőkben a kurzor "ottmaradhat", ezért kényszerítjük a frissítést
+window.addEventListener('scroll', () => {
+    // Itt nincs extra kódra szükség, mert az absolute pozíció 
+    // az oldal koordinátáján tartja a divet görgetés közben is.
+});
 
     </script>
 
@@ -438,3 +317,4 @@
 
 
 </html>
+
