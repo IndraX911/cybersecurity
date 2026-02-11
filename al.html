@@ -36,17 +36,31 @@
         .custom-cursor {
             width: 28px;
             height: 28px;
-            position: absolute !important; 
-            /* Kezdjen a képernyőn kívül, így nem látszik lent */
-            top: -100px; 
-            left: -100px;
+            /* FIXED pozíció, hogy a képernyőhöz tapadjon */
+            position: fixed !important; 
+            top: 0;
+            left: 0;
+            /* Ez a legfontosabb: eltoljuk a regisztrációs pontot */
+            margin-left: -14px; 
+            margin-top: -14px;
+            
             pointer-events: none;
             z-index: 2147483647;
+            
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
-            filter: drop-shadow(0 0 8px red);
-            animation: jitter 0.3s infinite;
+            
+            /* Rezgés animáció */
+            animation: jitter 0.2s infinite;
+            
+            /* Ha a body filtere zavar, ez segít: */
+            backdrop-filter: none !important;
+        }
+        
+        /* Kényszerítjük, hogy ne örökölje a body szűrőjét */
+        body > .custom-cursor {
+            filter: drop-shadow(0 0 8px red) !important;
         }
         
         @keyframes jitter {
@@ -292,19 +306,25 @@
         }
 
         // Megkeressük az egeret
-        const cursor = document.querySelector('.custom-cursor');
-        
+        // Megvárjuk, amíg az oldal kész
+window.addEventListener('load', () => {
+    const cursor = document.querySelector('.custom-cursor');
+    
+    if (cursor) {
+        // Kényszerítjük a kezdőpozíciót
+        cursor.style.position = 'fixed'; // Visszaváltunk fixed-re a teszt kedvéért
+        cursor.style.display = 'block';
+
         document.addEventListener('mousemove', (e) => {
-            if (cursor) {
-                // A pageX/Y abszolút koordináták az oldal tetejétől számítva
-                // Ez megoldja a görgetési problémát!
-                cursor.style.left = e.pageX + 'px';
-                cursor.style.top = e.pageY + 'px';
-                
-                // Biztosítjuk, hogy látható legyen, ha már mozog
-                cursor.style.display = 'block';
-            }
+            // A clientX/Y a látható ablakhoz képest mér
+            // A transform: translate3d pedig kikerüli a koordináta-hibákat
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
         });
+    }
+});
     </script>
 
    
@@ -314,6 +334,7 @@
 
 
 </html>
+
 
 
 
