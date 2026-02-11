@@ -28,20 +28,22 @@ body.loading-mode {
 /* --- 3. PROGRESS BAR (A SZÉLES CSÍK) --- */
 /* Ez biztosítja, hogy a tartály ne fogja le a csík szélességét */
 /* A konténer szélessége */
+/* SZÉLESEBB CSÍK KONKRÉT JAVÍTÁSA */
 .loader-container {
-    width: 95% !important; /* Szinte teljes szélesség */
-    max-width: 1200px;
+    width: 90% !important; /* Ez kényszeríti a szélességet */
+    max-width: 1100px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 #progress-bar-container {
-    width: 100% !important; 
+    width: 100% !important; /* Kitölti a konténert */
     height: 20px;
     border: 1px solid #00ff00;
     background: rgba(0, 255, 0, 0.1);
     margin-bottom: 30px;
+    overflow: hidden;
 }
 
 #progress-bar-fill {
@@ -49,20 +51,20 @@ body.loading-mode {
     height: 100%;
     background-color: #00ff00;
     box-shadow: 0 0 20px #00ff00;
+    transition: width 0.1s linear;
 }
 
-/* TERMINÁL JAVÍTÁSA */
+/* TERMINÁL KÉNYSZERÍTÉSE */
 #hacker-loader {
-    display: none; /* Alapból rejtve a JS-ig */
+    display: none; /* JS fogja bekapcsolni */
     position: fixed;
     top: 0; left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #000;
+    width: 100%; height: 100vh;
+    background-color: #000;
     color: #00ff00;
-    padding: 20px;
-    font-family: monospace;
-    z-index: 9999999;
+    padding: 30px;
+    font-family: 'Courier New', monospace;
+    z-index: 9999999; /* Minden felett legyen */
     overflow-y: auto;
 }
 /* --- 4. A SZÖVEG ÉS A NEON ENTER --- */
@@ -128,5 +130,6 @@ body.loading-mode {
     transition: opacity 0.8s ease-out;
     pointer-events: none;
 }
+
 
 
