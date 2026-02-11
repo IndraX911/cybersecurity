@@ -98,11 +98,11 @@ window.addEventListener('load', () => {
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, 15);
+                setTimeout(typeChar, 5);
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 130);
+                setTimeout(typeChar, 90);
             }
         } else {
             sessionStorage.setItem('introPlayed', 'true');
@@ -121,4 +121,5 @@ window.addEventListener('load', () => {
         }
     });
 });
+
 
