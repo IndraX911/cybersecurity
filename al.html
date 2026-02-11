@@ -32,14 +32,13 @@
         
         /* --- 2. A VÖRÖS NYÍL STÍLUSA (JAVÍTVA) --- */
         /* --- A VÖRÖS NYÍL DIZÁJNJA --- */
+        /* --- A VÖRÖS NYÍL DIZÁJNJA --- */
         .custom-cursor {
             width: 28px;
             height: 28px;
-            /* Absolute pozíció kell, mert a body filter elrontja a fixed-et */
+            /* Absolute pozíció, hogy a dokumentum tetejétől számoljon */
             position: absolute !important; 
-            top: 0;
-            left: 0;
-            pointer-events: none; /* Átengedi a kattintást a linkekre */
+            pointer-events: none;
             z-index: 2147483647;
             
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
@@ -48,19 +47,17 @@
             background-color: transparent !important;
             
             filter: drop-shadow(0 0 8px red);
+            display: block !important; /* Hogy biztosan látszódjon */
+            opacity: 1 !important;
             
-            /* Sima mozgásért felelős beállítás */
-            will-change: transform;
-            
-            /* Lassabb rezgés, ahogy kérted (0.3s) */
+            /* Rezgés */
             animation: jitter 0.3s infinite;
         }
         
         @keyframes jitter {
-            0% { transform: translate(0, 0); }
-            33% { transform: translate(1px, -1px); }
-            66% { transform: translate(-1px, 1px); }
-            100% { transform: translate(0, 0); }
+            0% { margin: 0px 0px; }
+            50% { margin: 1px -1px; }
+            100% { margin: 0px 0px; }
         }
 
 
@@ -301,25 +298,24 @@
 
         }
 
-        const cursor = document.querySelector('.custom-cursor');
+        // Megkeressük az egeret
+const cursor = document.querySelector('.custom-cursor');
 
-        document.addEventListener('mousemove', (e) => {
-            if (cursor) {
-                // A requestAnimationFrame biztosítja, hogy ne legyen lag/késés
-                window.requestAnimationFrame(() => {
-                    // pageX és pageY tartalmazza a görgetés értékét is!
-                    // Ezzel a kurzor mindig pontosan az egér alatt marad.
-                    cursor.style.transform = `translate3d(${e.pageX}px, ${e.pageY}px, 0)`;
-                });
-            }
-        });
+// Egérmozgás figyelése
+document.addEventListener('mousemove', (e) => {
+    if (cursor) {
+        // A pageX/Y a dokumentum tetejéhez mér, így a görgetést is automatikusan kezeli!
+        cursor.style.left = e.pageX + 'px';
+        cursor.style.top = e.pageY + 'px';
+    }
+});
 
-        // Biztosítjuk, hogy minden elem felett rejtve maradjon a gyári egér
-        document.addEventListener('mouseover', (e) => {
-            if (e.target && e.target.style) {
-                e.target.style.cursor = 'none';
-            }
-        });
+// Ez megakadályozza, hogy a linkek felett visszajöjjön a régi egér
+document.addEventListener('mouseover', (e) => {
+    if (e.target && e.target.style) {
+        e.target.style.cursor = 'none';
+    }
+});
     </script>
 
     <div class="custom-cursor"></div>
@@ -329,6 +325,7 @@
 
 
 </html>
+
 
 
 
