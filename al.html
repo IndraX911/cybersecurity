@@ -6,43 +6,44 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="lock.png">
     <style>
-    /* 1. KIKAPCSOLJUK AZ EREDETI EGERET MINDENHOL */
-        /* Az egér eltüntetése marad */
+            /* 1. KIKAPCSOLJUK AZ EREDETI EGERET MINDENHOL */
+                /* Az egér eltüntetése marad */
+                /* Eredeti egér eltüntetése */
         html, body, * {
             cursor: none !important;
         }
         
         .custom-cursor {
-            width: 25px;
-            height: 25px;
-            position: fixed;
-            pointer-events: none;
-            z-index: 999999;
+            width: 28px;
+            height: 28px;
+            position: fixed; /* Fixálva a képernyőhöz, görgetésnél is jó lesz */
+            top: 0;
+            left: 0;
+            pointer-events: none; /* ÁTENGEDI A KATTINTÁST - ez javítja a linkeket! */
+            z-index: 9999999;
+            background-color: transparent !important;
+            border-radius: 0 !important;
         
-            /* TÖRLÉS: Ezek feleltek a körért, most kiütjük őket */
-            background-color: transparent !important; 
-            border-radius: 0 !important; 
-        
-            /* AZ EGÉRNYÍL FORMÁJA (Vörös SVG) */
+            /* A vörös nyíl SVG */
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
         
-            /* RAGYOGÁS: Drop-shadow kell, hogy a nyíl alakja világítson, ne egy négyzet */
+            /* Ragyogás */
             filter: drop-shadow(0 0 5px #ff0000) drop-shadow(0 0 10px #ff0000);
         
-            /* VIBRÁLÁS */
-            animation: glitch-mouse 0.04s infinite;
+            /* LASSABB REZGÉS (0.04s helyett 0.15s) */
+            animation: glitch-mouse-slow 0.15s infinite;
             
             display: block !important;
         }
         
-        @keyframes glitch-mouse {
+        /* Finomabb, de még mindig hacker-stílusú rezgés */
+        @keyframes glitch-mouse-slow {
             0% { transform: translate(0, 0); }
-            20% { transform: translate(-3px, 2px) rotate(3deg); }
-            40% { transform: translate(3px, -2px) scale(1.1); }
-            60% { transform: translate(-5px, -1px) skewX(5deg); }
-            80% { transform: translate(4px, 3px); }
+            25% { transform: translate(-1px, 1px) rotate(1deg); }
+            50% { transform: translate(1px, -1px) scale(1.05); }
+            75% { transform: translate(-1px, -1px) rotate(-1deg); }
             100% { transform: translate(0, 0); }
         }
         
@@ -175,16 +176,21 @@ function showThreat(type) {
 });
 
 // Ha esetleg egy gomb fölé mész, akkor is maradjon rejtve az egér
-document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        document.body.style.cursor = 'none';
-    });
+document.addEventListener('mousemove', (e) => {
+    const cursor = document.querySelector('.custom-cursor');
+    if (cursor) {
+        // A clientX és clientY a látható ablakhoz képest mér,
+        // ami tökéletes a position: fixed-hez!
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    }
 });
 </script>
     <div class="custom-cursor"></div>
 </body>
 
 </html>
+
 
 
 
