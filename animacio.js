@@ -1,3 +1,12 @@
+// Az oldal tetejére:
+document.body.classList.add('loading-mode');
+
+// Amikor az ENTER-re kattintasz:
+document.getElementById('start-overlay').addEventListener('click', function() {
+    this.classList.add('loader-fade-out');
+    document.body.classList.remove('loading-mode'); // Ez visszahozza az eredeti oldalad színeit!
+});
+
 window.addEventListener('load', () => {
     const loader = document.getElementById('hacker-loader');
     const terminal = document.getElementById('terminal-content');
@@ -121,6 +130,7 @@ window.addEventListener('load', () => {
         }
     });
 });
+
 
 
 
