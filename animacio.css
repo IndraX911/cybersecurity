@@ -1,209 +1,104 @@
-
-#start-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000000; /* Teljesen fekete háttér */
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* ALAPOK ÉS TILTÁSOK */
+body.loading-mode {
+    background-color: #000 !important;
+    overflow: hidden !important;
+    margin: 0;
 }
 
+/* START OVERLAY (Betöltő felület) */
+#start-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+/* SZÉLES CSÍK KONTRÉL */
 .loader-container {
-    text-align: center;
-    width: 80%;
+    width: 90% !important; 
+    max-width: 1100px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 #progress-bar-container {
-    width: 100%;
-    max-width: 600px;
-    height: 12px;
+    width: 100% !important;
+    height: 20px;
     border: 1px solid #00ff00;
     background: rgba(0, 255, 0, 0.1);
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     overflow: hidden;
-    
+    position: relative;
 }
 
 #progress-bar-fill {
-    width: 0%; /* Innen indul */
+    width: 0%;
     height: 100%;
     background-color: #00ff00;
-    box-shadow: 0 0 15px #00ff00;
-    animation: glow 1.5s ease-in-out infinite alternate;
-}
-@keyframes glow {
-    from { box-shadow: 0 0 10px #00ff00; }
-    to { box-shadow: 0 0 25px #00ff00, 0 0 35px #00ff00; }
+    box-shadow: 0 0 20px #00ff00;
 }
 
+/* ÜZENET ÉS VILLOGÁS */
 #start-message {
-    color: #00ff00 !important; /* Kényszerített zöld szín */
+    color: #00ff00;
     font-family: 'Courier New', monospace;
-    font-size: 1.2rem;
-    margin: 0;
-    padding: 0;
-    display: block !important; /* Biztosan látszódjon */
-    text-shadow: 0 0 5px #00ff00;
+    font-size: 1.4rem;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.3s;
 }
 
-/* Ez az osztály csak a végén adódik hozzá a JS-ből */
 .ready-blink {
-    animation: simple-blink 1.2s infinite;
+    background-color: #00ff00 !important;
+    color: #000 !important;
+    padding: 10px 20px;
+    box-shadow: 0 0 30px #00ff00;
+    animation: simple-blink 0.6s infinite;
 }
 
 @keyframes simple-blink {
-    50% { opacity: 0.3; }
+    50% { opacity: 0.4; }
 }
 
-.fade-in {
-    animation: fadeIn 0.8s ease-in forwards;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-#boot-loader-container {
-    width: 300px;
-    text-align: center;
-}
-
-#boot-bar {
-    width: 0%; /* Innen indul */
-    height: 4px;
-    background: #00ff00;
-    box-shadow: 0 0 15px #00ff00;
-    margin-bottom: 10px;
-    /* Ez az animáció viszi végig a csíkot 2 másodperc alatt */
-    animation: loadBar 2s linear forwards;
-}
-
-#boot-text {
-    color: #00ff00;
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    letter-spacing: 2px;
-}
-
-@keyframes loadBar {
-    0% { width: 0%; }
-    100% { width: 100%; }
-}
+/* HACKER TERMINÁL (CMD) */
 #hacker-loader {
+    display: none; /* JS indítja */
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: 100%;
-    height: 100%;
-    background-color: #000;
-    background-image: 
-        linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
-    background-size: 30px 30px; /* Finom háttérrács */
-    color: #00ff00;
-    font-family: 'Courier New', monospace;
-    padding: 40px;
-    z-index: 9999;
-    overflow: hidden;
-    font-size: 1.3rem;
-    box-sizing: border-box;
-}
-
-#hacker-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    height: 100vh;
     background-color: #030a03;
+    background-image: 
+        linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+    background-size: 35px 35px;
     color: #00ff41;
     font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
     padding: 30px;
-    z-index: 9999;
-    
-    /* Görgetés engedélyezése */
-     
-    display: block;
-    height: 100vh;
-    overflow-y: auto; /* Ez KELL hozzá! */
-}
-
-/* Elrejtjük a görgetősávot, hogy ne látsszon, de lehessen görgetni */
-#hacker-loader::-webkit-scrollbar {
-    display: none;
-}
-#hacker-loader {
-    -ms-overflow-style: none;  /* IE és Edge */
-    scrollbar-width: none;  /* Firefox */
+    z-index: 20000;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 #terminal-content {
     white-space: pre-wrap;
-    line-height: 1.4;
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+    line-height: 1.5;
 }
 
-/* Villogó kurzor */
 #terminal-content::after {
     content: "_";
-    animation: blink 0.5s infinite;
-}
-
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
+    animation: simple-blink 0.5s infinite;
 }
 
 .loader-fade-out {
     opacity: 0;
-    transform: scale(1.1); /* Enyhe távolodó effekt eltűnéskor */
-    transition: all 0.8s ease-out;
-    pointer-events: none;
-
+    transition: opacity 1s ease-out;
 }
-
-/* A teljes képernyős indító felület */
-#start-overlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-color: #000000 !important;
-    display: flex !important; /* Ez rakja középre a szöveget */
-    justify-content: center !important;
-    align-items: center !important;
-    z-index: 99999 !important; /* Mindennek a tetején */
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-.blink-text {
-    color: #00ff00 !important;
-    font-family: 'Courier New', monospace !important;
-    font-size: 32px !important;
-    text-align: center !important;
-    display: block !important;
-    text-shadow: 0 0 15px #00ff00 !important;
-    animation: simple-blink 1.2s linear infinite !important;
-}
-
-/* A te kódod után szúrd be ezt: */
-@keyframes simple-blink {
-    0%   { opacity: 1; }
-    50%  { opacity: 0.2; }
-    100% { opacity: 1; }
-}
-
-
-
-
-
-
