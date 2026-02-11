@@ -3,25 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="lock.png">
+    <title>A Támadások Világa</title>
+    <link rel="stylesheet" href="style.css"> 
+    
     <style>
-        /* Eredeti egér elrejtése mindenhol */
-        /* 1. AZ EREDETI EGÉR ELTÜNTETÉSE - Brutál módszer */
+        /* --- ALAP BEÁLLÍTÁSOK --- */
+        body {
+            background-color: #050000;
+            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
+            margin: 0;
+            height: 100vh; /* Fontos a teljes magassághoz */
+        }
+
+        /* --- 1. AZ EREDETI EGÉR ELTÜNTETÉSE MINDENHOL --- */
         html, body, * {
             cursor: none !important;
         }
         
-        /* 2. A VÖRÖS NYÍL STÍLUSA */
+        /* --- 2. A VÖRÖS NYÍL STÍLUSA (JAVÍTVA) --- */
         .custom-cursor {
             width: 28px;
             height: 28px;
+            /* FIX POZÍCIÓ: A képernyőhöz ragasztjuk, nem az oldalhoz */
             position: fixed !important; 
-            /* A top és left legyen 0, mert a JS fogja mozgatni az egészet */
             top: 0;
             left: 0;
-            pointer-events: none;
-            z-index: 999999999; /* Brutál magas érték */
+            pointer-events: none; /* Átengedi a kattintást */
+            z-index: 2147483647; /* Legmagasabb prioritás */
             
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
@@ -29,10 +37,11 @@
             
             filter: drop-shadow(0 0 8px red);
             
-            /* Ez a sor segít a böngészőnek, hogy ne laggoljon görgetéskor */
+            /* Hardveres gyorsítás bekapcsolása a sima mozgásért */
             will-change: transform;
+            /* Kezdetben elrejtjük a bal felső sarokba, amíg a JS be nem tölt */
+            transform: translate3d(-100px, -100px, 0);
             
-            /* Rezgés animáció - kicsit finomítva */
             animation: jitter 0.2s infinite;
         }
         
@@ -41,200 +50,102 @@
             50% { margin: 1px -1px; }
             100% { margin: 0px 0px; }
         }
-        
-        body {
-            background-color: #050000;
-            /* Vöröses fekete */
-            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
-        }
-</style>
-    <title>A Támadások Világa</title>
+
+        /* --- STÍLUSOK A DEMO TARTALOMHOZ --- */
+        .menu a { color: #00ff00; margin-right: 15px; text-decoration: none; font-family: monospace; font-size: 1.2rem; }
+        .attack-hero { text-align: center; color: white; padding: 50px 20px; font-family: monospace; }
+        .attack-grid { display: flex; justify-content: center; gap: 20px; padding: 20px; flex-wrap: wrap; }
+        .attack-card { border: 1px solid #333; padding: 20px; width: 250px; background: rgba(0,0,0,0.5); color: #ccc; font-family: monospace; }
+        .selection-card { cursor: none; /* Biztos ami biztos */ border: 1px solid red; padding: 10px; margin: 10px; color: red; display: inline-block; }
+        .selection-card:hover { background: #300; }
+        .active { background: red; color: black; }
+        #threat-monitor { margin-top: 20px; color: white; font-family: monospace; text-align: center; border: 1px dashed red; padding: 20px; min-height: 100px; }
+    </style>
 </head>
 <body>
+
     <nav class="menu">
         <a href="index.html">FŐOLDAL</a>
         <a href="al.html">A TÁMADÁSOK VILÁGA</a>
         <a href="al2.html">VÉDEKEZÉSI KÉZIKÖNYV</a>
     </nav>
+
     <section class="attack-hero">
-    <h1>A TÁMADÁSOK VILÁGA</h1>
-    <p>Ismerd meg a digitális támadásokat, amik ellen a pajzsot építjük.</p>
-</section>
+        <h1>A TÁMADÁSOK VILÁGA</h1>
+        <p>Ismerd meg a digitális támadásokat, amik ellen a pajzsot építjük.</p>
+    </section>
 
-<section class="attack-grid">
-    <div class="attack-card">
-        <div class="attack-icon">🐎</div>
-        <h2>Trójai (Trojan)</h2>
-        <p>Hasznos programnak álcázza magát, de a háttérben kaput nyit a támadóknak.</p>
-        <ul class="attack-details">
-            <li><b>Veszély:</b> Adatlopás, távoli hozzáférés</li>
-            <li><b>Módszer:</b> Csatolmányok, tört szoftverek</li>
-        </ul>
-    </div>
-
-    <div class="attack-card">
-        <div class="attack-icon">🔐</div>
-        <h2>Ransomware</h2>
-        <p>Titkosítja az összes fájlodat, és pénzt követel a feloldásért cserébe.</p>
-        <ul class="attack-details">
-            <li><b>Veszély:</b> Teljes adatvesztés</li>
-            <li><b>Módszer:</b> Adathalász e-mailek</li>
-        </ul>
-    </div>
-
-    <div class="attack-card">
-        <div class="attack-icon">🎣</div>
-        <h2>Phishing</h2>
-        <p>Hamis weboldalakkal csalják ki a jelszavadat vagy bankkártya adataidat.</p>
-        <ul class="attack-details">
-            <li><b>Veszély:</b> Identitáslopás, anyagi kár</li>
-            <li><b>Módszer:</b> Sürgető hangvételű e-mailek</li>
-        </ul>
-    </div>
-</section>
-<section class="attack-interface">
-    <div class="attack-selector">
-        <div class="selection-card" onclick="showThreat('trojan')">
-            <span>01</span> TRÓJAI PROGRAM
+    <section class="attack-grid">
+        <div class="attack-card">
+            <div class="attack-icon">🐎</div>
+            <h2>Trójai (Trojan)</h2>
+            <p>Hasznos programnak álcázza magát.</p>
         </div>
-        <div class="selection-card" onclick="showThreat('ransomware')">
-            <span>02</span> RANSOMWARE
+        <div class="attack-card">
+            <div class="attack-icon">🔐</div>
+            <h2>Ransomware</h2>
+            <p>Titkosítja az összes fájlodat.</p>
         </div>
-        <div class="selection-card" onclick="showThreat('phishing')">
-            <span>03</span> ADATHALÁSZAT
+        <div class="attack-card">
+            <div class="attack-icon">🎣</div>
+            <h2>Phishing</h2>
+            <p>Hamis weboldalakkal csal.</p>
         </div>
-    </div>
+    </section>
 
-    <div id="threat-monitor" class="threat-monitor">
-        <div class="monitor-placeholder">
-            VÁLASSZON KI EGY FENYEGETÉST AZ ELEMZÉSHEZ...
+    <section class="attack-interface">
+        <div class="attack-selector">
+            <div class="selection-card" onclick="showThreat('trojan')"><span>01</span> TRÓJAI PROGRAM</div>
+            <div class="selection-card" onclick="showThreat('ransomware')"><span>02</span> RANSOMWARE</div>
+            <div class="selection-card" onclick="showThreat('phishing')"><span>03</span> ADATHALÁSZAT</div>
         </div>
-    </div>
-</section>
 
-<script>
-    const threatData = {
-    trojan: {
-        title: "TRÓJAI FALÓ (TROJAN)",
-        desc: "Látszólag ártalmatlan szoftver, amely hátsó kaput (backdoor) nyit a rendszeren.",
-        level: "medium",
-        levelText: "MAGAS",
-        percent: "75%"
-    },
-    ransomware: {
-        title: "ZSAROLÓVÍRUS (RANSOMWARE)",
-        desc: "Katonai szintű titkosítással zárolja a fájlokat. A feloldásért váltságdíjat követel.",
-        level: "high",
-        levelText: "KRITIKUS",
-        percent: "98%"
-    },
-    phishing: {
-        title: "ADATHALÁSZAT (PHISHING)",
-        desc: "Pszichológiai manipulációval kicsalt hitelesítő adatok és banki információk.",
-        level: "low",
-        levelText: "KÖZEPES",
-        percent: "45%"
-    }
-};
-
-function showThreat(type) {
-    const data = threatData[type];
-    const monitor = document.getElementById('threat-monitor');
-    
-    monitor.innerHTML = `
-        <div class="monitor-content" style="animation: fadeIn 0.5s ease;">
-            <h2 style="color: #00ff00; margin-bottom: 20px;">${data.title}</h2>
-            <p style="color: #c9d1d9; margin-bottom: 30px;">${data.desc}</p>
-            
-            <div class="threat-container">
-                <div class="threat-label">
-                    <span>VESZÉLYESSÉGI SZINT:</span>
-                    <span class="threat-value ${data.level}">${data.levelText}</span>
-                </div>
-                <div class="threat-bar">
-                    <div class="threat-fill ${data.level}" style="width: ${data.percent}"></div>
-                </div>
-            </div>
+        <div id="threat-monitor" class="threat-monitor">
+            <div class="monitor-placeholder">VÁLASSZON KI EGY FENYEGETÉST...</div>
         </div>
-    `;
+    </section>
 
-    document.querySelectorAll('.selection-card').forEach(card => card.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-}
-   document.addEventListener('mousemove', (e) => {
-    const cursor = document.querySelector('.custom-cursor');
-    if (cursor) {
-        // A kerekített értékek néha simábbak, de a vibráláshoz a nyers koordináta kell
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    }
-});
-
-// Ha esetleg egy gomb fölé mész, akkor is maradjon rejtve az egér
-const cursor = document.querySelector('.custom-cursor');
-
-document.addEventListener('mousemove', (e) => {
-    if (cursor) {
-        // A clientX/Y a látható ablakhoz képest adja meg a helyet.
-        // A translate rögzíti az elemet a kurzorhoz.
-        const x = e.clientX;
-        const y = e.clientY;
-        cursor.style.transform = `translate(${x}px, ${y}px)`;
-    }
-});
-
-// Extra biztonság: ha görgetsz, a fix pozíció miatt 
-// a translate-nek alapból követnie kellene, de így kényszerítjük:
-window.addEventListener('scroll', () => {
-    // A fixed + translate párosításnál itt nincs teendő, 
-    // ha az elem a body legvégén van.
-}, { passive: true });
-// Biztonsági mentés: Ha véletlenül visszajönne az egér gombok felett
-document.addEventListener('mouseover', (e) => {
-    if (e.target.style) {
-        e.target.style.cursor = 'none';
-    }
-});
-
-// Kényszerített frissítés görgetéskor
-window.addEventListener('scroll', () => {
-    // Ezt üresen is hagyhatjuk, mert a CSS position: absolute megoldja a többit,
-    // ha a JavaScript frissíti a koordinátákat.
-});
-
-// Egérmozgás követése
-document.addEventListener('mousemove', updateCursorPos);
-
-// Görgetésnél is kényszerítjük a frissítést
-document.addEventListener('scroll', (e) => {
-    // Mivel a scroll eseményben nincs clientX, az utolsó ismert pozíciót tartjuk
-    // De a position: fixed ezt alapból megoldja, ha nem akad be a böngésző
-}, { passive: true });
-</script>
     <div class="custom-cursor"></div>
+
+    <script>
+        // --- 1. TARTALOM KEZELŐ SZKRIPT (Threat Monitor) ---
+        const threatData = {
+            trojan: { title: "TRÓJAI FALÓ", desc: "Hátsó kaput nyit a rendszeren.", level: "high", levelText: "MAGAS", percent: "75%" },
+            ransomware: { title: "ZSAROLÓVÍRUS", desc: "Titkosítja a fájlokat.", level: "critical", levelText: "KRITIKUS", percent: "98%" },
+            phishing: { title: "ADATHALÁSZAT", desc: "Adatok kicsalása.", level: "medium", levelText: "KÖZEPES", percent: "45%" }
+        };
+
+        function showThreat(type) {
+            const data = threatData[type];
+            const monitor = document.getElementById('threat-monitor');
+            monitor.innerHTML = `
+                <div style="animation: fadeIn 0.5s ease;">
+                    <h2 style="color: red;">${data.title}</h2>
+                    <p>${data.desc}</p>
+                    <p>VESZÉLYESSÉG: ${data.levelText}</p>
+                </div>`;
+        }
+
+        // --- 2. EGÉR MOZGATÓ SZKRIPT (A JAVÍTOTT RÉSZ) ---
+        const cursor = document.querySelector('.custom-cursor');
+
+        // Ez az EGYETLEN eseményfigyelő, ami kell. 
+        // A több csak összezavarta a rendszert.
+        document.addEventListener('mousemove', (e) => {
+            if (cursor) {
+                // A clientX és clientY a képernyőhöz viszonyít (nem az oldalhoz).
+                // Mivel a CSS-ben position: fixed van, ez a tökéletes párosítás.
+                // Így görgetéskor sem csúszik el!
+                cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+            }
+        });
+
+        // Biztos ami biztos: linkek fölött se jöjjön vissza a régi egér
+        document.addEventListener('mouseover', (e) => {
+            if (e.target && e.target.style) {
+                e.target.style.cursor = 'none';
+            }
+        });
+    </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
