@@ -7,24 +7,24 @@ window.addEventListener('load', () => {
 
     // 2. HANG BEÁLLÍTÁSA
     const typeSound = new Audio('typing3.mp3'); 
-    typeSound.volume = 0.3; 
+    typeSound.volume = 0.2; 
     typeSound.playbackRate = 2.0; 
 
-    // 3. SESSION ELLENŐRZÉS (Ha már jártunk itt)
+    // 3. SESSION ELLENŐRZÉS
     if (sessionStorage.getItem('introPlayed')) {
         if (loader) loader.style.display = 'none';
         if (overlay) overlay.remove(); 
-        return; // Itt megáll, nem fut le a többi rész
+        return; 
     }
 
-    // 4. IDŐZÍTŐ: 2 másodperc múlva jelenjen meg a kezdő szöveg
+    // 4. IDŐZÍTŐ: Kezdő üzenet megjelenítése
     setTimeout(() => {
         if (startMessage) {
             startMessage.style.display = 'block';
         }
     }, 2000);
 
-    // 5. GÉPELÉSI ÜZENETEK
+    // 5. GÉPELÉSI ÜZENETEK (A mentett 2026-os PC adatokkal)
     const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
         "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
@@ -69,32 +69,40 @@ window.addEventListener('load', () => {
     let lineIndex = 0;
     let charIndex = 0;
 
-    // 6. GÉPELÉS FUNKCIÓ
+    // 6. GÉPELÉS FUNKCIÓ (Optimalizált verzió)
     function typeChar() {
         if (lineIndex < messages.length) {
             if (charIndex === 0) {
-                terminal.innerHTML += "<br>> ";
+                const lineBreak = document.createElement("br");
+                terminal.appendChild(lineBreak);
+                terminal.append("> ");
             }
 
-            terminal.innerHTML += messages[lineIndex].charAt(charIndex);
+            const currentMessage = messages[lineIndex];
+            terminal.append(currentMessage.charAt(charIndex));
+            
+            // Automatikus görgetés az aljára
             loader.scrollTop = loader.scrollHeight;
             
+            // Hang lejátszása (klónozással az átfedésért, de limitálva)
             if (charIndex % 3 === 0) { 
                 const soundClone = typeSound.cloneNode(); 
-                soundClone.volume = 0.2;
-                soundClone.play().catch(e => console.log("Hang tiltva"));
+                soundClone.volume = 0.15;
+                soundClone.play().catch(() => {/* Böngésző néha tiltja */});
             }
 
             charIndex++;
 
-            if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, Math.random() * 3 + 2); 
+            if (charIndex < currentMessage.length) {
+                // Véletlenszerű gépelési sebesség a realisztikus hatásért
+                setTimeout(typeChar, Math.random() * 15 + 5); 
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 140); 
+                setTimeout(typeChar, 180); // Szünet a sorok között
             }
         } else {
+            // Befejezés
             sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
@@ -105,7 +113,6 @@ window.addEventListener('load', () => {
 
     // 7. ENTER FIGYELŐ
     document.addEventListener('keydown', function(event) {
-        // Csak akkor indul, ha Entert nyomnak, létezik az overlay, és a szöveg már megjelent (2 mp után)
         if (event.key === 'Enter' && overlay && startMessage.style.display === 'block') {
             overlay.remove(); 
             typeChar();
