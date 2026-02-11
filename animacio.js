@@ -5,7 +5,15 @@ window.addEventListener('load', () => {
     const startMessage = document.getElementById('start-message');
     const progressBar = document.getElementById('progress-bar-fill');
 
-    // Mivel a hangfájl hiánya megállíthatja a kódot, hibakezeléssel látjuk el
+    // --- 0. ELLENŐRZÉS: LEFUTOTT-E MÁR? ---
+    if (sessionStorage.getItem('introPlayed')) {
+        if (overlay) overlay.style.display = 'none';
+        if (loader) loader.style.display = 'none';
+        document.body.classList.remove('loading-mode');
+        return; 
+    }
+
+    // Hangkezelés
     const typeSound = new Audio('typing3.mp3'); 
     typeSound.volume = 0.2;
 
@@ -22,8 +30,13 @@ window.addEventListener('load', () => {
             isFinished = true;
             
             if (startMessage) {
+                // Szöveg beállítása
                 startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
+                
+                // Neon osztály hozzáadása (CSS-ben legyen benne a lüktetés!)
                 startMessage.classList.add('ready-blink');
+                
+                // Fade-in effekt az üzenetnek
                 startMessage.style.opacity = "0";
                 setTimeout(() => {
                     startMessage.style.transition = "opacity 0.8s ease-in";
@@ -88,25 +101,23 @@ window.addEventListener('load', () => {
             if (charIndex === 0) terminal.innerHTML += "<br>> ";
             
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
-            
-            // Automatikus görgetés az aljára
             loader.scrollTop = loader.scrollHeight;
 
-            // Hang lejátszása (csak ha a fájl létezik, nem állítja meg a kódot)
             if (charIndex % 3 === 0) {
                 typeSound.cloneNode().play().catch(() => {});
             }
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, 10); // Gyors gépelés
+                setTimeout(typeChar, 10); 
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 50); // Szünet a sorok között
+                setTimeout(typeChar, 50); 
             }
         } else {
-            // BEFEJEZÉS
+            // BEFEJEZÉS ÉS MENTÉS
+            sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
                 document.body.classList.remove('loading-mode');
@@ -132,4 +143,3 @@ window.addEventListener('load', () => {
     
     if (overlay) overlay.addEventListener('click', startFinal);
 });
-
