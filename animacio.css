@@ -73,30 +73,28 @@
 
 /* A teljes képernyős indító felület */
 #start-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000000 !important; /* Fix fekete háttér */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000; /* Legyen nagyon magas, hogy minden felett legyen */
-    cursor: default;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #000000 !important;
+    display: flex !important; /* Ez rakja középre a szöveget */
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 99999 !important; /* Mindennek a tetején */
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .blink-text {
-    color: #00ff00; /* Neon zöld szöveg */
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 28px;
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 0 0 10px #00ff00;
-    animation: simple-blink 1.2s linear infinite;
+    color: #00ff00 !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 32px !important;
+    text-align: center !important;
+    display: block !important;
+    text-shadow: 0 0 15px #00ff00 !important;
+    animation: simple-blink 1.2s linear infinite !important;
 }
 
-@keyframes simple-blink {
-    50% { opacity: 0.2; } /* Csak elhalványul, nem tűnik el teljesen, így olvashatóbb */
-}
 
