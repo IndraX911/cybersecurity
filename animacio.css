@@ -1,114 +1,128 @@
-/* --- 1. GLOBÁLIS RESET --- */
-body, html {
-    background-color: #000 !important;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+#hacker-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    background-color: #000;
+    background-image: 
+        linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px; /* Finom háttérrács */
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    padding: 40px;
+    z-index: 9999;
+    overflow: hidden;
+    font-size: 1.3rem;
+    box-sizing: border-box;
 }
 
-/* --- 2. START OVERLAY (A FEKETE BETÖLTŐ) --- */
+#hacker-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #030a03;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    padding: 30px;
+    z-index: 9999;
+    
+    /* Görgetés engedélyezése */
+     
+    display: block;
+    height: 100vh;
+    overflow-y: auto; /* Ez KELL hozzá! */
+}
+
+/* Elrejtjük a görgetősávot, hogy ne látsszon, de lehessen görgetni */
+#hacker-loader::-webkit-scrollbar {
+    display: none;
+}
+#hacker-loader {
+    -ms-overflow-style: none;  /* IE és Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#terminal-content {
+    white-space: pre-wrap;
+    line-height: 1.4;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+}
+
+/* Villogó kurzor */
+#terminal-content::after {
+    content: "_";
+    animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.loader-fade-out {
+    opacity: 0;
+    transform: scale(1.1); /* Enyhe távolodó effekt eltűnéskor */
+    transition: all 0.8s ease-out;
+    pointer-events: none;
+}
+
 #start-overlay {
-    position: fixed !important;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: #000 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 100000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000; /* Teljesen fekete háttér */
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader-container {
+    text-align: center;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #progress-bar-container {
-    width: 80%;
+    width: 100%;
     max-width: 600px;
     height: 12px;
     border: 1px solid #00ff00;
     background: rgba(0, 255, 0, 0.1);
-    margin-bottom: 30px;
-    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
 }
 
 #progress-bar-fill {
-    width: 0%; height: 100%;
-    background: #00ff00;
+    width: 0%; /* Innen indul */
+    height: 100%;
+    background-color: #00ff00;
     box-shadow: 0 0 15px #00ff00;
 }
 
-/* --- 3. A SZKENNERES SZÖVEG (FIXÁLT) --- */
 #start-message {
-    color: #00ff00 !important;
-    font-family: 'Courier New', monospace !important;
-    font-size: 1.8rem !important;
-    text-shadow: 0 0 10px #00ff00;
-    position: relative !important;
-    padding: 20px 40px !important; /* Nagyobb hely a csíknak */
-    display: inline-block !important;
-    overflow: hidden !important;
+    color: #00ff00 !important; /* Kényszerített zöld szín */
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+    display: block !important; /* Biztosan látszódjon */
+    text-shadow: 0 0 5px #00ff00;
 }
 
-/* A HOSSZABB VÖRÖS LÉZER */
-#start-message::after {
-    content: '' !important;
-    position: absolute !important;
-    left: -10%;
-    width: 120%; /* Kilóg a szélén, hogy hosszabbnak tűnjön */
-    height: 4px !important;
-    background: #ff0000 !important;
-    /* Brutálabb vörös fényudvar */
-    box-shadow: 0 0 20px 5px #ff0000, 0 0 10px #ffffff !important;
-    z-index: 10;
-    animation: laser-scan 2.5s linear infinite !important;
+/* Ez az osztály csak a végén adódik hozzá a JS-ből */
+.ready-blink {
+    animation: simple-blink 1.2s infinite;
 }
 
-@keyframes laser-scan {
-    0% { top: -10%; }
-    100% { top: 110%; }
-}
-
-/* --- 4. A CMD TERMINÁL (HACKER LOADER) --- */
-#hacker-loader {
-    position: fixed !important;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background-color: #030a03 !important;
-    /* Hacker rács visszahozva */
-    background-image: 
-        linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px) !important;
-    background-size: 40px 40px !important;
-    color: #00ff41 !important;
-    font-family: 'Courier New', monospace !important;
-    padding: 40px !important;
-    z-index: 99999;
-    overflow-y: auto;
-    box-sizing: border-box;
-    display: block !important;
-}
-
-#terminal-content {
-    white-space: pre-wrap !important;
-    word-wrap: break-word !important;
-    line-height: 1.5;
-    text-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
-}
-
-#terminal-content::after {
-    content: "_" !important;
-    animation: cursor-blink 0.6s infinite;
-}
-
-/* --- 5. KIEGÉSZÍTŐ ANIMÁCIÓK --- */
-@keyframes cursor-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-.loader-fade-out {
-    opacity: 0 !important;
-    transform: scale(1.05);
-    transition: all 0.8s ease-out !important;
-    pointer-events: none;
+@keyframes simple-blink {
+    50% { opacity: 0.3; }
 }
