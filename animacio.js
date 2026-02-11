@@ -1,23 +1,44 @@
-// Betöltési mód bekapcsolása az indításkor
 document.body.classList.add('loading-mode');
 
 window.addEventListener('load', () => {
-    const loader = document.getElementById('hacker-loader');
-    const terminal = document.getElementById('terminal-content');
-    const overlay = document.getElementById('start-overlay');
-    const startMessage = document.getElementById('start-message');
-    const progressBar = document.getElementById('progress-bar-fill');
+    // Kicsit várunk, hogy a DOM biztosan kész legyen
+    setTimeout(() => {
+        const progressBar = document.querySelector('#progress-bar-fill');
+        const startMessage = document.getElementById('start-message');
+        const overlay = document.getElementById('start-overlay');
+        const loader = document.getElementById('hacker-loader');
+        const terminal = document.getElementById('terminal-content');
 
-    const typeSound = new Audio('typing3.mp3'); 
-    typeSound.volume = 0.2;
+        if (progressBar) {
+            progressBar.style.width = "1%"; // Kényszerített indítás
+            console.log("Progress bar megtalálva, indítás..."); 
+        }
 
-    if (sessionStorage.getItem('introPlayed')) {
-        if (loader) loader.style.display = 'none';
-        if (overlay) overlay.remove(); 
-        document.body.classList.remove('loading-mode');
-        return; 
-    }
+        let progress = 0;
+        let isFinished = false;
 
+        const interval = setInterval(() => {
+            progress += Math.random() * 2;
+            
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                isFinished = true;
+                if (startMessage) {
+                    startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
+                    startMessage.classList.add('ready-blink');
+                }
+            }
+            
+            if (progressBar) {
+                // Itt kényszerítjük a stílust
+                progressBar.setAttribute('style', `width: ${progress}% !important`);
+            }
+        }, 50);
+        
+        // ... a többi kódod (messages, typeChar, stb.) jöhet utána
+    }, 100); 
+});
     let progress = 0;
     let isFinished = false;
 
@@ -131,3 +152,4 @@ window.addEventListener('load', () => {
         overlay.addEventListener('click', startTerminal);
     }
 });
+
