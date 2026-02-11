@@ -172,11 +172,20 @@ function showThreat(type) {
     document.querySelectorAll('.selection-card').forEach(card => card.classList.remove('active'));
     event.currentTarget.classList.add('active');
 }
+    document.addEventListener('mousemove', (e) => {
+    const cursor = document.querySelector('.custom-cursor');
+    if (cursor) {
+        // Frissítjük a pozíciót az egér koordinátái alapján
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    }
+});
 </script>
     <div class="custom-cursor"></div>
 </body>
 
 </html>
+
 
 
 
