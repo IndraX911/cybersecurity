@@ -2,7 +2,7 @@
 body {
     background-color: #000000 !important;
     margin: 0;
-    overflow: hidden;
+    overflow: hidden; /* Hogy ne lehessen görgetni a betöltés alatt */
 }
 
 /* --- 2. START OVERLAY (A FEKETE HÁTTÉR) --- */
@@ -14,7 +14,7 @@ body {
     height: 100vh !important;
     background-color: #000000 !important;
     display: flex !important;
-    flex-direction: column !important;
+    flex-direction: column !important; /* Hogy a csík és a szöveg egymás alatt legyen */
     align-items: center !important;
     justify-content: center !important;
     z-index: 100000 !important;
@@ -45,6 +45,7 @@ body {
     height: 100%;
     background-color: #00ff00;
     box-shadow: 0 0 15px #00ff00;
+    /* A csík fénye finoman pulzál */
     animation: glow 1.5s ease-in-out infinite alternate;
 }
 
@@ -53,40 +54,22 @@ body {
     to { box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
 }
 
-/* --- 4. A BETÖLTŐ SZÖVEG --- */
+/* --- 4. A BETÖLTŐ SZÖVEG (EREDETI VERZIÓ) --- */
 #start-message {
     color: #00ff00 !important;
     font-family: 'Courier New', monospace !important;
-    font-size: 1.5rem !important;
+    font-size: 1.5rem !important; /* Jól olvasható méret */
     text-shadow: 0 0 10px #00ff00;
     margin: 0;
-    padding: 10px 20px; /* Helyet hagyunk a gomb-effektnek */
+    padding: 0;
     text-transform: uppercase;
     letter-spacing: 2px;
-    transition: all 0.3s ease; /* Finom átmenet, amikor gombbá változik */
-    /* Alapállapotban csak villog */
+    /* Ez az eredeti, egyszerű villogás */
     animation: simple-blink 1.5s infinite;
 }
 
-/* --- 5. A VISSZAHOZOTT "ENTER" GOMB STÍLUS --- */
-/* Amikor a JS ráteszi a .ready-blink osztályt, ilyen lesz: */
-.ready-blink {
-    background-color: #00ff00 !important; /* Zöld háttér */
-    color: #000000 !important; /* Fekete betű (inverz) */
-    font-weight: bold !important;
-    box-shadow: 0 0 25px #00ff00, 0 0 50px rgba(0, 255, 0, 0.5) !important; /* Brutális ragyogás */
-    cursor: pointer !important;
-    border: 2px solid #00ff00 !important;
-    animation: pulse-button 0.8s infinite alternate !important; /* Lüktető gomb */
-}
-
-/* A gomb lüktetése */
-@keyframes pulse-button {
-    0% { transform: scale(1); box-shadow: 0 0 20px #00ff00; }
-    100% { transform: scale(1.05); box-shadow: 0 0 40px #00ff00; }
-}
-
-/* --- 6. HACKER TERMINÁL (CMD) --- */
+/* --- 5. HACKER TERMINÁL (JAVÍTVA) --- */
+/* Egyetlen blokkban minden beállítás, hogy ne üssék egymást */
 #hacker-loader {
     position: fixed !important;
     top: 0; 
@@ -95,7 +78,7 @@ body {
     height: 100vh;
     background-color: #030a03 !important;
     
-    /* HÁTTÉRRÁCS */
+    /* A HÁTTÉRRÁCS VISSZAHOZVA */
     background-image: 
         linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px) !important;
@@ -103,34 +86,42 @@ body {
 
     color: #00ff41 !important;
     font-family: 'Courier New', monospace !important;
+    
+    /* BETŰMÉRET JAVÍTVA */
     font-size: 1.3rem !important; 
     line-height: 1.5 !important;
+    
     padding: 40px !important;
     z-index: 9999 !important;
     display: block !important;
+    
+    /* GÖRGETÉS ENGEDÉLYEZÉSE */
     overflow-y: auto !important; 
     box-sizing: border-box !important;
 }
 
+/* GÖRGETŐSÁV ELREJTÉSE (de görgetni lehet) */
 #hacker-loader::-webkit-scrollbar {
     display: none;
 }
 #hacker-loader {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    -ms-overflow-style: none;  /* IE és Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
+/* TERMINÁL SZÖVEG STÍLUSA */
 #terminal-content {
-    white-space: pre-wrap !important;
+    white-space: pre-wrap !important; /* Sortörések megtartása */
     text-shadow: 0 0 4px rgba(0, 255, 0, 0.6);
 }
 
+/* VILLOGÓ KURZOR A VÉGÉN */
 #terminal-content::after {
     content: "_";
     animation: blink-cursor 0.5s infinite;
 }
 
-/* --- 7. EGYÉB ANIMÁCIÓK --- */
+/* --- 6. ANIMÁCIÓK --- */
 @keyframes simple-blink {
     0%   { opacity: 1; }
     50%  { opacity: 0.3; }
@@ -147,4 +138,9 @@ body {
     transform: scale(1.1);
     transition: all 0.8s ease-out !important;
     pointer-events: none !important;
+}
+
+/* Ez kell a JS-nek a végén */
+.ready-blink {
+    animation: simple-blink 0.5s infinite !important; /* Gyorsabb villogás a végén */
 }
