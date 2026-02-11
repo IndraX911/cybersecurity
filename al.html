@@ -38,6 +38,7 @@
         }
         
         /* 2. A KURZOR - Most már tökéletes lesz */
+        /* --- 2. A VÖRÖS NYÍL STÍLUSA (JAVÍTVA) --- */
         .custom-cursor {
             width: 25px !important;
             height: 25px !important;
@@ -50,15 +51,20 @@
             background-size: contain !important;
             background-repeat: no-repeat !important;
             filter: drop-shadow(0 0 8px red) !important;
-            animation: jitter-fast 0.08s steps(2) infinite !important;
-            /* Alapból elrejtjük, hogy ne villanjon be bal fent */
+            
+            /* Alapból elrejtjük */
             display: none;
+        
+            /* Vibrálás: CSAK a belső eltolást rángatjuk */
+            animation: jitter-fast 0.08s steps(2) infinite !important;
+            /* Hardveres gyorsítás bekapcsolása */
+            will-change: transform;
         }
         
         @keyframes jitter-fast {
-            0% { margin: 0px 0px; }
-            50% { margin: 2px -1px; }
-            100% { margin: 0px 0px; }
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(2px, -1px); }
+            100% { transform: translate(0, 0); }
         }
     </style>
 
@@ -193,13 +199,14 @@
     if (!cursor) return;
 
     document.addEventListener('mousemove', function(e) {
-        // Amint mozog az egér, megjelenítjük
+        // Megjelenítjük az első mozdulatnál
         cursor.style.display = 'block';
         
-        // A clientX/Y a fix pozícióval most már NEM fog elcsúszni, 
-        // mert a body-n nincs filter!
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+        // A leghatékonyabb, görgetés-álló módszer
+        // A translate3d kényszeríti a böngészőt, hogy fixen tartsa az ablakhoz képest
+        cursor.style.left = '0px';
+        cursor.style.top = '0px';
+        cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
     });
 })();
 
@@ -304,6 +311,7 @@
     </script>
 </body>
 </html>
+
 
 
 
