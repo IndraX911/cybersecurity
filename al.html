@@ -292,22 +292,20 @@
 
         const cursor = document.querySelector('.custom-cursor');
 
-document.addEventListener('mousemove', (e) => {
-    if (cursor) {
-        // pageX/Y = kurzor helye az oldalon + a görgetés mértéke
-        // Ez a legbiztosabb módszer, ha a 'fixed' pozíció elromlik a filterek miatt
-        cursor.style.left = e.pageX + 'px';
-        cursor.style.top = e.pageY + 'px';
-    }
-});
+        document.addEventListener('mousemove', (e) => {
+            if (cursor) {
+                // Mivel kivettük a filter alól, a fixed position újra működik!
+                // A clientX a képernyőhöz igazodik, így görgetésnél a helyén marad.
+                cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+            }
+        });
 
-// Biztonsági mentés: ha görgetsz, de nem mozog az egér, 
-// egyes böngészőkben a kurzor "ottmaradhat", ezért kényszerítjük a frissítést
-window.addEventListener('scroll', () => {
-    // Itt nincs extra kódra szükség, mert az absolute pozíció 
-    // az oldal koordinátáján tartja a divet görgetés közben is.
-});
-
+        // Linkek kezelése
+        document.addEventListener('mouseover', (e) => {
+            if (e.target && e.target.style) {
+                e.target.style.cursor = 'none';
+            }
+        });
     </script>
 
     <div class="custom-cursor"></div>
@@ -317,4 +315,5 @@ window.addEventListener('scroll', () => {
 
 
 </html>
+
 
