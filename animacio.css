@@ -86,22 +86,15 @@
     visibility: visible !important;
     opacity: 1 !important;
 }
+
 .blink-text {
     color: #00ff00 !important;
     font-family: 'Courier New', monospace !important;
     font-size: 32px !important;
     text-align: center !important;
+    display: block !important;
     text-shadow: 0 0 15px #00ff00 !important;
-    
-    /* Itt adjuk meg az animációt: név, időtartam, típus, végtelenített */
-    animation: fadeEffect 1.5s ease-in-out infinite !important;
-}
-
-/* Ez a rész felel a villogásért (fade-in/out) */
-@keyframes fadeEffect {
-    0%   { opacity: 1; }   /* Teljesen látható */
-    50%  { opacity: 0.1; } /* Majdnem eltűnik */
-    100% { opacity: 1; }   /* Újra látható */
+    animation: simple-blink 1.2s linear infinite !important;
 }
 
 
