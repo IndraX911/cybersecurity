@@ -99,7 +99,29 @@ window.addEventListener('load', () => {
     // Indítás
     setTimeout(typeChar, 1150);
 
+    // Eredetileg itt hívtad meg a függvényt. 
+// Ehelyett most figyeljük az ENTER gombot:
+
+document.addEventListener('keydown', function(event) {
+    // Ellenőrizzük, hogy az ENTER-t nyomták-e le, ÉS hogy látszik-e még a start képernyő
+    const overlay = document.getElementById('start-overlay');
+    
+    if (event.key === 'Enter' && overlay.style.display !== 'none') {
+        // 1. Eltüntetjük a Start képernyőt
+        overlay.style.display = 'none';
+        
+        // 2. Lejátszunk egy kis "behatolási hangot" (opcionális, de menő)
+        // (Ide később tehetsz hangot, ha akarsz)
+
+        // 3. ELINDÍTJUK A HACKER ANIMÁCIÓT
+        // Fontos: Győződj meg róla, hogy a fő függvényed neve tényleg 'displayMessages'
+        // vagy ahogy elnevezted a kiíró logikát!
+        displayMessages(); 
+    }
 });
+
+});
+
 
 
 
