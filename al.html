@@ -6,39 +6,42 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="lock.png">
     <style>
+        /* Eredeti egér elrejtése mindenhol */
+        html, body, * {
+            cursor: none !important;
+        }
+        
         .custom-cursor {
             width: 28px;
             height: 28px;
             position: fixed;
             top: 0;
             left: 0;
-            /* Fontos: ne legyen transition, mert az is lassítja! */
-            transition: none !important; 
+            z-index: 9999999;
             pointer-events: none;
-            z-index: 2147483647;
-        
-            /* Hardveres gyorsítás kényszerítése */
-            backface-visibility: hidden;
-            will-change: transform;
-        
+            display: block !important; /* Kényszerített megjelenítés */
+            
+            /* Forma és szín */
             background-color: transparent !important;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
+            
             filter: drop-shadow(0 0 8px #ff0000);
-        
+            
+            /* Hardveres gyorsítás */
+            will-change: transform;
+            transform: translate3d(-100px, -100px, 0); /* Kezdetben legyen kint a képből */
+            
             /* Rezgés */
             animation: glitch-mouse-slow 0.2s infinite;
         }
-
+        
         @keyframes glitch-mouse-slow {
-            0% { opacity: 1; }
-            50% { opacity: 0.9; }
-            100% { opacity: 1; }
+            0% { opacity: 1; transform: translate3d(var(--x), var(--y), 0) translate(0, 0); }
+            50% { opacity: 0.9; transform: translate3d(var(--x), var(--y), 0) translate(1px, -1px); }
+            100% { opacity: 1; transform: translate3d(var(--x), var(--y), 0) translate(0, 0); }
         }
-        
-        
-        
         
         body {
             background-color: #050000;
@@ -171,13 +174,18 @@ function showThreat(type) {
 // Ha esetleg egy gomb fölé mész, akkor is maradjon rejtve az egér
 const cursor = document.querySelector('.custom-cursor');
 
+if (!cursor) {
+    console.error("Hiba: Nem találom a .custom-cursor elemet a HTML-ben!");
+}
+
 document.addEventListener('mousemove', (e) => {
     if (cursor) {
-        // A translate3d-t a videókártya számolja, így nincs késés
-        // A fixed pozíció miatt a clientX/Y a legjobb
-        const x = e.clientX;
-        const y = e.clientY;
-        cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        // Közvetlenül mozgatjuk az elemet
+        cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+        
+        // Ezt a két sort azért adjuk hozzá, hogy az animáció is tudja, hol vagyunk
+        cursor.style.setProperty('--x', `${e.clientX}px`);
+        cursor.style.setProperty('--y', `${e.clientY}px`);
     }
 });
 
@@ -200,6 +208,7 @@ document.addEventListener('scroll', (e) => {
 </body>
 
 </html>
+
 
 
 
