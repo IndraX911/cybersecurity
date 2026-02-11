@@ -1,50 +1,31 @@
+// Betöltési mód bekapcsolása azonnal
 document.body.classList.add('loading-mode');
 
 window.addEventListener('load', () => {
-    // Kicsit várunk, hogy a DOM biztosan kész legyen
-    setTimeout(() => {
-        const progressBar = document.querySelector('#progress-bar-fill');
-        const startMessage = document.getElementById('start-message');
-        const overlay = document.getElementById('start-overlay');
-        const loader = document.getElementById('hacker-loader');
-        const terminal = document.getElementById('terminal-content');
+    const loader = document.getElementById('hacker-loader');
+    const terminal = document.getElementById('terminal-content');
+    const overlay = document.getElementById('start-overlay');
+    const startMessage = document.getElementById('start-message');
+    const progressBar = document.getElementById('progress-bar-fill');
 
-        if (progressBar) {
-            progressBar.style.width = "1%"; // Kényszerített indítás
-            console.log("Progress bar megtalálva, indítás..."); 
-        }
+    // Hang effekt definiálása (ha nincs fájlod, a catch lekezeli)
+    const typeSound = new Audio('typing3.mp3'); 
+    typeSound.volume = 0.1;
 
-        let progress = 0;
-        let isFinished = false;
+    // Ha már látta az intrót ebben a munkamenetben, ugorjuk át
+    if (sessionStorage.getItem('introPlayed')) {
+        if (loader) loader.style.display = 'none';
+        if (overlay) overlay.remove(); 
+        document.body.classList.remove('loading-mode');
+        return; 
+    }
 
-        const interval = setInterval(() => {
-            progress += Math.random() * 2;
-            
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(interval);
-                isFinished = true;
-                if (startMessage) {
-                    startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
-                    startMessage.classList.add('ready-blink');
-                }
-            }
-            
-            if (progressBar) {
-                // Itt kényszerítjük a stílust
-                progressBar.setAttribute('style', `width: ${progress}% !important`);
-            }
-        }, 50);
-        
-        // ... a többi kódod (messages, typeChar, stb.) jöhet utána
-    }, 100); 
-});
     let progress = 0;
     let isFinished = false;
 
-    // Töltés indítása - JAVÍTOTT LOGIKA
+    // EGYETLEN TÖLTÉSI CIKLUS
     const interval = setInterval(() => {
-        progress += Math.random() * 2; // Kicsit lassabb, stabilabb töltés
+        progress += Math.random() * 2; 
         
         if (progress >= 100) {
             progress = 100;
@@ -53,11 +34,12 @@ window.addEventListener('load', () => {
             
             if (startMessage) {
                 startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
-                startMessage.classList.add('ready-blink'); // Aktiválja a neon hátteret
+                startMessage.classList.add('ready-blink'); // Neon zöld háttér bekapcsolása
             }
         }
         
         if (progressBar) {
+            // Itt kényszerítjük a szélességet
             progressBar.style.width = progress + "%";
         }
     }, 50);
@@ -102,7 +84,6 @@ window.addEventListener('load', () => {
         "Betöltés befejezése: CyberSecurity Interfész v2026",
         "TERMINÁL INDÍTÁSA..."
     ];
-
     let lineIndex = 0;
     let charIndex = 0;
 
@@ -114,8 +95,7 @@ window.addEventListener('load', () => {
 
             if (charIndex % 3 === 0) {
                 const s = typeSound.cloneNode();
-                s.volume = 0.1;
-                s.play().catch(() => {});
+                s.play().catch(() => {}); // Ha nincs meg a mp3, nem akad el a kód
             }
 
             charIndex++;
@@ -130,13 +110,12 @@ window.addEventListener('load', () => {
             sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
-                document.body.classList.remove('loading-mode'); // Itt hozzuk vissza az oldalt
+                document.body.classList.remove('loading-mode');
                 setTimeout(() => loader.style.display = 'none', 900);
             }, 1000);
         }
     }
 
-    // Billentyűzet és Kattintás figyelése az ENTER-hez
     function startTerminal() {
         if (isFinished && overlay) {
             overlay.remove();
@@ -144,6 +123,7 @@ window.addEventListener('load', () => {
         }
     }
 
+    // Figyeljük az ENTER billentyűt ÉS a kattintást is
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') startTerminal();
     });
@@ -152,4 +132,3 @@ window.addEventListener('load', () => {
         overlay.addEventListener('click', startTerminal);
     }
 });
-
