@@ -1,16 +1,18 @@
+document.body.classList.add('loading-mode');
+
 window.addEventListener('load', () => {
+    const progressBar = document.querySelector('#progress-bar-fill');
+    const startMessage = document.getElementById('start-message');
+    const overlay = document.getElementById('start-overlay');
     const loader = document.getElementById('hacker-loader');
     const terminal = document.getElementById('terminal-content');
-    const overlay = document.getElementById('start-overlay');
-    const startMessage = document.getElementById('start-message');
-    const progressBar = document.getElementById('progress-bar-fill');
 
     let progress = 0;
     let isFinished = false;
 
-    // TÖLTÉS MOTOR
+    // 1. Töltési folyamat
     const interval = setInterval(() => {
-        progress += Math.random() * 2.5;
+        progress += Math.random() * 3;
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
@@ -20,8 +22,10 @@ window.addEventListener('load', () => {
                 startMessage.classList.add('ready-blink');
             }
         }
-        if (progressBar) progressBar.style.width = progress + "%";
-    }, 50);
+        if (progressBar) {
+            progressBar.style.width = progress + "%";
+        }
+    }, 40);
 
     const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
@@ -63,63 +67,52 @@ window.addEventListener('load', () => {
         "Betöltés befejezése: CyberSecurity Interfész v2026",
         "TERMINÁL INDÍTÁSA..."
     ];
+
     let lineIndex = 0;
     let charIndex = 0;
 
+    // 2. Gépelés funkció
     function typeChar() {
-        if (!terminal) return;
-
         if (lineIndex < messages.length) {
             if (charIndex === 0) terminal.innerHTML += "<br>> ";
-            
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
             
-            // Automatikus görgetés az aljára
+            // Mindig görgessen az aljára
             loader.scrollTop = loader.scrollHeight;
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, 10); // Gyors gépelés
+                setTimeout(typeChar, 10);
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 100); // Szünet a sorok között
+                setTimeout(typeChar, 80);
             }
         } else {
-            // A végén eltüntetjük a fekete CMD-t
+            // A gépelés vége - belépés az oldalra
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
                 document.body.classList.remove('loading-mode');
-                setTimeout(() => loader.style.display = 'none', 900);
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    sessionStorage.setItem('introPlayed', 'true');
+                }, 900);
             }, 1500);
         }
     }
 
-    function startFinalPhase() {
-        if (isFinished) {
-            console.log("Fázis váltás indítása...");
-            
-            // Kényszerített megjelenítés
-            if (loader) {
-                loader.style.display = 'block';
-                loader.style.zIndex = '9999999';
-            }
-            if (overlay) {
-                overlay.style.display = 'none';
-            }
-            
-            // Rövid várakozás, hogy a böngésző "felfogja" a megjelenítést
-            setTimeout(typeChar, 200);
+    // 3. Indítás funkció
+    function startTerminal() {
+        if (isFinished && overlay) {
+            overlay.style.display = 'none'; // Eltünteti a betöltőt
+            loader.style.display = 'block'; // Megjeleníti a fekete CMD-t
+            typeChar(); // Elindítja a gépelést
         }
     }
 
-    // Billentyűzet
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') startFinalPhase();
+        if (e.key === 'Enter') startTerminal();
     });
-
-    // Kattintás (mobilon is működjön)
-    if (overlay) {
-        overlay.addEventListener('click', startFinalPhase);
-    }
+    
+    overlay.addEventListener('click', startTerminal);
 });
