@@ -97,5 +97,9 @@
     animation: simple-blink 1.2s linear infinite !important;
 }
 
-
-
+/* A te kódod után szúrd be ezt: */
+@keyframes simple-blink {
+    0%   { opacity: 1; }
+    50%  { opacity: 0.2; }
+    100% { opacity: 1; }
+}
