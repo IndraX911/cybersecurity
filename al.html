@@ -6,9 +6,36 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="lock.png">
     <style>
-            /* 1. KIKAPCSOLJUK AZ EREDETI EGERET MINDENHOL */
-                /* Az egér eltüntetése marad */
-                /* Eredeti egér eltüntetése */
+        .custom-cursor {
+            width: 28px;
+            height: 28px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            /* Fontos: ne legyen transition, mert az is lassítja! */
+            transition: none !important; 
+            pointer-events: none;
+            z-index: 2147483647;
+        
+            /* Hardveres gyorsítás kényszerítése */
+            backface-visibility: hidden;
+            will-change: transform;
+        
+            background-color: transparent !important;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: drop-shadow(0 0 8px #ff0000);
+        
+            /* Rezgés */
+            animation: glitch-mouse-slow 0.2s infinite;
+        }
+
+        @keyframes glitch-mouse-slow {
+            0% { opacity: 1; }
+            50% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
         
         
         
@@ -143,17 +170,14 @@ function showThreat(type) {
 
 // Ha esetleg egy gomb fölé mész, akkor is maradjon rejtve az egér
 const cursor = document.querySelector('.custom-cursor');
-let mouseX = 0;
-let mouseY = 0;
 
 document.addEventListener('mousemove', (e) => {
-    // pageX és pageY figyelembe veszi a görgetést is!
-    mouseX = e.pageX;
-    mouseY = e.pageY;
-    
     if (cursor) {
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
+        // A translate3d-t a videókártya számolja, így nincs késés
+        // A fixed pozíció miatt a clientX/Y a legjobb
+        const x = e.clientX;
+        const y = e.clientY;
+        cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     }
 });
 
@@ -176,6 +200,7 @@ document.addEventListener('scroll', (e) => {
 </body>
 
 </html>
+
 
 
 
