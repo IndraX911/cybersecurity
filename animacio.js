@@ -28,7 +28,7 @@ window.addEventListener('load', () => {
             
             // SZÖVEG CSERÉJE ÉS VILLOGTATÁSA
             if (startMessage) {
-                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T!";
+                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDITÁSÁHOZ!";
                 startMessage.classList.add('ready-blink');
             }
         }
@@ -121,3 +121,4 @@ window.addEventListener('load', () => {
         }
     });
 });
+
