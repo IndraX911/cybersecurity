@@ -1,11 +1,5 @@
-// Az oldal tetejére:
+// Betöltési mód bekapcsolása az indításkor
 document.body.classList.add('loading-mode');
-
-// Amikor az ENTER-re kattintasz:
-document.getElementById('start-overlay').addEventListener('click', function() {
-    this.classList.add('loader-fade-out');
-    document.body.classList.remove('loading-mode'); // Ez visszahozza az eredeti oldalad színeit!
-});
 
 window.addEventListener('load', () => {
     const loader = document.getElementById('hacker-loader');
@@ -20,35 +14,34 @@ window.addEventListener('load', () => {
     if (sessionStorage.getItem('introPlayed')) {
         if (loader) loader.style.display = 'none';
         if (overlay) overlay.remove(); 
+        document.body.classList.remove('loading-mode');
         return; 
     }
 
     let progress = 0;
     let isFinished = false;
 
-    // Töltés indítása
+    // Töltés indítása - JAVÍTOTT LOGIKA
     const interval = setInterval(() => {
-        progress += Math.random() * 3; // Véletlenszerű sebesség
+        progress += Math.random() * 2; // Kicsit lassabb, stabilabb töltés
         
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
             isFinished = true;
             
-            // SZÖVEG CSERÉJE ÉS VILLOGTATÁSA
             if (startMessage) {
-                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDITÁSÁHOZ!";
-                startMessage.classList.add('ready-blink');
+                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
+                startMessage.classList.add('ready-blink'); // Aktiválja a neon hátteret
             }
         }
         
         if (progressBar) {
             progressBar.style.width = progress + "%";
         }
-    }, 70);
+    }, 50);
 
-    // Üzenetek a gépeléshez (A 2026-os Ryzen 9 konfigoddal)
-   const messages = [
+    const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
         "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
         "Hálózati azonosító: 192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255),
@@ -95,7 +88,6 @@ window.addEventListener('load', () => {
     function typeChar() {
         if (lineIndex < messages.length) {
             if (charIndex === 0) terminal.innerHTML += "<br>> ";
-            
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
             loader.scrollTop = loader.scrollHeight;
 
@@ -107,33 +99,35 @@ window.addEventListener('load', () => {
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, Math.random() * 4 + 2); // 2 és 12 ms között váltakozik
+                setTimeout(typeChar, 5); 
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 45);
+                setTimeout(typeChar, 30);
             }
         } else {
             sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
+                document.body.classList.remove('loading-mode'); // Itt hozzuk vissza az oldalt
                 setTimeout(() => loader.style.display = 'none', 900);
-            }, 1500);
+            }, 1000);
         }
     }
 
-    // Billentyű figyelés
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && isFinished && overlay) {
+    // Billentyűzet és Kattintás figyelése az ENTER-hez
+    function startTerminal() {
+        if (isFinished && overlay) {
             overlay.remove();
             typeChar();
         }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') startTerminal();
     });
+
+    if (overlay) {
+        overlay.addEventListener('click', startTerminal);
+    }
 });
-
-
-
-
-
-
-
