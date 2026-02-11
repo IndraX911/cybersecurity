@@ -13,26 +13,31 @@
     <link rel="icon" type="image/png" href="lock.png">
 
     <style>
-        /* Eredeti egér elrejtése mindenhol */
-
-        /* 1. AZ EREDETI EGÉR ELTÜNTETÉSE - Brutál módszer */
-
-        /* Eredeti egér tiltása */
+        .screen-filter {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Ide került a szűrő! */
+            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
+            background-color: transparent;
+            pointer-events: none; /* Átengedi a kattintást! */
+            z-index: 999998; /* Közvetlenül a kurzor alatt */
+        }
+        
         body {
             background-color: #050000;
-            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
             margin: 0;
-            height: 100vh; /* Fontos a teljes magassághoz */
+            min-height: 100vh;
+            cursor: none !important;
         }
-
-        /* --- 1. AZ EREDETI EGÉR ELTÜNTETÉSE MINDENHOL --- */
+        
         html, body, * {
             cursor: none !important;
         }
         
-        /* --- 2. A VÖRÖS NYÍL STÍLUSA (JAVÍTVA) --- */
-        /* --- A VÖRÖS NYÍL DIZÁJNJA --- */
-        /* --- A VÖRÖS NYÍL DIZÁJNJA --- */
+        /* 2. A KURZOR - Most már tökéletes lesz */
         .custom-cursor {
             width: 25px !important;
             height: 25px !important;
@@ -45,9 +50,9 @@
             background-size: contain !important;
             background-repeat: no-repeat !important;
             filter: drop-shadow(0 0 8px red) !important;
-            
-            /* Vibrálás sebessége: 0.08s */
             animation: jitter-fast 0.08s steps(2) infinite !important;
+            /* Alapból elrejtjük, hogy ne villanjon be bal fent */
+            display: none;
         }
         
         @keyframes jitter-fast {
@@ -55,25 +60,12 @@
             50% { margin: 2px -1px; }
             100% { margin: 0px 0px; }
         }
-        body {
-
-            background-color: #050000;
-
-            /* Vöröses fekete */
-
-            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2);
-
-        }
-        body > .custom-cursor {
-            filter: drop-shadow(0 0 8px red) !important;
-        }
     </style>
 
     <title>A Támadások Világa</title>
-
 </head>
-
 <body>
+    <div class="screen-filter"></div>
 
     <nav class="menu">
 
@@ -195,26 +187,21 @@
     <script>
         // Ezt a scriptet a </body> elé tedd, a DIV UTÁN
         // MINDENT törölj ki a korábbi egér JS-ből és csak ezt tedd be
-<script>
     (function() {
-        const cursor = document.querySelector('.custom-cursor');
+    const cursor = document.querySelector('.custom-cursor');
+    
+    if (!cursor) return;
+
+    document.addEventListener('mousemove', function(e) {
+        // Amint mozog az egér, megjelenítjük
+        cursor.style.display = 'block';
         
-        if (!cursor) {
-            console.error("HIBA: Nincs .custom-cursor div a HTML-ben!");
-            return;
-        }
-
-        document.addEventListener('mousemove', function(e) {
-            // Sima left/top használata, mert a translate3d bal felülre ragaszthatja
-            // ha a szülő elem (body) filterezve van
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Biztonsági mentés: Ha a linkek felett eltűnne
-        document.body.style.cursor = 'none';
-    })();
-</script>
+        // A clientX/Y a fix pozícióval most már NEM fog elcsúszni, 
+        // mert a body-n nincs filter!
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+})();
 
         const threatData = {
 
@@ -317,6 +304,7 @@
     </script>
 </body>
 </html>
+
 
 
 
