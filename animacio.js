@@ -11,8 +11,8 @@ window.addEventListener('load', () => {
     if (sessionStorage.getItem('introPlayed')) {
         loader.style.display = 'none';
         const overlay = document.getElementById('start-overlay');
-    if (overlay) {
-        overlay.remove(); 
+        if (overlay) {
+            overlay.remove(); 
     }
         return; 
     }
@@ -122,6 +122,7 @@ document.addEventListener('keydown', function(event) {
 });
 
 });
+
 
 
 
