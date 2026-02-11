@@ -1,3 +1,55 @@
+/* Konténer, ami mindent középre tesz */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+/* A töltőcsík kerete */
+#progress-bar-container {
+    width: 60%;         /* Szélesebb csík */
+    max-width: 600px;
+    height: 10px;       /* Vastagabb csík */
+    border: 1px solid #00ff00;
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* A tényleges zöld töltés */
+#progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #00ff00;
+    box-shadow: 0 0 20px #00ff00;
+    transition: width 0.2s ease-out;
+}
+
+/* Az üzenet stílusa */
+#start-message {
+    font-family: 'Courier New', monospace;
+    color: #00ff00;
+    font-size: 1.2rem;
+    text-shadow: 0 0 10px #00ff00;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 #boot-loader-container {
     width: 300px;
     text-align: center;
@@ -129,4 +181,5 @@
     50%  { opacity: 0.2; }
     100% { opacity: 1; }
 }
+
 
