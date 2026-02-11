@@ -18,28 +18,31 @@
             position: fixed;
             pointer-events: none;
             z-index: 999999;
-            
+        
+            /* TÖRLÉS: Ezek feleltek a körért, most kiütjük őket */
+            background-color: transparent !important; 
+            border-radius: 0 !important; 
+        
             /* AZ EGÉRNYÍL FORMÁJA (Vörös SVG) */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="black" stroke-width="1"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
         
-            /* Vörös ragyogás (Glow) */
-            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+            /* RAGYOGÁS: Drop-shadow kell, hogy a nyíl alakja világítson, ne egy négyzet */
+            filter: drop-shadow(0 0 5px #ff0000) drop-shadow(0 0 10px #ff0000);
         
-            /* VIBRÁLÁS (Agresszív glitch) */
+            /* VIBRÁLÁS */
             animation: glitch-mouse 0.04s infinite;
             
             display: block !important;
         }
         
-        /* Ugyanaz a vibrálás, amit szerettél */
         @keyframes glitch-mouse {
             0% { transform: translate(0, 0); }
-            20% { transform: translate(-3px, 2px) rotate(2deg); }
-            40% { transform: translate(3px, -2px) scale(1.1); opacity: 0.8; }
+            20% { transform: translate(-3px, 2px) rotate(3deg); }
+            40% { transform: translate(3px, -2px) scale(1.1); }
             60% { transform: translate(-5px, -1px) skewX(5deg); }
-            80% { transform: translate(4px, 3px); opacity: 1; }
+            80% { transform: translate(4px, 3px); }
             100% { transform: translate(0, 0); }
         }
         
@@ -182,6 +185,7 @@ document.querySelectorAll('a, button').forEach(el => {
 </body>
 
 </html>
+
 
 
 
