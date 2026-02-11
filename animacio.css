@@ -20,7 +20,7 @@ body.loading-mode {
 
 /* --- 3. PROGRESS BAR --- */
 #progress-bar-container {
-    width: 100%;
+    width: 80%;
     max-width: 600px;
     height: 12px;
     border: 1px solid #00ff00;
@@ -95,4 +95,5 @@ body.loading-mode {
     transition: opacity 0.8s ease-out !important;
     pointer-events: none !important;
 }
+
 
