@@ -104,12 +104,13 @@ window.addEventListener('load', () => {
 document.addEventListener('keydown', function(event) {
     const overlay = document.getElementById('start-overlay');
     
-    // Ha az Entert nyomják meg, és az overlay még létezik/látható
+    // Ha Entert nyomnak és az overlay létezik
     if (event.key === 'Enter' && overlay) {
-        // Ez a sor kényszeríti az eltűnést, felülbírálva a CSS-t:
-        overlay.style.setProperty('display', 'none', 'important');
         
-        // Elindítjuk a gépelést
+        // Ez a sor GYÖKERESTÜL KITÖRÖLI az elemet az oldalból
+        overlay.remove(); 
+        
+        // Ezután elindítjuk a gépelést
         if (typeof typeChar === "function") {
             typeChar();
         }
@@ -117,6 +118,7 @@ document.addEventListener('keydown', function(event) {
 });
 
 });
+
 
 
 
