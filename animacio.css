@@ -26,22 +26,31 @@ body.loading-mode {
 }
 
 /* --- 3. PROGRESS BAR (A SZÉLES CSÍK) --- */
+/* Ez biztosítja, hogy a tartály ne fogja le a csík szélességét */
+.loader-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #progress-bar-container {
-    width: 90%; 
-    max-width: 1000px; 
-    height: 18px; 
+    width: 100%; /* A loader-container 90%-át kitölti */
+    max-width: 1200px; /* Még szélesebb maximum */
+    height: 20px; /* Kicsit vaskosabb */
     border: 1px solid #00ff00;
     background: rgba(0, 255, 0, 0.1);
     margin-bottom: 30px;
     position: relative;
-    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
 }
 
 #progress-bar-fill {
-    width: 0%; /* A JS fogja mozgatni */
+    width: 0%;
     height: 100%;
     background-color: #00ff00;
     box-shadow: 0 0 20px #00ff00;
+    transition: width 0.1s linear; /* Simább mozgás */
 }
 
 /* --- 4. A SZÖVEG ÉS A NEON ENTER --- */
@@ -107,3 +116,4 @@ body.loading-mode {
     transition: opacity 0.8s ease-out;
     pointer-events: none;
 }
+
