@@ -52,7 +52,8 @@
             background-repeat: no-repeat;
             
             /* Rezgés animáció */
-            animation: jitter 0.2s infinite;
+            animation: jitter 0.1s linear infinite !important;
+            will-change: transform;
             
             /* Ha a body filtere zavar, ez segít: */
             backdrop-filter: none !important;
@@ -334,6 +335,7 @@ window.addEventListener('load', () => {
 
 
 </html>
+
 
 
 
