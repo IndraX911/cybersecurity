@@ -1,4 +1,3 @@
-
 window.addEventListener('load', () => {
     const loader = document.getElementById('hacker-loader');
     const terminal = document.getElementById('terminal-content');
@@ -6,30 +5,24 @@ window.addEventListener('load', () => {
     const startMessage = document.getElementById('start-message');
     const progressBar = document.getElementById('progress-bar-fill');
 
+    // Mivel a hangfájl hiánya megállíthatja a kódot, hibakezeléssel látjuk el
     const typeSound = new Audio('typing3.mp3'); 
     typeSound.volume = 0.2;
-
-    if (sessionStorage.getItem('introPlayed')) {
-        if (loader) loader.style.display = 'none';
-        if (overlay) overlay.remove(); 
-        return; 
-    }
 
     let progress = 0;
     let isFinished = false;
 
-    // Töltés indítása
+    // --- 1. TÖLTÉS FOLYAMATA ---
     const interval = setInterval(() => {
-        progress += Math.random() * 3; // Véletlenszerű sebesség
+        progress += Math.random() * 2.5; 
         
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
             isFinished = true;
             
-            // SZÖVEG CSERÉJE ÉS VILLOGTATÁSA
             if (startMessage) {
-                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDITÁSÁHOZ!";
+                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
                 startMessage.classList.add('ready-blink');
             }
         }
@@ -37,10 +30,10 @@ window.addEventListener('load', () => {
         if (progressBar) {
             progressBar.style.width = progress + "%";
         }
-    }, 70);
+    }, 60);
 
-    // Üzenetek a gépeléshez (A 2026-os Ryzen 9 konfigoddal)
-   const messages = [
+    // --- 2. TELJES ÜZENETLISTA ---
+    const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
         "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
         "Hálózati azonosító: 192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255),
@@ -84,47 +77,53 @@ window.addEventListener('load', () => {
     let lineIndex = 0;
     let charIndex = 0;
 
+    // --- 3. GÉPELÉS FUNKCIÓ ---
     function typeChar() {
         if (lineIndex < messages.length) {
             if (charIndex === 0) terminal.innerHTML += "<br>> ";
             
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
+            
+            // Automatikus görgetés az aljára
             loader.scrollTop = loader.scrollHeight;
 
+            // Hang lejátszása (csak ha a fájl létezik, nem állítja meg a kódot)
             if (charIndex % 3 === 0) {
-                const s = typeSound.cloneNode();
-                s.volume = 0.1;
-                s.play().catch(() => {});
+                typeSound.cloneNode().play().catch(() => {});
             }
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, Math.random() * 4 + 2); // 2 és 12 ms között váltakozik
+                setTimeout(typeChar, 10); // Gyors gépelés
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 45);
+                setTimeout(typeChar, 50); // Szünet a sorok között
             }
         } else {
-            sessionStorage.setItem('introPlayed', 'true');
+            // BEFEJEZÉS
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
+                document.body.classList.remove('loading-mode');
                 setTimeout(() => loader.style.display = 'none', 900);
-            }, 1500);
+            }, 2000);
         }
     }
 
-    // Billentyű figyelés
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && isFinished && overlay) {
-            overlay.remove();
-            typeChar();
+    // --- 4. INDÍTÁS ESEMÉNYEK ---
+    function startFinal() {
+        if (isFinished) {
+            if (overlay) overlay.style.display = 'none';
+            if (loader) {
+                loader.style.display = 'block';
+                typeChar();
+            }
         }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') startFinal();
     });
+    
+    if (overlay) overlay.addEventListener('click', startFinal);
 });
-
-
-
-
-
-
