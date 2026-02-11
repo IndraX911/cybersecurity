@@ -9,34 +9,34 @@
             /* 1. KIKAPCSOLJUK AZ EREDETI EGERET MINDENHOL */
                 /* Az egér eltüntetése marad */
                 /* Eredeti egér eltüntetése */
-        html, body, * {
-            cursor: none !important;
-            height: 100%;
-            margin: 0;
-        }
-        
         .custom-cursor {
             width: 28px;
             height: 28px;
-            position: fixed !important; /* Kényszerített fix pozíció */
+            /* Váltás absolute-ra, hogy a dokumentumhoz képest mozogjon */
+            position: absolute !important; 
+            pointer-events: none;
+            z-index: 2147483647;
+            
+            /* Fontos, hogy ne legyen semmi eltolás alapból */
             top: 0;
             left: 0;
-            pointer-events: none;
-            z-index: 2147483647; /* A lehető legmagasabb réteg (ne kerüljön alá semmi) */
-            
+            margin: 0;
+            padding: 0;
+        
             background-color: transparent !important;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
-        
             filter: drop-shadow(0 0 8px #ff0000);
             
-            /* Ez segít a sima mozgásban görgetés alatt: */
-            will-change: left, top; 
-            
-            /* Lassabb rezgés */
+            /* Rezgés */
             animation: glitch-mouse-slow 0.2s infinite;
             display: block !important;
+        }
+        
+        /* Az eredeti kurzor tiltása mindenhol */
+        html, body, a, button, input {
+            cursor: none !important;
         }
         
         @keyframes glitch-mouse-slow {
@@ -176,17 +176,25 @@ function showThreat(type) {
 
 // Ha esetleg egy gomb fölé mész, akkor is maradjon rejtve az egér
 const cursor = document.querySelector('.custom-cursor');
+let mouseX = 0;
+let mouseY = 0;
 
-// Függvény a pozíció frissítésére
-function updateCursorPos(e) {
+document.addEventListener('mousemove', (e) => {
+    // pageX és pageY figyelembe veszi a görgetést is!
+    mouseX = e.pageX;
+    mouseY = e.pageY;
+    
     if (cursor) {
-        // A requestAnimationFrame segít, hogy a monitor frissítésével szinkronban legyen
-        requestAnimationFrame(() => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
     }
-}
+});
+
+// Kényszerített frissítés görgetéskor
+window.addEventListener('scroll', () => {
+    // Ezt üresen is hagyhatjuk, mert a CSS position: absolute megoldja a többit,
+    // ha a JavaScript frissíti a koordinátákat.
+});
 
 // Egérmozgás követése
 document.addEventListener('mousemove', updateCursorPos);
@@ -201,6 +209,7 @@ document.addEventListener('scroll', (e) => {
 </body>
 
 </html>
+
 
 
 
