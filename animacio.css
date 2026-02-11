@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #000; /* Fekete háttér */
+    background-color: #000;
     z-index: 9999;
     display: flex;
     align-items: center;
@@ -19,38 +19,39 @@
     align-items: center;
 }
 
-/* A töltőcsík kerete - Nagyobb és láthatóbb */
 #progress-bar-container {
-    width: 50%;
-    max-width: 500px;
-    height: 15px; /* Kicsit vastagabb */
+    width: 60%;
+    max-width: 600px;
+    height: 12px;
     border: 1px solid #00ff00;
     background: rgba(0, 255, 0, 0.05);
-    margin-bottom: 25px;
-    padding: 2px;
+    margin-bottom: 20px;
 }
 
-/* A zöld töltés */
 #progress-bar-fill {
     width: 0%;
     height: 100%;
     background: #00ff00;
     box-shadow: 0 0 15px #00ff00;
-    transition: width 0.1s linear;
 }
 
-/* A felirat stílusa */
 #start-message {
     color: #00ff00;
     font-family: 'Courier New', monospace;
-    font-size: 1.2rem;
-    letter-spacing: 2px;
-    opacity: 0; /* Alapból láthatatlan */
-    transition: opacity 0.5s ease-in;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
     margin-top: 10px;
 }
-@keyframes blink {
-    50% { opacity: 0.5; }
+
+/* Villogó effekt, ha kész a betöltés */
+.ready-blink {
+    animation: blinker 1.5s linear infinite;
+    font-weight: bold;
+    text-shadow: 0 0 8px #00ff00;
+}
+
+@keyframes blinker {
+    50% { opacity: 0.2; }
 }
 
 .fade-in {
@@ -192,6 +193,7 @@
     50%  { opacity: 0.2; }
     100% { opacity: 1; }
 }
+
 
 
 
