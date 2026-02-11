@@ -37,36 +37,23 @@
             width: 25px !important;
             height: 25px !important;
             position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
+            top: 0;
+            left: 0;
             z-index: 2147483647 !important;
             pointer-events: none !important;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>') !important;
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+            filter: drop-shadow(0 0 8px red) !important;
             
-            /* Hardveres gyorsítás - ez megállítja a lagot! */
-            will-change: transform;
-            transform: translate3d(0,0,0);
-        }
-        
-        .custom-cursor::after {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="1.5"><path d="M5.5 2v18l4.5-4.5 3.5 8 3-1.5-3.5-8h6.5l-14-12z"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            filter: drop-shadow(0 0 8px red);
-            
-            /* CSAK AZ AFTER REZEG, nem az egész elem */
-            animation: jitter-fast 0.08s linear infinite !important;
+            /* Vibrálás sebessége: 0.08s */
+            animation: jitter-fast 0.08s steps(2) infinite !important;
         }
         
         @keyframes jitter-fast {
-            0% { transform: translate(0,0); }
-            25% { transform: translate(1px, -1px); }
-            50% { transform: translate(-1px, 1px); }
-            75% { transform: translate(1px, 1px); }
-            100% { transform: translate(0,0); }
+            0% { margin: 0px 0px; }
+            50% { margin: 2px -1px; }
+            100% { margin: 0px 0px; }
         }
         body {
 
@@ -208,14 +195,26 @@
     <script>
         // Ezt a scriptet a </body> elé tedd, a DIV UTÁN
         // MINDENT törölj ki a korábbi egér JS-ből és csak ezt tedd be
-window.addEventListener('mousemove', (e) => {
-    const cursor = document.querySelector('.custom-cursor');
-    if (cursor) {
-        // A requestAnimationFrame helyett itt direktben toljuk, 
-        // hogy ne tudja a böngésző elhalasztani
-        cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-    }
-}, { passive: true }); // A passive segít a teljesítményben
+<script>
+    (function() {
+        const cursor = document.querySelector('.custom-cursor');
+        
+        if (!cursor) {
+            console.error("HIBA: Nincs .custom-cursor div a HTML-ben!");
+            return;
+        }
+
+        document.addEventListener('mousemove', function(e) {
+            // Sima left/top használata, mert a translate3d bal felülre ragaszthatja
+            // ha a szülő elem (body) filterezve van
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Biztonsági mentés: Ha a linkek felett eltűnne
+        document.body.style.cursor = 'none';
+    })();
+</script>
 
         const threatData = {
 
@@ -318,5 +317,6 @@ window.addEventListener('mousemove', (e) => {
     </script>
 </body>
 </html>
+
 
 
