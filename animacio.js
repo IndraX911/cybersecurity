@@ -116,11 +116,12 @@ document.addEventListener('keydown', function(event) {
         // 3. ELINDÍTJUK A HACKER ANIMÁCIÓT
         // Fontos: Győződj meg róla, hogy a fő függvényed neve tényleg 'displayMessages'
         // vagy ahogy elnevezted a kiíró logikát!
-        displayMessages(); 
+        
     }
 });
 
 });
+
 
 
 
