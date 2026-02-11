@@ -39,15 +39,16 @@
             background-size: contain !important;
             background-repeat: no-repeat !important;
             filter: drop-shadow(0 0 8px red) !important;
-            /* Rezgetés */
-            animation: jitter-fast 0.08s steps(2) infinite !important;
-            display: block !important;
-            will-change: transform !important;
+            
+            /* Vibrálás: CSAK a margót bántjuk, hogy ne ütközzön a JS mozgással */
+            animation: ultra-jitter 0.05s linear infinite !important;
         }
         
-        @keyframes jitter-fast {
+        @keyframes ultra-jitter {
             0% { margin: 0px 0px; }
-            50% { margin: 2px -1px; }
+            25% { margin: 3px -2px; }
+            50% { margin: -2px 3px; }
+            75% { margin: 2px 2px; }
             100% { margin: 0px 0px; }
         }
         
@@ -56,12 +57,14 @@
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            background: transparent !important;
-            filter: sepia(100%) hue-rotate(-50deg) saturate(300%) contrast(1.2) !important;
+            width: 100vw !important;
+            height: 100vh !important;
             pointer-events: none !important;
             z-index: 999999 !important;
+            /* Ez a réteg adja a vörös szűrőt */
+            background-color: rgba(255, 0, 0, 0.1) !important; /* Halvány vörös alapszín */
+            backdrop-filter: sepia(100%) hue-rotate(-50deg) saturate(500%) contrast(1.5) !important;
+            -webkit-backdrop-filter: sepia(100%) hue-rotate(-50deg) saturate(500%) contrast(1.5) !important;
         }
     </style>
 
@@ -303,6 +306,7 @@
     </script>
 </body>
 </html>
+
 
 
 
