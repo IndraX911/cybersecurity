@@ -91,14 +91,13 @@ body.loading-mode {
 }
 
 #matrix-canvas {
-    position: absolute; /* Fontos! */
+    position: fixed; /* Ez a kulcs! Mindig a képernyőhöz rögzíti, nem az oldalhoz. */
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Szöveg mögé */
-    opacity: 0.15; /* Halványítás */
-    pointer-events: none;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Hogy a szövegek mögött maradjon */
+    display: block;
 }
 
 #terminal-content {
@@ -121,3 +120,4 @@ body.loading-mode {
     opacity: 0;
     transition: opacity 1s ease-out;
 }
+
