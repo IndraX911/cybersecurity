@@ -21,6 +21,11 @@ window.addEventListener('load', () => {
     let isFinished = false;
 
     // --- 1. MÁTRIX ESŐ FUNKCIÓ (Itt defináljuk) ---
+     0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#00ff00"; // Neon zöld
+            ctx.font = fontSize + "px monospace";
+// --- 1. MÁTRIX ESŐ FUNKCIÓ (GLITCH VERZIÓ) ---
     function startMatrix() {
         const canvas = document.getElementById('matrix-canvas');
         if (!canvas) return;
@@ -31,7 +36,8 @@ window.addEventListener('load', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
+        // Kibővített karakterkészlet a káoszhoz
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~Ωπµ®©";
         const fontSize = 16;
         const columns = Math.floor(canvas.width / fontSize);
         const drops = [];
@@ -41,16 +47,43 @@ window.addEventListener('load', () => {
         }
 
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Elmosódás
+            // A halványítás (ez csinálja a csíkot)
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#00ff00"; // Neon zöld
             ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
+                // VÉLETLENSZERŰ SZÍNKEVERÉS (A GLITCH LÉNYEGE)
+                const randomColor = Math.random();
+                
+                // Alapértelmezett: Neon Zöld
+                ctx.fillStyle = "#00ff00"; 
+
+                // 2% esély: Fehér villanás (Adatcsomag)
+                if (randomColor > 0.975) {
+                    ctx.fillStyle = "#ffffff"; 
+                    ctx.shadowBlur = 15; // Kicsit jobban világít
+                    ctx.shadowColor = "#ffffff";
+                } 
+                // 0.5% esély: Vörös hiba (Rendszerhiba/Danger)
+                else if (randomColor > 0.995) {
+                    ctx.fillStyle = "#ff0033"; 
+                    ctx.shadowBlur = 20; // Vörös izzás
+                    ctx.shadowColor = "#ff0033";
+                } else {
+                    // Ha zöld, nincs extra árnyék, hogy gyors maradjon
+                    ctx.shadowBlur = 0; 
+                }
+
+                // Karakter választása és kirajzolása
                 const text = characters.charAt(Math.floor(Math.random() * characters.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
+                // Reseteljük az árnyékot a következő körre
+                ctx.shadowBlur = 0;
+
+                // Vissza a tetejére, ha leért
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
@@ -183,3 +216,4 @@ window.addEventListener('load', () => {
     
     if (overlay) overlay.addEventListener('click', startFinal);
 });
+
