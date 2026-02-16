@@ -7,9 +7,7 @@ window.addEventListener('load', () => {
     const startMessage = document.getElementById('start-message');
     const progressBar = document.getElementById('progress-bar-fill');
 
-    // --- 0. TESZT ÜZEMMÓD: Ha nem indulna, töröld ki a sessionStorage-t ---
-    // sessionStorage.removeItem('introPlayed'); // Eddig menjen a // ha tesztelsz
-
+    // --- 0. ELLENŐRZÉS: LEFUTOTT-E MÁR? ---
     if (sessionStorage.getItem('introPlayed')) {
         console.log("Az intro már lefutott korábban. Kihagyás...");
         if (overlay) overlay.style.display = 'none';
@@ -18,7 +16,6 @@ window.addEventListener('load', () => {
         return; 
     }
 
-    // Hangkezelés hibaellenőrzéssel
     let typeSound;
     try {
         typeSound = new Audio('typing3.mp3'); 
@@ -30,27 +27,33 @@ window.addEventListener('load', () => {
     let progress = 0;
     let isFinished = false;
 
-    // --- 1. MÁTRIX ESŐ FUNKCIÓ ---
+    // --- 1. MÁTRIX ESŐ FUNKCIÓ (JAVÍTOTT ÁTMÉRETEZÉSSEL) ---
     function startMatrix() {
         console.log("Mátrix eső indítása...");
         const canvas = document.getElementById('matrix-canvas');
-        if (!canvas) {
-            console.error("Hiba: Nincs matrix-canvas a HTML-ben!");
-            return;
-        }
+        if (!canvas) return;
         const ctx = canvas.getContext('2d');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
 
         const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~Ωπµ®©";
         const fontSize = 16;
-        const columns = Math.floor(canvas.width / fontSize);
-        const drops = [];
+        let drops = [];
 
-        for (let x = 0; x < columns; x++) {
-            drops[x] = 1;
+        // ÚJ: Átméretező függvény
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const columns = Math.floor(canvas.width / fontSize);
+            
+            // Ha több oszlop kell (pl. szélesebb lett a kép), hozzáadjuk az újakat
+            for (let x = drops.length; x < columns; x++) {
+                drops[x] = Math.random() * -100; // Kicsit eltolva induljanak fentről
+            }
         }
+
+        // ÚJ: Figyeljük az ablak változását
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); // Kezdő méret beállítása
 
         function draw() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; 
@@ -77,6 +80,7 @@ window.addEventListener('load', () => {
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
                 ctx.shadowBlur = 0;
 
+                // Resetelés, ha leért az aljára
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
@@ -87,20 +91,14 @@ window.addEventListener('load', () => {
     }
 
     // --- 2. TÖLTÉS FOLYAMATA ---
-    console.log("Töltés elindítva...");
     const interval = setInterval(() => {
         progress += Math.random() * 2.5; 
-        
-        if (progressBar) {
-            progressBar.style.width = progress + "%";
-        }
+        if (progressBar) progressBar.style.width = progress + "%";
 
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
             isFinished = true;
-            console.log("Töltés kész, várakozás az Enterre.");
-            
             if (startMessage) {
                 startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
                 startMessage.classList.add('ready-blink');
@@ -173,7 +171,6 @@ window.addEventListener('load', () => {
                 setTimeout(typeChar, 30); 
             }
         } else {
-            console.log("Gépelés vége, belépés a főoldalra...");
             sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
@@ -183,10 +180,8 @@ window.addEventListener('load', () => {
         }
     }
 
-    // --- 5. INDÍTÁS ---
     function startFinal() {
         if (isFinished) {
-            console.log("Enter megnyomva, váltás a terminálra.");
             if (overlay) overlay.style.display = 'none';
             if (loader) {
                 loader.style.display = 'block';
