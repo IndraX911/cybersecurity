@@ -128,6 +128,100 @@ window.addEventListener('load', () => {
 
     // --- 4. INDÍTÁS ESEMÉNYEK ---
     function startFinal() {
+        function startMatrix() {
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let x = 0; x < columns; x++) {
+        drops[x] = 1;
+    }
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Elmosódás effekt
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#0F0"; // Mátrix-zöld szín
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+    setInterval(draw, 33);
+}
+
+// A startFinal függvényedben hívd meg:
+function startFinal() {
+    function startMatrix() {
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+    
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+    
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+    
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Elmosódás effekt
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+            ctx.fillStyle = "#0F0"; // Mátrix-zöld szín
+            ctx.font = fontSize + "px monospace";
+    
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 33);
+    }
+    
+    // A startFinal függvényedben hívd meg:
+    function startFinal() {
+        if (isFinished) {
+            if (overlay) overlay.style.display = 'none';
+            if (loader) {
+                loader.style.display = 'block';
+                startMatrix(); // <--- ITT INDÍTJUK EL!
+                typeChar();
+            }
+        }
+    }
+    if (isFinished) {
+        if (overlay) overlay.style.display = 'none';
+        if (loader) {
+            loader.style.display = 'block';
+            startMatrix(); // <--- ITT INDÍTJUK EL!
+            typeChar();
+        }
+    }
+}
         if (isFinished) {
             if (overlay) overlay.style.display = 'none';
             if (loader) {
@@ -143,5 +237,6 @@ window.addEventListener('load', () => {
     
     if (overlay) overlay.addEventListener('click', startFinal);
 });
+
 
 
