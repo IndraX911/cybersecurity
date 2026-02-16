@@ -1,3 +1,17 @@
+#matrix-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* A szöveg mögé kerül */
+    opacity: 0.15; /* Nagyon halvány, hogy ne zavarjon */
+}
+
+#hacker-loader {
+    position: relative; /* Hogy a canvas igazodni tudjon */
+    /* ... a többi marad változatlan ... */
+}
 /* ALAPOK ÉS TILTÁSOK */
 body.loading-mode {
     background-color: #000 !important;
@@ -114,4 +128,5 @@ body.loading-mode {
     opacity: 0;
     transition: opacity 1s ease-out;
 }
+
 
