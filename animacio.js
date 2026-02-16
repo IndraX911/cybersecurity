@@ -20,7 +20,47 @@ window.addEventListener('load', () => {
     let progress = 0;
     let isFinished = false;
 
-    // --- 1. TÖLTÉS FOLYAMATA ---
+    // --- 1. MÁTRIX ESŐ FUNKCIÓ (Itt defináljuk) ---
+    function startMatrix() {
+        const canvas = document.getElementById('matrix-canvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+
+        // Teljes képernyő méret
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
+        const fontSize = 16;
+        const columns = Math.floor(canvas.width / fontSize);
+        const drops = [];
+
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Elmosódás
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#00ff00"; // Neon zöld
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 35);
+    }
+
+    // --- 2. TÖLTÉS FOLYAMATA ---
     const interval = setInterval(() => {
         progress += Math.random() * 2.5; 
         
@@ -30,13 +70,8 @@ window.addEventListener('load', () => {
             isFinished = true;
             
             if (startMessage) {
-                // Szöveg beállítása
                 startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
-                
-                // Neon osztály hozzáadása (CSS-ben legyen benne a lüktetés!)
                 startMessage.classList.add('ready-blink');
-                
-                // Fade-in effekt az üzenetnek
                 startMessage.style.opacity = "0";
                 setTimeout(() => {
                     startMessage.style.transition = "opacity 0.8s ease-in";
@@ -50,7 +85,7 @@ window.addEventListener('load', () => {
         }
     }, 60);
 
-    // --- 2. TELJES ÜZENETLISTA ---
+    // --- 3. TELJES ÜZENETLISTA ---
     const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
         "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
@@ -95,7 +130,7 @@ window.addEventListener('load', () => {
     let lineIndex = 0;
     let charIndex = 0;
 
-    // --- 3. GÉPELÉS FUNKCIÓ ---
+    // --- 4. GÉPELÉS FUNKCIÓ ---
     function typeChar() {
         if (lineIndex < messages.length) {
             if (charIndex === 0) terminal.innerHTML += "<br>> ";
@@ -109,14 +144,14 @@ window.addEventListener('load', () => {
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, Math.random() * 3 + 1);
+                setTimeout(typeChar, Math.random() * 3 + 1); 
             } else {
                 charIndex = 0;
                 lineIndex++;
                 setTimeout(typeChar, 40); 
             }
         } else {
-            // BEFEJEZÉS ÉS MENTÉS
+            // BEFEJEZÉS
             sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
@@ -126,56 +161,21 @@ window.addEventListener('load', () => {
         }
     }
 
-    // --- 4. INDÍTÁS ESEMÉNYEK ---
-
-// A startFinal függvényedben hívd meg:
-function startMatrix() {
-    const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = [];
-
-    for (let x = 0; x < columns; x++) {
-        drops[x] = 1;
-    }
-
-    function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Elmosódás effekt
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "#0F0"; // Mátrix-zöld szín
-        ctx.font = fontSize + "px monospace";
-
-        for (let i = 0; i < drops.length; i++) {
-            const text = characters.charAt(Math.floor(Math.random() * characters.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
+    // --- 5. INDÍTÁS ESEMÉNYEK (FONTOS RÉSZ) ---
+    function startFinal() {
+        if (isFinished) {
+            if (overlay) overlay.style.display = 'none';
+            if (loader) {
+                loader.style.display = 'block'; // Előbb megjelenítjük a dobozt
+                
+                // Kicsit várunk, hogy a böngésző észlelje a méretet, aztán indul a mátrix és a gépelés
+                setTimeout(() => {
+                    startMatrix(); 
+                    typeChar();
+                }, 50);
             }
-            drops[i]++;
         }
     }
-    setInterval(draw, 33);
-}
-
-// A startFinal függvényedben hívd meg:
-function startFinal() {
-    if (isFinished) {
-        if (overlay) overlay.style.display = 'none';
-        if (loader) {
-            loader.style.display = 'block';
-            startMatrix(); // <--- ITT INDÍTJUK EL!
-            typeChar();
-        }
-    }
-}
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') startFinal();
@@ -183,8 +183,3 @@ function startFinal() {
     
     if (overlay) overlay.addEventListener('click', startFinal);
 });
-
-
-
-
-
