@@ -1,28 +1,43 @@
 window.addEventListener('load', () => {
+    console.log("Script elindult...");
+
     const loader = document.getElementById('hacker-loader');
     const terminal = document.getElementById('terminal-content');
     const overlay = document.getElementById('start-overlay');
     const startMessage = document.getElementById('start-message');
     const progressBar = document.getElementById('progress-bar-fill');
 
-    // --- 0. ELLENŐRZÉS: LEFUTOTT-E MÁR? ---
+    // --- 0. TESZT ÜZEMMÓD: Ha nem indulna, töröld ki a sessionStorage-t ---
+    // sessionStorage.removeItem('introPlayed'); // Eddig menjen a // ha tesztelsz
+
     if (sessionStorage.getItem('introPlayed')) {
+        console.log("Az intro már lefutott korábban. Kihagyás...");
         if (overlay) overlay.style.display = 'none';
         if (loader) loader.style.display = 'none';
         document.body.classList.remove('loading-mode');
         return; 
     }
 
-    const typeSound = new Audio('typing3.mp3'); 
-    typeSound.volume = 0.2;
+    // Hangkezelés hibaellenőrzéssel
+    let typeSound;
+    try {
+        typeSound = new Audio('typing3.mp3'); 
+        typeSound.volume = 0.2;
+    } catch (e) {
+        console.warn("Hangfájl nem található, néma üzemmód.");
+    }
 
     let progress = 0;
     let isFinished = false;
 
-    // --- 1. MÁTRIX ESŐ FUNKCIÓ (GLITCH VERZIÓ) ---
+    // --- 1. MÁTRIX ESŐ FUNKCIÓ ---
     function startMatrix() {
+        console.log("Mátrix eső indítása...");
         const canvas = document.getElementById('matrix-canvas');
-        if (!canvas) return;
+        if (!canvas) {
+            console.error("Hiba: Nincs matrix-canvas a HTML-ben!");
+            return;
+        }
         const ctx = canvas.getContext('2d');
 
         canvas.width = window.innerWidth;
@@ -72,32 +87,30 @@ window.addEventListener('load', () => {
     }
 
     // --- 2. TÖLTÉS FOLYAMATA ---
+    console.log("Töltés elindítva...");
     const interval = setInterval(() => {
         progress += Math.random() * 2.5; 
-        
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(interval);
-            isFinished = true;
-            
-            if (startMessage) {
-                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
-                startMessage.classList.add('ready-blink');
-                startMessage.style.opacity = "0";
-                setTimeout(() => {
-                    startMessage.style.transition = "opacity 0.8s ease-in";
-                    startMessage.style.opacity = "1";
-                }, 100);
-            }
-        }
         
         if (progressBar) {
             progressBar.style.width = progress + "%";
         }
+
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            isFinished = true;
+            console.log("Töltés kész, várakozás az Enterre.");
+            
+            if (startMessage) {
+                startMessage.innerHTML = "RENDSZER KÉSZEN ÁLL. NYOMJ ENTER-T A BRUTE FORCE INDÍTÁSÁHOZ!";
+                startMessage.classList.add('ready-blink');
+                startMessage.style.opacity = "1";
+            }
+        }
     }, 60);
 
     // --- 3. ÜZENETEK ---
-    const messages = [
+   const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
         "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
         "Hálózati azonosító: 192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255),
@@ -141,26 +154,26 @@ window.addEventListener('load', () => {
     let lineIndex = 0;
     let charIndex = 0;
 
-    // --- 4. GÉPELÉS FUNKCIÓ ---
     function typeChar() {
         if (lineIndex < messages.length) {
             if (charIndex === 0) terminal.innerHTML += "<br>> ";
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
             loader.scrollTop = loader.scrollHeight;
 
-            if (charIndex % 3 === 0) {
+            if (typeSound && charIndex % 3 === 0) {
                 typeSound.cloneNode().play().catch(() => {});
             }
 
             charIndex++;
             if (charIndex < messages[lineIndex].length) {
-                setTimeout(typeChar, Math.random() * 3 + 1); 
+                setTimeout(typeChar, 5); 
             } else {
                 charIndex = 0;
                 lineIndex++;
-                setTimeout(typeChar, 40); 
+                setTimeout(typeChar, 30); 
             }
         } else {
+            console.log("Gépelés vége, belépés a főoldalra...");
             sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
@@ -173,6 +186,7 @@ window.addEventListener('load', () => {
     // --- 5. INDÍTÁS ---
     function startFinal() {
         if (isFinished) {
+            console.log("Enter megnyomva, váltás a terminálra.");
             if (overlay) overlay.style.display = 'none';
             if (loader) {
                 loader.style.display = 'block';
