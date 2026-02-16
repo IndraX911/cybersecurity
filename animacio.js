@@ -13,30 +13,21 @@ window.addEventListener('load', () => {
         return; 
     }
 
-    // Hangkezelés
     const typeSound = new Audio('typing3.mp3'); 
     typeSound.volume = 0.2;
 
     let progress = 0;
     let isFinished = false;
 
-    // --- 1. MÁTRIX ESŐ FUNKCIÓ (Itt defináljuk) ---
-     0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#00ff00"; // Neon zöld
-            ctx.font = fontSize + "px monospace";
-// --- 1. MÁTRIX ESŐ FUNKCIÓ (GLITCH VERZIÓ) ---
+    // --- 1. MÁTRIX ESŐ FUNKCIÓ (GLITCH VERZIÓ) ---
     function startMatrix() {
         const canvas = document.getElementById('matrix-canvas');
         if (!canvas) return;
-
         const ctx = canvas.getContext('2d');
 
-        // Teljes képernyő méret
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Kibővített karakterkészlet a káoszhoz
         const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~Ωπµ®©";
         const fontSize = 16;
         const columns = Math.floor(canvas.width / fontSize);
@@ -47,43 +38,30 @@ window.addEventListener('load', () => {
         }
 
         function draw() {
-            // A halványítás (ez csinálja a csíkot)
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
-                // VÉLETLENSZERŰ SZÍNKEVERÉS (A GLITCH LÉNYEGE)
                 const randomColor = Math.random();
-                
-                // Alapértelmezett: Neon Zöld
                 ctx.fillStyle = "#00ff00"; 
 
-                // 2% esély: Fehér villanás (Adatcsomag)
                 if (randomColor > 0.975) {
                     ctx.fillStyle = "#ffffff"; 
-                    ctx.shadowBlur = 15; // Kicsit jobban világít
+                    ctx.shadowBlur = 15;
                     ctx.shadowColor = "#ffffff";
-                } 
-                // 0.5% esély: Vörös hiba (Rendszerhiba/Danger)
-                else if (randomColor > 0.995) {
+                } else if (randomColor > 0.995) {
                     ctx.fillStyle = "#ff0033"; 
-                    ctx.shadowBlur = 20; // Vörös izzás
+                    ctx.shadowBlur = 20;
                     ctx.shadowColor = "#ff0033";
                 } else {
-                    // Ha zöld, nincs extra árnyék, hogy gyors maradjon
                     ctx.shadowBlur = 0; 
                 }
 
-                // Karakter választása és kirajzolása
                 const text = characters.charAt(Math.floor(Math.random() * characters.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                // Reseteljük az árnyékot a következő körre
                 ctx.shadowBlur = 0;
 
-                // Vissza a tetejére, ha leért
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
@@ -118,7 +96,7 @@ window.addEventListener('load', () => {
         }
     }, 60);
 
-    // --- 3. TELJES ÜZENETLISTA ---
+    // --- 3. ÜZENETEK ---
     const messages = [
         "CYBERSECURITY Kernel v4.1.0-release [LTS]",
         "Rendszer-indítási idő: " + new Date().toLocaleString('hu-HU'),
@@ -167,7 +145,6 @@ window.addEventListener('load', () => {
     function typeChar() {
         if (lineIndex < messages.length) {
             if (charIndex === 0) terminal.innerHTML += "<br>> ";
-            
             terminal.innerHTML += messages[lineIndex].charAt(charIndex);
             loader.scrollTop = loader.scrollHeight;
 
@@ -184,7 +161,6 @@ window.addEventListener('load', () => {
                 setTimeout(typeChar, 40); 
             }
         } else {
-            // BEFEJEZÉS
             sessionStorage.setItem('introPlayed', 'true');
             setTimeout(() => {
                 loader.classList.add('loader-fade-out');
@@ -194,14 +170,12 @@ window.addEventListener('load', () => {
         }
     }
 
-    // --- 5. INDÍTÁS ESEMÉNYEK (FONTOS RÉSZ) ---
+    // --- 5. INDÍTÁS ---
     function startFinal() {
         if (isFinished) {
             if (overlay) overlay.style.display = 'none';
             if (loader) {
-                loader.style.display = 'block'; // Előbb megjelenítjük a dobozt
-                
-                // Kicsit várunk, hogy a böngésző észlelje a méretet, aztán indul a mátrix és a gépelés
+                loader.style.display = 'block';
                 setTimeout(() => {
                     startMatrix(); 
                     typeChar();
@@ -216,4 +190,3 @@ window.addEventListener('load', () => {
     
     if (overlay) overlay.addEventListener('click', startFinal);
 });
-
