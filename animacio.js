@@ -56,7 +56,7 @@ window.addEventListener('load', () => {
         resizeCanvas(); // Kezdő méret beállítása
 
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; 
+            ctx.fillStyle = "rgba(0, 0, 0, 0.12)"; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.font = fontSize + "px monospace";
 
@@ -199,3 +199,4 @@ window.addEventListener('load', () => {
     
     if (overlay) overlay.addEventListener('click', startFinal);
 });
+
