@@ -98,6 +98,8 @@ body.loading-mode {
     height: 100vh;
     z-index: -1; /* Hogy a szövegek mögött maradjon */
     display: block;
+    opacity: 0.3;
+    filter: brightness(0.7);
 }
 
 #terminal-content {
@@ -120,4 +122,5 @@ body.loading-mode {
     opacity: 0;
     transition: opacity 1s ease-out;
 }
+
 
