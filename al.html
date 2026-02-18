@@ -347,41 +347,58 @@
 
         // Megkeressük az egeret
         // Megvárjuk, amíg az oldal kész
-        const hackLines = [
-    "CONNECTING TO 182.21.4.110:22...",
-    "ATTEMPTING EXPLOIT: CVE-2024-4012...",
-    "INJECTING PACKET OFFSET 0x44...",
-    "BUFFER OVERFLOW SUCCESSFUL.",
-    "BYPASSING INTEGRITY CHECK...",
-    "ROOT ACCESS GRANTED.",
-    "EXTRACTING SHA-256 HASHES...",
-    "BRUTE FORCING PASSWORDS: [####------] 42%",
-    "PAYLOAD DEPLOYED AT /tmp/reverse_shell.sh",
-    "DELETING SYSTEM LOGS..."
-];
 
+
+// Ezt a függvényt hívjuk meg az oldal betöltésekor
 function startLiveHack() {
     const consoleBox = document.getElementById('live-hacker-console');
-    if(!consoleBox) return;
+    
+    // Biztonsági ellenőrzés: ha nem találja az ID-t, ne dobjon hibát
+    if(!consoleBox) {
+        console.error("Hiba: Nem találom a 'live-hacker-console' elemet!");
+        return;
+    }
 
+    console.log("Live Hack szimuláció elindult...");
+
+    const hackLines = [
+        "CONNECTING TO SERVER: 192.168.1.254...",
+        "ACCESSING PORT 80... OPEN",
+        "ATTEMPTING SQL INJECTION...",
+        "BYPASSING FIREWALL...",
+        "ROOT ACCESS GRANTED.",
+        "EXTRACTING USER_DB...",
+        "ENCRYPTING LOCAL FILES...",
+        "DELETING SYSTEM LOGS: /var/log/auth.log",
+        "SCANNING NETWORK NODES...",
+        "PACKET CAPTURE STARTED: eth0",
+        "DDoS ATTACK STRENGTH: 450 Gbps",
+        "MALWARE PAYLOAD DEPLOYED."
+    ];
+
+    // Ez a rész pörgeti a sorokat
     setInterval(() => {
         const line = document.createElement('div');
-        line.className = 'hack-line';
-        // Véletlenszerűen választunk egy sort a listából
-        line.innerHTML = `<span class="prompt">></span> ${hackLines[Math.floor(Math.random() * hackLines.length)]}`;
+        line.style.color = "#00ff41";
+        line.style.marginBottom = "5px";
+        line.innerHTML = `<span style="color: #fff;">></span> ${hackLines[Math.floor(Math.random() * hackLines.length)]}`;
         
         consoleBox.appendChild(line);
 
-        // Ha túl sok sor van, töröljük a legfelsőt, hogy ne akadjon a gép
+        // Max 15 sort hagyunk meg, a többit töröljük (hogy ne lassuljon be)
         if (consoleBox.childNodes.length > 15) {
             consoleBox.removeChild(consoleBox.firstChild);
         }
 
-        // Mindig az aljára görget
+        // Automatikus görgetés az aljára
         consoleBox.scrollTop = consoleBox.scrollHeight;
-    }, 800); // 0.8 másodpercenként jön egy új sor
+    }, 600); // 0.6 másodpercenként jön új sor
 }
+
+// FONTOS: Ez indítja el a függvényt, amikor az oldal betöltődött!
+window.addEventListener('load', startLiveHack);
     </script>
 </body>
 </html>
+
 
