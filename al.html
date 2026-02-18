@@ -93,12 +93,15 @@
         .green { background: #27c93f; }
         
         .hack-body {
-            height: 250px;
-            padding: 10px;
-            overflow-y: hidden;
-            color: #00ff41;
-            font-size: 0.8rem;
-        }
+            background-color: black;
+            padding: 15px;
+            height: 300px;
+            overflow-y: hidden; /* Elrejtjük a görgetősávot a tisztább hatásért */
+            border: 1px solid #00ff41;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            box-shadow: inset 0 0 10px #00ff41; /* Belső zöldes ragyogás */
+}
         
         .prompt { color: #fff; margin-right: 5px; }
     </style>
@@ -400,5 +403,6 @@ window.addEventListener('load', startLiveHack);
     </script>
 </body>
 </html>
+
 
 
