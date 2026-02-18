@@ -316,22 +316,40 @@
 
         // Megkeressük az egeret
         // Megvárjuk, amíg az oldal kész
+        const hackLines = [
+    "CONNECTING TO 182.21.4.110:22...",
+    "ATTEMPTING EXPLOIT: CVE-2024-4012...",
+    "INJECTING PACKET OFFSET 0x44...",
+    "BUFFER OVERFLOW SUCCESSFUL.",
+    "BYPASSING INTEGRITY CHECK...",
+    "ROOT ACCESS GRANTED.",
+    "EXTRACTING SHA-256 HASHES...",
+    "BRUTE FORCING PASSWORDS: [####------] 42%",
+    "PAYLOAD DEPLOYED AT /tmp/reverse_shell.sh",
+    "DELETING SYSTEM LOGS..."
+];
+
+function startLiveHack() {
+    const consoleBox = document.getElementById('live-hacker-console');
+    if(!consoleBox) return;
+
+    setInterval(() => {
+        const line = document.createElement('div');
+        line.className = 'hack-line';
+        // Véletlenszerűen választunk egy sort a listából
+        line.innerHTML = `<span class="prompt">></span> ${hackLines[Math.floor(Math.random() * hackLines.length)]}`;
+        
+        consoleBox.appendChild(line);
+
+        // Ha túl sok sor van, töröljük a legfelsőt, hogy ne akadjon a gép
+        if (consoleBox.childNodes.length > 15) {
+            consoleBox.removeChild(consoleBox.firstChild);
+        }
+
+        // Mindig az aljára görget
+        consoleBox.scrollTop = consoleBox.scrollHeight;
+    }, 800); // 0.8 másodpercenként jön egy új sor
+}
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
