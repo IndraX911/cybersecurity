@@ -79,10 +79,11 @@
             max-width: 800px;    /* De ne legyen szélesebb 800px-nél */
             height: 400px;
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-            position: absolute;
-            transform: translate(-50%, -50%);
-            top: 50%;
+            position: relative;
+            transform: translateX(-50%);
             left: 50%;
+            margin-top: 50px;     /* Ezzel tolod le az "A TÁMADÁSOK VILÁGA" felirattól */
+            margin-bottom: 30px;
         }
         
         .hack-header {
@@ -410,6 +411,7 @@ window.addEventListener('load', startLiveHack);
     </script>
 </body>
 </html>
+
 
 
 
